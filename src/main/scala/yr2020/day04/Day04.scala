@@ -2,6 +2,7 @@ package yr2020.day04
 
 import yr2020.common.Util.loadList
 
+import scala.annotation.tailrec
 import scala.util.matching.Regex
 object Day04 {
 
@@ -76,6 +77,7 @@ object Day04 {
     }
   }
 
+  @tailrec
   def nextRecord(sourceList:List[String], record: List[String]): (List[String], List[String]) = sourceList match {
     case h :: Nil => (Nil, h :: record)
     case h :: tail if h.size > 0 => nextRecord(tail, h :: record)
