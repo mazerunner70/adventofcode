@@ -18,5 +18,8 @@ object Util {
     }
   }
 
+  def sumPairing(list: List[Long], total: Long): Long = {
+    list.find(it=>list.contains(total-it)).getOrElse(-1)
+  }
 
 }
