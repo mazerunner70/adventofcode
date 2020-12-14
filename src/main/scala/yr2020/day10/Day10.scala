@@ -21,7 +21,7 @@ object Day10 {
     case h :: tail => {
       val newTotal = h match {
         case 2 | 3 => total * 2
-        case 4     => total * 7 / 4
+        case 4     => total * 7 / 4 // Black magic - needs more modelling to understand this number
         case _     => total
       }
       analyseSingleJoltSequences(tail, newTotal)
@@ -39,7 +39,7 @@ object Day10 {
 
 
   def main(args: Array[String]): Unit = {
-    val list = loadList("day10/input.txt").map(_.toInt)
+    val list = loadList("day01-10/day10/input.txt").map(_.toInt)
     val highest = list.max+3
     val addedends = 0 :: highest :: list
     println(part1(addedends))

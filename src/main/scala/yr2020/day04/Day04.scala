@@ -86,7 +86,7 @@ object Day04 {
 
 
   def main(args: Array[String]): Unit = {
-    val list = loadList("day04/input.txt")
+    val list = loadList("day01-10/day04/input.txt")
     val records = iterate(list)
     val validCount1 = records.map (validateRecord1(_)).filter(_ == true).size
     println(validCount1)

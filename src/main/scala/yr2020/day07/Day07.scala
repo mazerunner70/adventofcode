@@ -52,7 +52,7 @@ object Day07 {
 
   def main(args: Array[String]): Unit = {
 //    println(allBags.bags.map{b=>println("-"+b.name);treeSearchCount(b, shinyGold)})
-    val list = loadList("day07/input.txt")
+    val list = loadList("day01-10/day07/input.txt")
     val bagMap= list.map{ l=>val b = bagLineParse1(l); b._1 -> b._2}.toMap
     println(bagMap)
     val result: Map[String, Int] = bagMap.keys.map{ b=>println(b);b->treeSearchDistinctCount(b, "shiny gold", bagMap)}.toMap

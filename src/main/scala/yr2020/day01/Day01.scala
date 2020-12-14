@@ -27,7 +27,7 @@ object Day01 {
     Source.fromResource(filename).mkString
 
   def main(args: Array[String]): Unit = {
-    val pageContent = loadFromFile("day01/input.txt")
+    val pageContent = loadFromFile("day01-10/day01/input.txt")
     val array = pageContent.split('\n').map(_.toInt).sorted
     val foundvalue2 = iterate2(array)
     println(foundvalue2 * (2020 - foundvalue2))

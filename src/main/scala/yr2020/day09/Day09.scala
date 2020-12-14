@@ -41,7 +41,7 @@ object Day09 {
 
 
   def main(args: Array[String]): Unit = {
-    val list = loadList("day09/input.txt").map(_.toLong)
+    val list = loadList("day01-10/day09/input.txt").map(_.toLong)
     val invalidNumber = slideWindow(list, List(), rule, 25).filter(_._1 == false)(0)._2
     println(invalidNumber)
     val contigNumbers = slideWindow2(list, invalidNumber)

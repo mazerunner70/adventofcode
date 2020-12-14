@@ -26,7 +26,7 @@ object Day05 {
     }
 
   def main(args: Array[String]): Unit = {
-    val list = loadList("day05/input.txt")
+    val list = loadList("day01-10/day05/input.txt")
     val seatIds = list.map(convToBinary(_))
     println(seatIds.max)
     println(findMissingEntry(list.map(convToBinary(_)).sorted)(0))

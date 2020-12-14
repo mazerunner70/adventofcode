@@ -29,7 +29,7 @@ object Day02 {
 
 
   def main(args: Array[String]): Unit = {
-    val pageContent = loadFromFile("day02/input.txt")
+    val pageContent = loadFromFile("day01-10/day02/input.txt")
     val list = pageContent.split('\n').map(_.toString).toList
     println(
       list.count { line: String =>

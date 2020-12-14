@@ -24,7 +24,7 @@ object Day03 {
   }
 
   def main(args: Array[String]): Unit = {
-    val pageContent = loadFromFile("day03/input.txt")
+    val pageContent = loadFromFile("day01-10/day03/input.txt")
     val list = pageContent.split('\n').map(_.toString).toList
     println(traverse(list, 3, 1))
     val tg = traverseGroup(list, List(1-> 1, 3 -> 1,  5 -> 1, 7 -> 1, 1 -> 2), List())

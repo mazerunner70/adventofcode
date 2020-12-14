@@ -13,7 +13,7 @@ object Day06 {
 
 
   def main(args: Array[String]): Unit = {
-    val list = loadList("day06/input.txt")
+    val list = loadList("day01-10/day06/input.txt")
     println(multiLineRecordParse(list).map(_.mkString("").distinct.size).sum)
     println(multiLineRecordParse(list).map(intersection(_).size).sum)
   }

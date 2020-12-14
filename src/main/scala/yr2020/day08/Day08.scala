@@ -70,7 +70,7 @@ object Day08 {
   }
 
   def main(args: Array[String]): Unit = {
-    val list = loadList("day08/input.txt")
+    val list = loadList("day01-10/day08/input.txt")
     val program: List[(String, String)] = list.map(_.span(_ != ' ')).map(t=> (t._1, t._2.trim))
     println(part1(program))
     println(part2(program))
