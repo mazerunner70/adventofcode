@@ -1,4 +1,4 @@
-package yr2020.day06
+package yr2020.day01T10.day06
 
 import yr2020.common.Util.{loadList, multiLineRecordParse}
 

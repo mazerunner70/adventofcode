@@ -1,4 +1,4 @@
-package yr2020.day09
+package yr2020.day01T10.day09
 
 import yr2020.common.Util.{loadList, sumPairing}
 

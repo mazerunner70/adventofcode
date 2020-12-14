@@ -1,4 +1,4 @@
-package yr2020.day01
+package yr2020.day01T10.day01
 
 import scala.io.Source
 

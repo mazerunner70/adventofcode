@@ -1,4 +1,4 @@
-package yr2020.day04
+package yr2020.day01T10.day04
 
 import yr2020.common.Util.loadList
 

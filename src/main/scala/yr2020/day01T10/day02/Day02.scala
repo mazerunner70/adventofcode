@@ -1,4 +1,4 @@
-package yr2020.day02
+package yr2020.day01T10.day02
 
 import scala.io.Source
 import scala.util.matching.Regex
