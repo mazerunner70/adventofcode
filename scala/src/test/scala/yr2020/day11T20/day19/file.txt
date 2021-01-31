@@ -1,0 +1,12 @@
+(11,List(
+    RuleLine(8,RuleNumberListOr(RuleNumberList(List(42)),RuleNumberList(List(42, 8)))),
+    RuleLine(8,RuleNumberListOr(RuleNumberList(List(42)),RuleNumberList(List(42, 8)))),
+    RuleLine(8,RuleNumberListOr(RuleNumberList(List(42)),RuleNumberList(List(42, 8)))),
+    RuleLine(8,RuleNumberListOr(RuleNumberList(List(42)),RuleNumberList(List(42, 8)))),
+    RuleLine(8,RuleNumberListOr(RuleNumberList(List(42)),RuleNumberList(List(42, 8)))),
+    RuleLine(8,RuleNumberListOr(RuleNumberList(List(42)),RuleNumberList(List(42, 8)))),
+    RuleLine(8,RuleNumberListOr(RuleNumberList(List(42)),RuleNumberList(List(42, 8)))),
+    RuleLine(8,RuleNumberListOr(RuleNumberList(List(42)),RuleNumberList(List(42, 8)))),
+    RuleLine(8,RuleNumberListOr(RuleNumberList(List(42)),RuleNumberList(List(42, 8)))),
+    RuleLine(8,RuleNumberListOr(RuleNumberList(List(42)),RuleNumberList(List(42, 8)))),
+    RuleLine(0,RuleNumberList(List(8, 11)))))
