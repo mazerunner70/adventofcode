@@ -1,10 +1,8 @@
 import React, { Component, setGlobal } from 'reactn';
 
+
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import { createStyles, Theme, Switch, IconButton } from '@material-ui/core';
-import CssBaseline from '@material-ui/core/CssBaseline';
-
-import TopBar from '../component/topbar/TopBar';
 
 const styles = (theme: Theme) => createStyles({
     rootFacet: {
@@ -32,7 +30,7 @@ export interface State {
     tabValue: number;
 }
 
-class HomePage extends Component<Props, State> {
+class SampleDay extends Component<Props, State> {
     constructor(props: Props) {
         super();
         this.state = {
@@ -42,11 +40,8 @@ class HomePage extends Component<Props, State> {
     };
     render() {
         const { classes } = this.props;
-        const currentPath = this.props.location.pathname
         return (
             <React.Fragment>
-                <CssBaseline />
-                <TopBar currentPath={currentPath} />
                 <div className={classes.root}>Hello World</div>
             </React.Fragment>
         )
@@ -54,4 +49,4 @@ class HomePage extends Component<Props, State> {
 
 }
 
-export default withStyles(styles)(HomePage);
+export default withStyles(styles)(SampleDay);
