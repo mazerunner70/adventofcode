@@ -1,92 +1,78 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Toolbar from '@material-ui/core/Toolbar';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircleOutlined';
-import HelpOutlineOutlined from '@material-ui/icons/HelpOutlineOutlined';
-import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
-import Badge from '@material-ui/core/Badge';
+
+
+import { Box, Drawer, Divider, IconButton, AppBar, SwipeableDrawer } from '@mui/material';
+import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Tabs, Tab } from '@mui/material';
+import {CssBaseline, Toolbar, Typography, Grid} from '@mui/material'; 
+import {Inbox, Mail, Menu as MenuIcon, HelpOutlineOutlined} from '@mui/icons-material';
+import { SxProps } from '@mui/system';
 import Menu from './Menu';
-import { withStyles } from '@material-ui/core/styles';
-import { WithStyles, createStyles, Theme } from '@material-ui/core';
 
 const logo = require('../../../../images/entellect.svg');
 
-const styles = (theme: Theme) => createStyles({
-  appBar: {
-    position: 'relative',
-    boxShadow: 'none',
-    borderBottom: `1px solid ${theme.palette.grey['100']}`,
-    backgroundColor: 'white',
+// const styles = (theme: Theme) => createStyles({
+//   appBar: {
+//     position: 'relative',
+//     boxShadow: 'none',
+//     borderBottom: `1px solid ${theme.palette.grey['100']}`,
+//     backgroundColor: 'white',
+//   },
+//   inline: {
+//     display: 'inline'
+//   },
+//   flex: {
+//     display: 'flex',
+//     [theme.breakpoints.down('sm')]: {
+//       display: 'flex',
+//       justifyContent: 'space-evenly',
+//       alignItems: 'center'
+//     }
+//   },
+//   link,
+//   productLogo: {
+//     display: 'inline-block',
+//     borderLeft: `1px solid ${theme.palette.grey['A100']}`,
+//     marginLeft: 32,
+//     paddingLeft: 24
+//   },
+//   tagline: {
+//     display: 'inline-block',
+//     marginLeft: 10
+//   },
+//   iconContainer: {
+//     display: 'none',
+//     [theme.breakpoints.down('sm')]: {
+//       display: 'block'
+//     }
+//   },
+//   iconButton: {
+//     float: 'right'
+//   },
+//   tabContainer: {
+//     marginLeft: 32,
+//     [theme.breakpoints.down('sm')]: {
+//       display: 'none'
+//     }
+//   },
+//   tabItem: {
+//     minWidth: 'auto'
+//   },
+//   rightPanel: {
+//     display: 'flex',
+//     float: 'right',
+//     alignItems: 'right',
+//     [theme.breakpoints.down('sm')]: {
+//       display: 'none'
+//     }
+//   },
+//   grow: {
+//     flexGrow: 1,
+//   }
+// })
 
-  },
-  inline: {
-    display: 'inline'
-  },
-  flex: {
-    display: 'flex',
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
-      justifyContent: 'space-evenly',
-      alignItems: 'center'
-    }
-  },
-  link: {
-    textDecoration: 'none',
-    color: 'inherit'
-  },
-  productLogo: {
-    display: 'inline-block',
-    borderLeft: `1px solid ${theme.palette.grey['A100']}`,
-    marginLeft: 32,
-    paddingLeft: 24
-  },
-  tagline: {
-    display: 'inline-block',
-    marginLeft: 10
-  },
-  iconContainer: {
-    display: 'none',
-    [theme.breakpoints.down('sm')]: {
-      display: 'block'
-    }
-  },
-  iconButton: {
-    float: 'right'
-  },
-  tabContainer: {
-    marginLeft: 32,
-    [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
-  },
-  tabItem: {
-    minWidth: 'auto'
-  },
-  rightPanel: {
-    display: 'flex',
-    float: 'right',
-    alignItems: 'right',
-    [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
-  },
-  grow: {
-    flexGrow: 1,
-  }
-})
-
-export interface Props  extends WithStyles<typeof styles> { 
+export interface Props { 
   currentPath: any | '/';
   noTabs?: boolean | false;
   location?: {search: any | ''};
@@ -152,70 +138,102 @@ class Topbar extends Component<Props> {
 
 
   render() {
-
-    const { classes } = this.props;    
-
+    const heroText: SxProps = {     
+        display: 'inline-block',
+        borderLeft: '1px solid grey.100',
+        marginLeft: 32,
+        paddingLeft: 24
+        };
     return (
-      <AppBar position="absolute" color="default" className={classes.appBar}>
-        <Toolbar>
-          <Grid container spacing={24} alignItems="baseline">
-            <Grid item xs={12} container alignItems='baseline' className={classes.flex}>
-              <div className={classes.inline}>
-                <Typography variant="h6" color="inherit" noWrap>
-                  <Link to='/' className={classes.link}>
-                    <img width={20} src={logo} alt="no data" />
-                    <span className={classes.tagline}>Advent of Code</span>
-                  </Link>
-                </Typography>
-              </div>
-              {!this.props.noTabs && (
-                <React.Fragment>
-                  <div className={classes.productLogo}>
-                    <Typography>
+        <Box>HelloTopbar</Box>
+    //   <AppBar position="absolute" color="default" sx={{ position: 'relative',
+    //   boxShadow: 'none',
+    //   borderBottom: `1px solid grey.100}`,
+    //   backgroundColor: 'white' }}>
+    //     <Toolbar>
+    //       <Grid container spacing={24} alignItems="baseline">
+    //         <Grid item xs={12} container alignItems='baseline' sx={{
+    //             sm: {
+    //                 display: 'flex',
+    //                 justifyContent: 'space-evenly',
+    //                 alignItems: 'center'
+    //             }
+    //         }}>
+    //           <div >
+    //             <Typography variant="h6" color="inherit" noWrap sx={{ display: 'inline' }}>
+    //                 <Box  sx={heroText}>
+    //               <Link to='/'>
+    //                 <img width={20} src={logo} alt="no data" />
+    //                 <Box component="span" sx={{
+    //                     display: 'inline-block',
+    //                     marginLeft: 10
+    //                 }}>Advent of Code</Box>
+    //               </Link>
+    //               </Box>
+    //             </Typography>
+    //           </div>
+    //           {!this.props.noTabs && (
+    //             <React.Fragment>
+    //               <Box sx={heroText}>
+    //                 <Typography>
 
-                    </Typography>
-                  </div>
-                  <div className={classes.iconContainer}>
-                    <IconButton onClick={this.mobileMenuOpen} className={classes.iconButton} color="inherit" aria-label="Menu">
-                      <MenuIcon />
-                    </IconButton>
-                  </div>
-                  <div className={classes.tabContainer}>
-                    <SwipeableDrawer anchor="right" open={this.state.menuDrawer} onClose={this.mobileMenuClose} onOpen={f=>f}>
-                      <AppBar title="Menu" />
-                      <List>
-                        {Menu.map((item, index) => (
-                          <ListItem  component={Link as any} {...this.generateTo(item.pathname)} to={item.pathname} button key={index}>
-                            <ListItemText primary={item.label} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </SwipeableDrawer>
-                    <Tabs
-                      value={this.current() || this.state.value}
-                      indicatorColor="primary"
-                      textColor="primary"
-                      onChange={this.handleChange}
-                    >
-                      {Menu.map((item, index) => (
-                        <Tab  id={item.label} component={Link as any} {...this.generateTo(item.pathname)} to={item.pathname}  label={item.label} />
-                      ))}
-                    </Tabs>
-                  </div>
-                  <div className={classes.grow} />
-                  <div className={classes.rightPanel}>
-                    <IconButton>                      
-                        <HelpOutlineOutlined />
-                    </IconButton>                   
-                  </div>
-                </React.Fragment>
-              )}
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
+    //                 </Typography>
+    //               </Box>
+    //               <Box sx={{     
+    //                   display: 'none',
+    //                     sm: {
+    //                         display: 'block'
+    //                     }
+    //                 }}>
+    //                 <IconButton onClick={this.mobileMenuOpen} sx={{float: 'right'}} color="inherit" aria-label="Menu">
+    //                   <MenuIcon />
+    //                 </IconButton>
+    //               </Box>
+    //               <Box sx={{     marginLeft: 32,
+    //                     sm: {
+    //                        display: 'none'
+    //                     }
+    //                 }}>
+    //                 <SwipeableDrawer anchor="right" open={this.state.menuDrawer} onClose={this.mobileMenuClose} onOpen={f=>f}>
+    //                   <AppBar title="Menu" />
+    //                   <List>
+    //                     {Menu.map((item, index) => (
+    //                       <ListItem  component={Link as any} {...this.generateTo(item.pathname)} to={item.pathname} button key={index}>
+    //                         <ListItemText primary={item.label} />
+    //                       </ListItem>
+    //                     ))}
+    //                   </List>
+    //                 </SwipeableDrawer>
+    //                 <Tabs
+    //                   value={this.current() || this.state.value}
+    //                   indicatorColor="primary"
+    //                   textColor="primary"
+    //                   onChange={this.handleChange}
+    //                 >
+    //                   {Menu.map((item, index) => (
+    //                     <Tab  id={item.label} component={Link as any} {...this.generateTo(item.pathname)} to={item.pathname}  label={item.label} />
+    //                   ))}
+    //                 </Tabs>
+    //               </Box>
+    //               <Box sx={{flexGrow: 1}}/>
+    //               <Box sx={{     display: 'flex',
+    //                 float: 'right',
+    //                 alignItems: 'right',
+    //                 sm: {
+    //                    display: 'none'
+    //                 }}}>
+    //                 <IconButton>                      
+    //                     <HelpOutlineOutlined />
+    //                 </IconButton>                   
+    //               </Box>
+    //             </React.Fragment>
+    //           )}
+    //         </Grid>
+    //       </Grid>
+    //     </Toolbar>
+    //   </AppBar>
     )
   }
 }
 
-export default withStyles(styles)(Topbar);
+export default Topbar;

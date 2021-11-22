@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+// import { ThemeProvider, createTheme } from '@mui/system';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './App.less';
 import Routes from './routes'
 import { Link } from 'react-router-dom';
-import { blue, indigo } from '@material-ui/core/colors'
+import { blue, indigo } from '@mui/material/colors'
 
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     secondary: {
       main: '#e17400'
     },
     primary: {
-      main: indigo[700]
+      main: indigo[500]
     }
   },
   typography: {
@@ -29,9 +30,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           <Routes />
-        </MuiThemeProvider>
+        </ThemeProvider>
 
         <div style={{
           position: 'fixed',
