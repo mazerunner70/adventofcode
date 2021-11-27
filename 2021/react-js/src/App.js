@@ -8,9 +8,13 @@ import { blue, indigo } from '@mui/material/colors'
 
 
 const theme = createTheme({
+  toggle: {
+    thumbOnColor: '#ffff00',
+    trackOnColor: '#ff0000'
+  },
   palette: {
     secondary: {
-      main: '#e17400'
+      main: '#ff0000' //'#e17400'
     },
     primary: {
       main: indigo[500]

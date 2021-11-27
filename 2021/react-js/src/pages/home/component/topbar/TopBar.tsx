@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 
-import { Box, Drawer, Divider, IconButton, AppBar, SwipeableDrawer } from '@mui/material';
+import { Box, Button, Divider, IconButton, AppBar, SwipeableDrawer } from '@mui/material';
 import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { Tabs, Tab } from '@mui/material';
 import {CssBaseline, Toolbar, Typography, Grid} from '@mui/material'; 
@@ -10,6 +10,7 @@ import {Inbox, Mail, Menu as MenuIcon, HelpOutlineOutlined} from '@mui/icons-mat
 import { SxProps } from '@mui/system';
 import Menu from './Menu';
 
+// const logo = require('../../../../images/logo192.png');
 const logo = require('../../../../images/entellect.svg');
 
 // const styles = (theme: Theme) => createStyles({
@@ -123,6 +124,13 @@ class Topbar extends Component<Props> {
     }
 
   }
+   handleOpen = () => {
+    // setOpen(true);
+  };
+
+   handleClose = () => {
+    // setOpen(false);
+  };
 
   generateTo(path: String) {
     var x = { pathname: path};
@@ -145,93 +153,184 @@ class Topbar extends Component<Props> {
         paddingLeft: 24
         };
     return (
-        <Box>HelloTopbar</Box>
-    //   <AppBar position="absolute" color="default" sx={{ position: 'relative',
-    //   boxShadow: 'none',
-    //   borderBottom: `1px solid grey.100}`,
-    //   backgroundColor: 'white' }}>
-    //     <Toolbar>
-    //       <Grid container spacing={24} alignItems="baseline">
-    //         <Grid item xs={12} container alignItems='baseline' sx={{
-    //             sm: {
-    //                 display: 'flex',
-    //                 justifyContent: 'space-evenly',
-    //                 alignItems: 'center'
-    //             }
-    //         }}>
-    //           <div >
-    //             <Typography variant="h6" color="inherit" noWrap sx={{ display: 'inline' }}>
-    //                 <Box  sx={heroText}>
-    //               <Link to='/'>
-    //                 <img width={20} src={logo} alt="no data" />
-    //                 <Box component="span" sx={{
-    //                     display: 'inline-block',
-    //                     marginLeft: 10
-    //                 }}>Advent of Code</Box>
-    //               </Link>
-    //               </Box>
-    //             </Typography>
-    //           </div>
-    //           {!this.props.noTabs && (
-    //             <React.Fragment>
-    //               <Box sx={heroText}>
-    //                 <Typography>
+        <>
+        {/* <Box>HelloTopbar</Box>
+        <AppBar position="static">
+      <Toolbar>
+        <IconButton
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={heroText}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" sx={heroText}>
+          Title
+        </Typography>
+        <Button color="inherit" onClick={handleOpen}>
+          Signup
+        </Button>
+      </Toolbar>
+      <ModalDialog open={open} handleClose={handleClose} />
+    </AppBar> */}
 
-    //                 </Typography>
-    //               </Box>
-    //               <Box sx={{     
-    //                   display: 'none',
-    //                     sm: {
-    //                         display: 'block'
-    //                     }
-    //                 }}>
-    //                 <IconButton onClick={this.mobileMenuOpen} sx={{float: 'right'}} color="inherit" aria-label="Menu">
-    //                   <MenuIcon />
-    //                 </IconButton>
-    //               </Box>
-    //               <Box sx={{     marginLeft: 32,
-    //                     sm: {
-    //                        display: 'none'
-    //                     }
-    //                 }}>
-    //                 <SwipeableDrawer anchor="right" open={this.state.menuDrawer} onClose={this.mobileMenuClose} onOpen={f=>f}>
-    //                   <AppBar title="Menu" />
-    //                   <List>
-    //                     {Menu.map((item, index) => (
-    //                       <ListItem  component={Link as any} {...this.generateTo(item.pathname)} to={item.pathname} button key={index}>
-    //                         <ListItemText primary={item.label} />
-    //                       </ListItem>
-    //                     ))}
-    //                   </List>
-    //                 </SwipeableDrawer>
-    //                 <Tabs
-    //                   value={this.current() || this.state.value}
-    //                   indicatorColor="primary"
-    //                   textColor="primary"
-    //                   onChange={this.handleChange}
-    //                 >
-    //                   {Menu.map((item, index) => (
-    //                     <Tab  id={item.label} component={Link as any} {...this.generateTo(item.pathname)} to={item.pathname}  label={item.label} />
-    //                   ))}
-    //                 </Tabs>
-    //               </Box>
-    //               <Box sx={{flexGrow: 1}}/>
-    //               <Box sx={{     display: 'flex',
-    //                 float: 'right',
-    //                 alignItems: 'right',
-    //                 sm: {
-    //                    display: 'none'
-    //                 }}}>
-    //                 <IconButton>                      
-    //                     <HelpOutlineOutlined />
-    //                 </IconButton>                   
-    //               </Box>
-    //             </React.Fragment>
-    //           )}
-    //         </Grid>
-    //       </Grid>
-    //     </Toolbar>
-    //   </AppBar>
+        {/* <AppBar position="absolute" color="default" sx={{ position: 'relative',
+      boxShadow: 'none',
+      borderBottom: `1px solid grey.100}`,
+      backgroundColor: 'white' }}>
+        <Toolbar>
+          <Grid container spacing={24} alignItems="baseline">
+            <Grid item xs={12} container alignItems='baseline' sx={{
+                sm: {
+                    display: 'flex',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center'
+                }
+            }}>
+                          <div >
+                <Typography variant="h6" color="inherit" noWrap sx={{ display: 'inline' }}>
+                    <Box  sx={heroText}>
+                  <Link to='/'>
+                    <img width={20} src={logo} />
+                    <Box component="span" sx={{
+                        display: 'inline-block',
+                        marginLeft: 10
+                    }}>Advent of Code</Box>
+                  </Link>
+                  </Box>
+                </Typography>
+              </div>
+              {!this.props.noTabs && (
+                <React.Fragment>
+                  <Box sx={heroText}>
+                    <Typography>
+
+                    </Typography>
+                  </Box>
+                  <Box sx={{     
+                      display: 'none',
+                        sm: {
+                            display: 'block'
+                        }
+                    }}>
+                    <IconButton onClick={this.mobileMenuOpen} sx={{float: 'right'}} color="inherit" aria-label="Menu">
+                      <MenuIcon />
+                    </IconButton>
+                  </Box>
+                  <Box sx={{     marginLeft: 32,
+                        sm: {
+                           display: 'none'
+                        }
+                    }}>
+                    <SwipeableDrawer anchor="right" open={this.state.menuDrawer} onClose={this.mobileMenuClose} onOpen={f=>f}>
+                      <AppBar title="Menu" />
+                      <List>
+                      {Menu.map((item, index) => (
+                          <ListItem component={Link as any} to={item.pathname} button key={index}><ListItemText primary={item.label}>Tree</ListItemText></ListItem>))}
+                        {/* {Menu.map((item, index) => (
+                          <ListItem  component={Link as any} {...this.generateTo(item.pathname)} to={item.pathname} button key={index}>
+                            <ListItemText primary={item.label} />
+                          </ListItem>
+                        ))} 
+                      </List>
+                    </SwipeableDrawer>
+                                </Box>
+                  
+                  </React.Fragment>)}
+            </Grid>
+            </Grid>
+        </Toolbar>
+
+
+      </AppBar> */}
+      {/* <AppBar position="absolute" color="default" sx={{ position: 'relative',
+      boxShadow: 'none',
+      borderBottom: `1px solid grey.100}`,
+      backgroundColor: 'white' }}>
+        <Toolbar>
+          <Grid container spacing={24} alignItems="baseline">
+            <Grid item xs={12} container alignItems='baseline' sx={{
+                sm: {
+                    display: 'flex',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center'
+                }
+            }}>
+              <div >
+                <Typography variant="h6" color="inherit" noWrap sx={{ display: 'inline' }}>
+                    <Box  sx={heroText}>
+                  <Link to='/'>
+                    <img width={20} src={logo} alt="no data" />
+                    <Box component="span" sx={{
+                        display: 'inline-block',
+                        marginLeft: 10
+                    }}>Advent of Code</Box>
+                  </Link>
+                  </Box>
+                </Typography>
+              </div>
+              {!this.props.noTabs && (
+                <React.Fragment>
+                  <Box sx={heroText}>
+                    <Typography>
+
+                    </Typography>
+                  </Box>
+                  <Box sx={{     
+                      display: 'none',
+                        sm: {
+                            display: 'block'
+                        }
+                    }}>
+                    <IconButton onClick={this.mobileMenuOpen} sx={{float: 'right'}} color="inherit" aria-label="Menu">
+                      <MenuIcon />
+                    </IconButton>
+                  </Box>
+                  <Box sx={{     marginLeft: 32,
+                        sm: {
+                           display: 'none'
+                        }
+                    }}>
+                    <SwipeableDrawer anchor="right" open={this.state.menuDrawer} onClose={this.mobileMenuClose} onOpen={f=>f}>
+                      <AppBar title="Menu" />
+                      <List>
+                        {Menu.map((item, index) => (
+                          <ListItem  component={Link as any} {...this.generateTo(item.pathname)} to={item.pathname} button key={index}>
+                            <ListItemText primary={item.label} />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </SwipeableDrawer>
+                    <Tabs
+                      value={this.current() || this.state.value}
+                      indicatorColor="primary"
+                      textColor="primary"
+                      onChange={this.handleChange}
+                    >
+                      {Menu.map((item, index) => (
+                        <Tab  id={item.label} component={Link as any} {...this.generateTo(item.pathname)} to={item.pathname}  label={item.label} />
+                      ))}
+                    </Tabs>
+                  </Box>
+                  <Box sx={{flexGrow: 1}}/>
+                  <Box sx={{     display: 'flex',
+                    float: 'right',
+                    alignItems: 'right',
+                    sm: {
+                       display: 'none'
+                    }}}>
+                    <IconButton>                      
+                        <HelpOutlineOutlined />
+                    </IconButton>                   
+                  </Box>
+                </React.Fragment>
+              )}
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar> */}
+      </>
     )
   }
 }
