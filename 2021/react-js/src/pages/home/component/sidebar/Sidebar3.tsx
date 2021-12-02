@@ -21,7 +21,8 @@ export default function Sidebar3( ) {
       setSelectedIndex(index);
   }
   return (
-    <AppBar position="static">
+    <React.Fragment>
+    <AppBar position="relative">
   <Toolbar variant="dense" sx={{backgroundColor: 'white'}}>
     <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
       <MenuIcon />
@@ -50,6 +51,6 @@ id="date-select" exclusive={true} size="small" >
 </ToggleButtonGroup>
 
   </Toolbar>
-</AppBar>
+</AppBar> </React.Fragment>
   )
 }

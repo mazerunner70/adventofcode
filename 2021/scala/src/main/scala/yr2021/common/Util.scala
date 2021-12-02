@@ -1,4 +1,4 @@
-  package yr2020.common
+package yr2021.common
 
 import scala.annotation.tailrec
 import scala.io.Source

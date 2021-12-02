@@ -51,9 +51,17 @@ class HomePage extends Component<Props, State> {
     <div><TopBar2 /></div>
     
   </Grid>
-  <Grid item xs={12}>
-    xs=4
+  <Grid item xs={2}>
+    xs=2
     <Sidebar3/> 
+  </Grid>  
+  <Grid item xs={2}>
+    xs=2
+    <Sidebar3/> 
+  </Grid>  
+  <Grid item xs={10}>
+    xs=10
+
   </Grid>
   <Grid item xs={12}>
     xs=6
