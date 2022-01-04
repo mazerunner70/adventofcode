@@ -1,4 +1,4 @@
-package yr2021.day01T10
+package yr2021.days
 
 class Day01 {
 

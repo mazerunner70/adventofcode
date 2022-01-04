@@ -1,4 +1,4 @@
-package yr2021.day01T10
+package yr2021.days
 
 import org.scalatest.flatspec.AnyFlatSpec
 import yr2021.common.Util
@@ -16,15 +16,15 @@ class Day03Test extends AnyFlatSpec {
 
   "doing day 3 pt1" should "show assert the answers" in {
     val day03 = new Day03()
-    val testList = Util.loadList("day01T10/day03/test.txt")
+    val testList = Util.loadList("days/day03/test.txt")
     assert(day03.pt1(testList) == 198)
-    val list = Util.loadList("day01T10/day03/input.txt")
+    val list = Util.loadList("days/day03/input.txt")
     assert(day03.pt1(list) == 1025636)
   }
   "doing day 3 pt2" should "show assert the answers" in {
     val day03 = new Day03()
-    val testList = Util.loadList("day01T10/day03/test.txt")
-    val list = Util.loadList("day01T10/day03/input.txt")
+    val testList = Util.loadList("days/day03/test.txt")
+    val list = Util.loadList("days/day03/input.txt")
     assert(day03.pt2(testList) == 230)
     assert(day03.pt2(list) == 793873)
 

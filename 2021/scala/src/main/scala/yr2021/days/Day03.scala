@@ -1,4 +1,4 @@
-package yr2021.day01T10
+package yr2021.days
 
 class Day03 {
 
@@ -11,8 +11,6 @@ class Day03 {
       .replaceAll("0", "1")
       .replaceAll("2", "0")
 
-  def editCommonDigit(digitFrequencies: List[(String, List[Char])], totalListCount: Int) =
-    digitFrequencies.map(x => if (x._2.size *2 == totalListCount) ("1", x._2) else x)
 
   def pt1(list: List[String]) = {
     val gammaRateString = getMostCommonDigits(list).map(_._1).mkString

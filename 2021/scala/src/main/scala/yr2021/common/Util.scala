@@ -26,6 +26,9 @@ object Util {
   def gcd(a: Long, b: Long): Long =
     if (b == 0) a else gcd(b, a % b)
 
+  def gcd(a: Int, b: Int): Int =
+    if (b == 0) a else gcd(b, a % b)
+
   //https://rosettacode.org/wiki/Modular_inverse#Scala
   def gcdExt(u: Long, v: Long): (Long, Long, Long) = {
     @tailrec
@@ -48,5 +51,28 @@ object Util {
 
   def modi(a: Long, m: Long): Long =
     BigInt(a).modInverse(BigInt(m)).toLong
+
+  implicit class TupleProduct(val p: Product) {
+    def product = {
+      p.productIterator.collect {
+        case x: java.lang.Number => x.intValue()
+      }.product
+    }
+  }
+
+  def tupleAdd(tupleA: (Int, Int), tupleB: (Int, Int)): (Int, Int) =
+    (tupleA._1+tupleB._1, tupleA._2+tupleB._2)
+  def tupleMultiply(tuple: (Int, Int), magnitude: Int): (Int, Int) = {
+    (tuple._1 * magnitude, tuple._2 * magnitude)
+  }
+
+  // http://rosettacode.org/wiki/Averages/Median#Scala
+  def median[T](s: Seq[T])(implicit n: Integral[T]) = {
+    import n._
+    val (lower, upper) = s.sortWith(_<_).splitAt(s.size / 2)
+    if (s.size % 2 == 0) (lower.last + upper.head) / fromInt(2) else upper.head
+  }
+
+  def triangle(number: Int): Int = number*(number+1)/2
 
 }
