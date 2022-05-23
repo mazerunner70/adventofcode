@@ -16,7 +16,7 @@ class Day10 {
   def openBrace(char: Char) = bracePairs.find(bp=>bp.open == char)
   def closeBrace(char: Char) = bracePairs.find(bp=>bp.close == char)
 
-  def braceParser(line: List[Char], openedBraces: List[BracePair]): Result = line match {
+  def braceParser(line: List[Char], openedBraces: List[BracePair] = List()): Result = line match {
     case term :: tail => {
       val open = openBrace(term)
       val close = closeBrace(term)
@@ -37,7 +37,7 @@ class Day10 {
       .foldLeft(0L)((a, v)=> a*5+v)
   }
 
-  def parseBraces(lines: List[String]) = lines.map(line=> braceParser(line.toList, List()))
+  def parseBraces(lines: List[String]) = lines.map(line=> braceParser(line.toList))
 
   def pt1(lines: List[String]) = {
     parseBraces(lines).map(_ match {
@@ -45,13 +45,7 @@ class Day10 {
       case Result(char, unclosed) => pt1ScoreCalculator(char)
     }).sum
   }
-//  def pt2q(lines: List[String]) = {
-//    val list = parseBraces(lines).map(_ match {
-//      case Result(char, unclosed) if char == 0 => pt2ScoreCalulator(unclosed)
-//      case Result(char, unclosed) => 0
-//    }).sorted
-//    list
-//  }
+
   def pt2(lines: List[String]) = {
     val list = for (
       result <- parseBraces(lines)

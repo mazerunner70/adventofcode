@@ -11,13 +11,11 @@ object Util {
   def loadList(filename: String): List[String] =
     loadFromFile(filename).split('\n').map(_.toString).toList
 
-  def multiLineRecordParse(list: List[String]): List[List[String]] = {
-    val (h, t) = list.span(_.size > 0)
-    (h, t) match {
-      case x if x._2.size == 0 => h :: Nil
-      case x if x._2.size != 0 => h :: multiLineRecordParse(t.tail)
-    }
+  def multiLineRecordParse(list: List[String]): List[List[String]] = list.span(_.size > 0)  match {
+    case (block, rest) if rest.size == 0 => block :: Nil
+    case (block, rest) if rest.size > 1 => block :: multiLineRecordParse(rest.tail)
   }
+
 
   def sumPairing(list: List[Long], total: Long): Long = {
     list.find(it => list.contains(total - it)).getOrElse(-1)
@@ -74,5 +72,9 @@ object Util {
   }
 
   def triangle(number: Int): Int = number*(number+1)/2
+
+  def distributionMap[A](list: List[A]): Map[A, Int] = {
+    list.groupBy(e=>e).map(e=>(e._1, e._2.size))
+  }
 
 }

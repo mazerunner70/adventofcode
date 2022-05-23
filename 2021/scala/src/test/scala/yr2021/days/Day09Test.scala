@@ -17,7 +17,7 @@ class Day09Test extends AnyFlatSpec {
     val grid = day09.asGrid(testLines)
     assert (grid.xSize == 10)
     assert (grid.ySize == 5)
-    assert (grid.get(Coordinate(0,0)) == 2)
+    assert (grid.get(Day09Coordinate(0,0)) == 2)
   }
 
   it should "withinRange" in {
@@ -30,24 +30,24 @@ class Day09Test extends AnyFlatSpec {
     val day09 = new Day09
     val testLines = loadList("days/day09/test.txt")
     val grid = day09.asGrid(testLines)
-    assert(day09.isInside(Coordinate(-1,-1), grid) == false)
-    assert(day09.isInside(Coordinate(-1,0), grid) == false)
-    assert(day09.isInside(Coordinate(1,0), grid) == true)
-    assert(day09.isInside(Coordinate(0,-1), grid) == false)
-    assert(day09.isInside(Coordinate(0,1), grid) == true)
+    assert(day09.isInside(Day09Coordinate(-1,-1), grid) == false)
+    assert(day09.isInside(Day09Coordinate(-1,0), grid) == false)
+    assert(day09.isInside(Day09Coordinate(1,0), grid) == true)
+    assert(day09.isInside(Day09Coordinate(0,-1), grid) == false)
+    assert(day09.isInside(Day09Coordinate(0,1), grid) == true)
   }
 
   it should "adjacentCoords" in {
     val day09 = new Day09
     val testLines = loadList("days/day09/test.txt")
     val grid = day09.asGrid(testLines)
-    assert(day09.adjacentCoords(Coordinate(0,0), grid) == List(Coordinate(0,1), Coordinate(1,0)))
+    assert(day09.adjacentCoords(Day09Coordinate(0,0), grid) == List(Day09Coordinate(0,1), Day09Coordinate(1,0)))
   }
 
   it should "getLowPointCoords" in {
     val day09 = new Day09
     val testLines = loadList("days/day09/test.txt")
-    assert(day09.getLowPointCoords(day09.asGrid(testLines)) == Seq(Coordinate(1,0), Coordinate(2,2), Coordinate(6,4), Coordinate(9,0)))
+    assert(day09.getLowPointCoords(day09.asGrid(testLines)) == Seq(Day09Coordinate(1,0), Day09Coordinate(2,2), Day09Coordinate(6,4), Day09Coordinate(9,0)))
   }
 
   it should "pt1-test" in {
@@ -65,8 +65,8 @@ class Day09Test extends AnyFlatSpec {
     val day09 = new Day09
     val testLines = loadList("days/day09/test.txt")
     val grid = day09.asGrid(testLines)
-    assert (day09.gridWalk(grid, List(Coordinate(1,0)), List()) == List(Coordinate(0,1), Coordinate(0,0), Coordinate(1,0)))
-    assert (day09.gridWalk(grid, List(Coordinate(0,0)), List()) == List(Coordinate(1,0), Coordinate(0,1), Coordinate(0,0)))
+    assert (day09.gridWalk(grid, List(Day09Coordinate(1,0)), List()) == List(Day09Coordinate(0,1), Day09Coordinate(0,0), Day09Coordinate(1,0)))
+    assert (day09.gridWalk(grid, List(Day09Coordinate(0,0)), List()) == List(Day09Coordinate(1,0), Day09Coordinate(0,1), Day09Coordinate(0,0)))
   }
 
   it should "pt2-test" in {

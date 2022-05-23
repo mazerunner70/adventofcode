@@ -40,7 +40,8 @@ class Day05 {
     line(0)._1 == line(1)._1 || line(0)._2 == line(1)._2
 
   def pt2LineFilter(line: List[(Int, Int)]): Boolean = {
-    if (line(0)._1 == line(1)._1 || line(0)._2 == line(1)._2)
+//    if (line(0)._1 == line(1)._1 || line(0)._2 == line(1)._2)
+    if (pt1LineFilter(line))
       true
     else
       math.abs(line(1)._1-line(0)._1) == math.abs(line(1)._2-line(0)._2)

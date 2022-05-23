@@ -1,5 +1,7 @@
 package yr2021.days
 
+import scala.annotation.tailrec
+
 class Day01 {
 
   def pt1execute(list: List[String]): Int = {
@@ -14,6 +16,7 @@ class Day01 {
   def pt1funct(list: List[String]): Int = {
     val intList = list.map(_.toInt)
     def cmp(term1: Int, term2: Int): Int = if (term2>term1) 1 else 0
+    @tailrec
     def funct1(term1: Int, term2: Int, list: List[Int], count: Int):Int = list match {
       case Nil => count + cmp(term1, term2)
       case _   => funct1(term2, list.head, list.tail, count + cmp(term1, term2))
@@ -31,6 +34,7 @@ class Day01 {
     val compactedList = compactor(intList, 3, List.empty)
     pt1executeInt(compactedList)
   }
+
 
 
 }

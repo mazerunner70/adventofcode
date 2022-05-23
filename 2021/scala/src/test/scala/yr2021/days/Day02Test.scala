@@ -15,7 +15,7 @@ class Day02Test extends AnyFlatSpec {
 
     //pt 2
     assert(day02.pt2(testList) == 900)
-    assert(day02.pt2(list) == 1938402)
+    assert(day02.pt2(list) == 1947878632)
 
   }
 
