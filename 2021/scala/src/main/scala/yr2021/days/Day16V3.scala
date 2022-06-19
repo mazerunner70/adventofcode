@@ -26,16 +26,36 @@ object Day16V3 {
       'F' -> "1111"
     )
 
+  def pSum(list: List[Long]): Long =
+    list.sum
+
+  val mapped = Map[Int, List[Long]=>Long](
+    0 -> {x => x.sum},
+    1 -> {x => x.product },
+    2 -> {x => x.min},
+    3 -> {x => x.max},
+    4 -> {x => 0},
+    5 -> {x => if (x(0) > x(1)) 1 else 0},
+    6 -> {x => if (x(0) < x(1)) 1 else 0},
+    7 -> {x => if (x(0) == x(1)) 1 else 0},
+  )
+
   sealed abstract class Packet(val packetVersion: Int)
   case class Literal(override val packetVersion: Int, literal: Long) extends Packet(packetVersion)
-  case class Operation(override val packetVersion: Int, children: List[Packet]) extends Packet(packetVersion)
+  case class Operation(override val packetVersion: Int, val packetType: Int, children: List[Packet]) extends Packet(packetVersion)
 
   def flatten(packet: Packet): List[Packet] = {
     def run(packet: Packet, list: List[Packet]): List[Packet] = packet match {
       case Literal(pv, l) => packet :: list
-      case Operation(pv, c) => packet :: c.map(run(_, Nil)).flatten
+      case Operation(pv, pt, c) => packet :: c.map(run(_, Nil)).flatten
     }
     run(packet, Nil)
+  }
+  def operate(packet: Packet): Long = {
+    packet match {
+      case Literal(pv, l) => l
+      case Operation(pv, pt, c) => mapped(pt)(c.map(operate(_)))
+    }
   }
 
   type HexString = String
@@ -58,7 +78,7 @@ object Day16V3 {
   }
 
   def parsePackets(binString: BinString, maxPacketCount: Int, list: List[Packet]): (List[Packet], BinString) = maxPacketCount match {
-    case 0 => (list, binString)
+    case 0 => (list.reverse, binString)
     case n =>
       val (p, bs) = parsePacket(binString)
       parsePackets(bs, maxPacketCount-1, p :: list)
@@ -80,19 +100,19 @@ object Day16V3 {
         val (list, bs) = extractUntil(binString3, 5, (bs)=> bs.charAt(0) == '1', List.empty)
         (Literal(asInt(packetVersion), asLong(list.map(x=>x.substring(1)).mkString)), bs)
       }
-      case s => {
+      case pt => {
         val (operatorType, bs) = extract(binString3, 1)
         operatorType match {
           case "0" => {
             val (bitCount, bs1) = extract(bs, 15)
             val (bits, bs2) = extract(bs1, asInt(bitCount))
             val (packets, bs3) = parsePackets(bits, List.empty)
-            (Operation(asInt(packetVersion), packets), bs1)
+            (Operation(asInt(packetVersion), pt, packets), bs2)
           }
           case "1" => {
             val (packetCount, bs1) = extract(bs, 11)
             val (list, b) = parsePackets(bs1, asInt(packetCount), List.empty)
-            (Operation(asInt(packetVersion), list), b)
+            (Operation(asInt(packetVersion), pt, list), b)
           }
         }
       }
