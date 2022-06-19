@@ -87,7 +87,26 @@ class Day16V3Test extends AnyFlatSpec {
     val binString = Day16V3.parseString(lines.head)
     val packet = Day16V3.parsePacket(binString)._1
     val packets = Day16V3.flatten(packet)
-    assert(packets.map(_.packetVersion) == 5)
+    assert(packets.map(_.packetVersion).sum == 940)
+  }
+
+  it should "pt2" in {
+    val day15 = new Day15
+    val lines = loadList("days/day16/input.txt")
+    val binString = Day16V3.parseString(lines.head)
+    val packet = Day16V3.parsePacket(binString)._1
+    assert(Day16V3.operate(packet) == 5)
+  }
+  it should "pt2 tests" in {
+    List(("C200B40A82", 3), ("04005AC33890", 54), ("880086C3E88112", 7), ("CE00C43D881120",9)
+      , ("D8005AC2A8F0", 1), ("F600BC2D8F", 0), ("9C005AC2F8F0", 0), ("9C0141080250320F1802104A08", 1)).foreach{
+      e => {
+        val (p, b) = Day16V3.parsePacket(Day16V3.parseString(e._1))
+        println(e)
+        println(p)
+        assert(Day16V3.operate(p) == e._2)
+      }
+    }
   }
 
 }
