@@ -1,7 +1,7 @@
 package yr2021.fpdays.day02
 
 import cats.{Functor, Monoid}
-import yr2021.common.Coordinate
+import yr2021.common.Coordinate2D
 import cats.syntax.semigroup._
 
 /**
@@ -17,10 +17,10 @@ import cats.syntax.semigroup._
  */
 class Day02 {
 
-  implicit val CoordinateAddMonoid: Monoid[Coordinate] =
-    new Monoid[Coordinate] {
-      def combine(a: Coordinate, b: Coordinate) =  a + b
-      def empty = Coordinate(0,0)
+  implicit val CoordinateAddMonoid: Monoid[Coordinate2D] =
+    new Monoid[Coordinate2D] {
+      def combine(a: Coordinate2D, b: Coordinate2D) =  a + b
+      def empty = Coordinate2D(0,0)
     }
   def addAll[A](values: List[A])
                (implicit monoid: Monoid[A]): A =
@@ -33,7 +33,7 @@ class Day02 {
 //        value.coordChanges.map(func)
 //    }
 
-  val directions = Map("forward"-> Coordinate(1, 0), "down"->Coordinate(0, 1), "up"->Coordinate(0,-1))
+  val directions = Map("forward"-> Coordinate2D(1, 0), "down"->Coordinate2D(0, 1), "up"->Coordinate2D(0,-1))
 
   def parseLine(line: String) = {
     val strings = line.split(" ")

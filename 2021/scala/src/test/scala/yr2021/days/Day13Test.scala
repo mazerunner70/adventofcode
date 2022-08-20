@@ -1,7 +1,7 @@
 package yr2021.days
 
 import org.scalatest.flatspec.AnyFlatSpec
-import yr2021.common.Coordinate
+import yr2021.common.Coordinate2D
 
 class Day13Test extends AnyFlatSpec {
 
@@ -18,7 +18,7 @@ class Day13Test extends AnyFlatSpec {
     assert(day13.pt1(lines) == 850)
   }
 
-  def prettyPrint(coordinates:List[Coordinate]) = {
+  def prettyPrint(coordinates:List[Coordinate2D]) = {
     val rows = coordinates.groupBy(_.y).map(en=>(en._1, en._2.map(_.x).sorted)).toList.sortBy(r=>r._1)
     rows.map(r=>0::r._2 zip r._2).foreach { rl =>
       val row = rl.map(tup => tup._2 - tup._1-1).map(g=>List.fill(g)(" ") ++ "#").flatten.mkString

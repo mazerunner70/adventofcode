@@ -1,18 +1,18 @@
 package yr2021.days
-import yr2021.common.{Coordinate, Grid}
+import yr2021.common.{Coordinate2D, Grid}
 
 
 
 class Day11 {
 
   def incEnergy(grid: Grid): Grid = {
-    def incTransformer(coordinate: Coordinate, neighbours: Seq[Coordinate]) =
+    def incTransformer(coordinate: Coordinate2D, neighbours: Seq[Coordinate2D]) =
       grid.get(coordinate) + 1
     grid.transformGrid(Seq(), incTransformer)
   }
 
-  def locateFlashers(grid: Grid, flashers: Seq[Coordinate] = Seq()): StepOutcome = {
-    def flashTransform(coordinate: Coordinate, flashersInt: Seq[Coordinate]) = {
+  def locateFlashers(grid: Grid, flashers: Seq[Coordinate2D] = Seq()): StepOutcome = {
+    def flashTransform(coordinate: Coordinate2D, flashersInt: Seq[Coordinate2D]) = {
       val count = grid.get(coordinate) + flashers.count(c=>c.isAdjacent(coordinate))
       count
     }
@@ -24,11 +24,11 @@ class Day11 {
     else locateFlashers(grid, newFlashers)
   }
   def resetFlashers(grid: Grid): Grid = {
-    def flashTransform(coordinate: Coordinate, neighbours: Seq[Coordinate]) =
+    def flashTransform(coordinate: Coordinate2D, neighbours: Seq[Coordinate2D]) =
       if (grid.get(coordinate)<10) grid.get(coordinate) else 0
     grid.transformGrid(Seq(), flashTransform)
   }
-  case class StepOutcome(grid: Grid, flashers: Seq[Coordinate])
+  case class StepOutcome(grid: Grid, flashers: Seq[Coordinate2D])
   def step(grid: Grid): StepOutcome = {
     val incEnergyGrid = incEnergy(grid)
     val energisedGrid = locateFlashers(incEnergyGrid)
