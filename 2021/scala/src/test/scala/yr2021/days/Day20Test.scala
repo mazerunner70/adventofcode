@@ -18,7 +18,7 @@ class Day20Test extends AnyFlatSpec {
     val blocks = InputData.fromFile("days/day20/test.txt").multiLineRecordParse(InputData.emptyLineSeparater)
     val iea = Iea(blocks(0).head.map(".#".indexOf(_)).toVector)
     def toInt(l: String)= l.map(".#".indexOf(_)).toVector
-    val grid = Grid.asGrid(blocks(1), toInt )
+    val grid = Grid.asGrid(blocks(1).asLineList, toInt )
     val c1 = Day20.transform(grid, iea, 0)
     assert(c1 == Grid(Vector(Vector(0, 0, 0, 0, 0, 0, 0, 0, 0), Vector(0, 0, 1, 1, 0, 1, 1, 0, 0), Vector(0, 1, 0, 0, 1, 0, 1, 0, 0), Vector(0, 1, 1, 0, 1, 0, 0, 1, 0), Vector(0, 1, 1, 1, 1, 0, 0, 1, 0), Vector(0, 0, 1, 0, 0, 1, 1, 0, 0), Vector(0, 0, 0, 1, 1, 0, 0, 1, 0), Vector(0, 0, 0, 0, 1, 0, 1, 0, 0), Vector(0, 0, 0, 0, 0, 0, 0, 0, 0))))
     val c2 = Day20.transform(c1, iea, 0)
@@ -32,7 +32,7 @@ class Day20Test extends AnyFlatSpec {
     val blocks = InputData.fromFile("days/day20/input.txt").multiLineRecordParse(InputData.emptyLineSeparater)
     val iea = Iea(blocks(0).head.map(".#".indexOf(_)).toVector)
     def toInt(l: String)= l.map(".#".indexOf(_)).toVector
-    val grid = Grid.asGrid(blocks(1), toInt )
+    val grid = Grid.asGrid(blocks(1).asLineList, toInt )
 
     assert(Day20.countOn(Day20.transformSequence(grid, iea, 2)) == 5231)
     assert(Day20.countOn(Day20.transformSequence(grid, iea, 50)) == 5231)

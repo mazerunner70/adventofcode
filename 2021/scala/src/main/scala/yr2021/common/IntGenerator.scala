@@ -16,8 +16,8 @@ case class SimpleRNG(seed: Long) extends IntGenerator {
 
 case class SimpleDeterministic(start: Int, inc: Int, max: Int) extends IntGenerator {
   override def nextInt: (Int, IntGenerator) = {
-    val nextInt = if (start + inc  < max) start + inc else 0
-    (nextInt, SimpleDeterministic(nextInt, inc, max))
+    val nextInt = if (start + inc  <= max) start + inc else 1
+    (start, SimpleDeterministic(nextInt, inc, max))
   }
 }
 

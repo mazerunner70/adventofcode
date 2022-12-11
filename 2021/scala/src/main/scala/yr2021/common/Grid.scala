@@ -1,7 +1,5 @@
 package yr2021.common
 
-import yr2021.days.{Day09Coordinate, Day09Grid}
-case class Cell(coordinate: Coordinate2D, value: Int)
 
 case class Grid private (grid: Vector[Vector[Int]]) {
   val xSize = grid(0).size

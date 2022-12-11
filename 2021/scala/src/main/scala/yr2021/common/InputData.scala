@@ -6,9 +6,10 @@ import scala.io.Source
 
 case class InputData(lines: List[String]) {
 
-
-
-  def multiLineRecordParse(separater: String=>Boolean): List[List[String]] = groupWhen(separater)(lines)
+  def asLineList: List[String] = lines
+  def multiLineRecordParse(separater: String=>Boolean): List[InputData] = groupWhen(separater)(lines)
+  def head = lines.head
+  def tail = lines.tail
 }
 
 
@@ -16,9 +17,10 @@ case class InputData(lines: List[String]) {
 object InputData {
   def emptyLineSeparater(line:String) = line.size>0
 
-  def groupWhen[A] (f: A => Boolean)(xs: List[A]): List[List[A]] = {
-    val fr = xs.foldLeft((List[List[A]](), List[A]()))( (a, e)=> if (f(e))((a._1, e :: a._2)) else (a._2.reverse :: a._1, Nil))
-    (fr._2.reverse :: fr._1).reverse
+  def groupWhen (f: String => Boolean)(xs: List[String]): List[InputData] = {
+    val init: (List[InputData], List[String]) = (List(), List())
+    val fr = xs.foldLeft(init)( (a, e)=> if (f(e))((a._1, e :: a._2)) else (InputData(a._2.reverse) :: a._1, Nil))
+    (InputData(fr._2.reverse) :: fr._1).reverse
   }
 
   def loadAsString(filename: String): String =
