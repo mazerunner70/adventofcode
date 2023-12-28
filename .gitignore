@@ -5,3 +5,5 @@
 target
 project
 
+__pycache__/
+
