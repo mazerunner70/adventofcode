@@ -1,5 +1,6 @@
 import Day01 from "./day01";
 import Day02 from "./day02";
+import Day03 from "./day03";
 
 async function loadConfigJson() {
     return fetch("/assets/config.json").then((d) => {
@@ -8,7 +9,7 @@ async function loadConfigJson() {
         return data;
     })
 }
-const dayObjects = [null, new Day01(), new Day02()]
+const dayObjects = [null, new Day01(), new Day02(), new Day03()]
 
 // do test
 async function doTest(dayno, daypart, daypartid) {
@@ -54,14 +55,11 @@ async function doTest(dayno, daypart, daypartid) {
 async function dayrunner() {
     return loadConfigJson().then(daysdata => {
         return Promise.all(daysdata.map(daydata => {
-            console.log("--", daydata)
             const p1test = doTest(daydata.dayno, daydata.part1.test, 1)
             const p1full = doTest(daydata.dayno, daydata.part1.full, 1)
             const p2test = doTest(daydata.dayno, daydata.part2.test, 2)
             const p2full = doTest(daydata.dayno, daydata.part2.full, 2)
             return Promise.all([p1test, p1full, p2test, p2full]).then((results) => {
-                console.log("+",results)
-                console.log("++", [p1test, p1full, p2test, p2full])
                 return ({
                     day: {
                         number: daydata.dayno,
@@ -93,17 +91,9 @@ async function dayrunner() {
                 })
             })
         })).then((results) => {
-            console.log("66", results)
             return results
         })
     })
-//     const day01 = new Day01()
-//     return fetch("/assets/day01/test.txt").then((d) => {
-//         return d.text();
-//     }).then((data) => {
-// //        return getTableData(day01.execute(1, data), 0)
-//         return getTableData(day01.execute(1, data), 141)
-//     })
 }
 
 export default dayrunner;

@@ -29,27 +29,5 @@ class Day01 {
 
 }
 
-async function day01execute(partno, data) {
-    console.log(partno);
-    console.log(data)
-    const day01 = new Day01()
-    const sum = day01.execute(partno, data)
-    console.log(sum)
-    const myFirstPromise = new Promise((resolve, reject) => {
-        // We call resolve(...) when what we were doing asynchronously was successful, and reject(...) when it failed.
-        // In this example, we use setTimeout(...) to simulate async code.
-        // In reality, you will probably be using something like XHR or an HTML API.
-        setTimeout(() => {
-            resolve("Success!"); // Yay! Everything went well!
-        }, 2500);
-    });
-    myFirstPromise.then((successMessage) => {
-        // successMessage is whatever we passed in the resolve(...) function above.
-        // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
-        console.log(`Yay! ${successMessage}`);
-    });
-    return myFirstPromise;
-}
-
 // export default day01execute;
 export default Day01;

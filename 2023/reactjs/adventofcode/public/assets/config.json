@@ -44,5 +44,29 @@
         "reference": "56580"
       }
     }
+  },
+  {
+    "dayno": 3,
+    "part1": {
+      "test": {
+        "file": "test.txt",
+        "reference": "4361"
+      },
+      "full": {
+        "file": "input.txt",
+        "reference": "509115"
+      }
+    },
+    "part2": {
+      "test": {
+        "file": "test.txt",
+        "reference": "467835"
+      },
+      "full": {
+        "file": "input.txt",
+        "reference": "75220503"
+      }
+    }
   }
+
 ]
