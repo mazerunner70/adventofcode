@@ -155,9 +155,6 @@ function Summary() {
     console.log("d", data)
     return (
         <>
-            <div className="board-row">
-                <button onClick={rundays}>Start Run</button>
-            </div>
             <div className="summary">
                 <Table columns={columns} data={data} />
             </div>

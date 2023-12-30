@@ -64,7 +64,7 @@ async function dayrunner() {
                 console.log("++", [p1test, p1full, p2test, p2full])
                 return ({
                     day: {
-                        number: 1,
+                        number: daydata.dayno,
                         part1: {
                             test: {
                                 reference: daydata.part1.test.reference,
