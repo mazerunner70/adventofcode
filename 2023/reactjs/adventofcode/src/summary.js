@@ -38,7 +38,7 @@ async function rundays() {
     ]
  */
 const Genres = ({ value }) => {
-    console.log("value", value)
+    // console.log("value", value)
     // Loop through the array and create a badge-like component instead of a comma-separated string
     return (
         <>
@@ -148,11 +148,11 @@ function Summary() {
     useEffect(() => {
         (async () => {
             const result = await dayrunner()
-            console.log("11", result)
+            // console.log("11", result)
             setData(result);
         })();
     }, []);
-    console.log("d", data)
+    // console.log("d", data)
     return (
         <>
             <div className="summary">

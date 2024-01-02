@@ -4,8 +4,10 @@ import Day03 from "./day03";
 
 async function loadConfigJson() {
     return fetch("/assets/config.json").then((d) => {
+        console.log("config1", d)
         return d.json();
     }).then((data) => {
+        console.log("config", data)
         return data;
     })
 }
@@ -14,12 +16,13 @@ const dayObjects = [null, new Day01(), new Day02(), new Day03()]
 // do test
 async function doTest(dayno, daypart, daypartid) {
     const day = dayObjects[dayno]
+    // console.log("doTest", dayno, daypartid, daypart)
     return fetch(`/assets/day${dayno.toString().padStart(2, "0")}/${daypart.file}`).then((d) => {
         return d.text();
     }).then((data) => {
         return day.execute(daypartid, data)
     }).then((result) => {
-        console.log("doTest", dayno, daypartid, result, daypart.reference, result === daypart.reference)
+        // console.log("doTest", dayno, daypartid, result, daypart.reference, result === daypart.reference)
         return [result, result === daypart.reference]
     })
 }
@@ -54,6 +57,7 @@ async function doTest(dayno, daypart, daypartid) {
 
 async function dayrunner() {
     return loadConfigJson().then(daysdata => {
+        console.log("daysdata", daysdata)
         return Promise.all(daysdata.map(daydata => {
             const p1test = doTest(daydata.dayno, daydata.part1.test, 1)
             const p1full = doTest(daydata.dayno, daydata.part1.full, 1)
