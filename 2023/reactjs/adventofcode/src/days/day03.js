@@ -60,9 +60,9 @@ class Day03 {
     }
 
     execute(partno, data) {
-        console.log("execute", partno)
+        // console.log("execute", partno)
         const res = partno === 1? this.part1(data) : this.part2(data)
-        console.log("execute", partno, res)
+        // console.log("execute", partno, res)
         return res
     }
 }
