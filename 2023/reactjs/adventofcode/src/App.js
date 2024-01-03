@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import AdventOfCode from "./advent";
+import AdventOfCode from "./pages/home/advent";
 import Summary from "./summary";
 import './App.css';
 

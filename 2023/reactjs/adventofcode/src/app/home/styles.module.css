@@ -1,0 +1,13 @@
+.box {
+    display: flex;
+}
+
+.left {
+    flex: 0 0 250px; /* do not grow, do not shrink, start at 250px */
+    border: 1px dashed #f0f;
+}
+
+.right {
+    flex: 1;  /* grow */
+    border: 1px dashed #00f;
+}
