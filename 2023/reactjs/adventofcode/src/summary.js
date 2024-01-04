@@ -1,5 +1,5 @@
 import dayrunner from "./days/dayrunner";
-import Table from "./components/table";
+import Table from "./app/components/table";
 import {useEffect, useMemo, useState} from "react";
 import "./summary.css"
 
