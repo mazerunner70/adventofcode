@@ -1,11 +1,13 @@
-
+'use client'
 import styles from './styles.module.css'
 
-export default function Page(handleClick) {
+const handleClick = async () => {
+    console.log("here")
+}
+
+export default function Page() {
     return (
-        <div>
             <button className={styles['glow-on-hover']} type="button" onClick={handleClick}>INITIALISE</button>
-        </div>
     )
 
 }
