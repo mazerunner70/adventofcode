@@ -18,11 +18,13 @@ export default function Page() {
     console.log("here")
     console.log("gg", config)
     return (
-        <div className={styles.box}>
-            <div className={styles.left}>
-                { config ? <h1><Advent data = { {config} }/></h1> : <Initialiser onClick={fetchConfig} /> }
+        <div className={styles.main}>
+            <div className={styles.header}>
+
             </div>
-            <div className={styles.right}><h1>Hello, right</h1></div>
+            <section className={styles.section}>
+                <h1 className={styles.h1}>Advent of Code 2023</h1>
+            </section>
         </div>
     )
 

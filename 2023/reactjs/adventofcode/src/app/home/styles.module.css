@@ -11,3 +11,45 @@
     flex: 1;  /* grow */
     border: 1px dashed #00f;
 }
+
+
+.main {
+    height: 80vh;
+    max-height: 100%;
+    overflow-x: hidden;
+    perspective: 1px;
+    perspective-origin: center top;
+    transform-style: preserve-3d;
+    padding: 0 40px;
+    font: 36px/1.6 Alegreya Sans, serif;
+}
+
+.header {
+    height: 70vh;
+    background: url("/assets/adventofcode.png");
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+    vertical-align: top;
+    transform-origin: center top;
+    transform:
+            translateZ(-1px)
+            scale(2);
+}
+
+.section {
+    min-height: 30vh;
+    background: white;
+    transform: translateZ(0);
+    padding: 10px 0;
+}
+
+.h1 {
+    font-size: 30px;
+    font-weight: 400;
+    padding: 10px 20px;
+}
+
+
+
+
