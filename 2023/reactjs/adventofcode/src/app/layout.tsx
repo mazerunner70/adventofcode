@@ -1,6 +1,6 @@
 
 import {InitialisedContextProvider} from "@app/context/Initialised.context";
-
+import StyledComponentsRegistry from '@app/lib/registry'
 export default function RootLayout({
                                        children,
                                    }: {
@@ -10,10 +10,12 @@ export default function RootLayout({
         <html lang="en">
             <body>
                 <InitialisedContextProvider>
-                    {children}
+                    <StyledComponentsRegistry>
+                        {children}
+                    </StyledComponentsRegistry>
                 </InitialisedContextProvider>
             </body>
-            </html>
+        </html>
     )
 
 }
