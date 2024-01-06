@@ -1,7 +1,7 @@
 import {useState} from "react";
-import {useAppDispatch, useAppSelector} from "./app/hooks";
-import {selectAdventConfig} from "./features/advent/adventSlice";
-import {fetchConfigAsync} from "./features/advent/adventSlice";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {selectAdventConfig} from "../../features/advent/adventSlice";
+import {fetchConfigAsync} from "../../features/advent/adventSlice";
 
 
 
