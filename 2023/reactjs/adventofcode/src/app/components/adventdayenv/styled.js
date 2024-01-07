@@ -1,11 +1,11 @@
 'use client';
 import styled from 'styled-components';
 
-export const Container = styled.div`
+const Conntainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+
     width: 100%;
 `;
 
@@ -41,4 +41,9 @@ const ProgressBarText = styled.div`
     display: none;
 `;
 
-export{Container, ProgressBarContainer, ProgressBar, ProgressBarText}
+const TitleDiv = styled.div`
+    font-weight: bold;
+    font-size: 1.5rem;
+`;
+
+export{Conntainer, ProgressBarContainer, ProgressBar, ProgressBarText, TitleDiv}

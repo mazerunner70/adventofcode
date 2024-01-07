@@ -3,14 +3,12 @@ import AdventDay
 
 
 export default function Advent({data}: {data}) {
-    console.error("h1")
+    console.log("h1")
     return (
         <div>
             Hello!!
             {JSON.stringify(data)}
-            {data?.map((dayConfig) => {
-                return <AdventDay dayConfig={dayConfig}/>
-            })}
+            {data?.map((dayConfig) =>  <AdventDay key= {dayConfig.dayno} dayConfig={dayConfig}/>)}
         </div>
     )
 }

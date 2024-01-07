@@ -5,6 +5,8 @@ import { useState, useContext } from 'react';
 import Initialiser from "@app/components/initialiser";
 import Advent from '@app/components/advent';
 import { InitialisedContext } from "@app/context/Initialised.context";
+import GlowOnHoverButton
+    from "../../../../../../../../../../../../home/william/Documents/personal/projects/adventofcode/2023/reactjs/adventofcode/src/app/components/glowbutton/styled";
 
 export default function Page() {
 
@@ -14,7 +16,6 @@ export default function Page() {
         dispatch({ type: "SET_INITIALISED", payload: { initialised: true } });
     }
 
-    console.log("here")
     return (
         <div className={styles.main}>
             <div className={styles.header}>
@@ -23,7 +24,7 @@ export default function Page() {
             <section className={styles.section}>
                 <span className={styles.h1}>Advent of Code 2023</span>
                 { !state.initialised &&
-                    <button className={styles['glow-on-hover']} type="button" onClick={handleClick}>INITIALISE</button>
+                    <GlowOnHoverButton type="button" onClick={handleClick}>INITIALISE</GlowOnHoverButton>
                 }
             </section>
         </div>
