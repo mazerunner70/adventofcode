@@ -4,9 +4,9 @@ import {useContext, useEffect, useRef, useState} from "react"
 import {Conntainer, ProgressBarContainer, ProgressBar, ProgressBarText, TitleDiv} from "./styled"
 import gsap from "gsap"
 import GlowButton from "@app/components/glowbutton/GlowButton";
-import {AdventContext} from "@app/context/Advent.context";
+import {AdventContext, IAdventEnv} from "@app/context/Advent.context";
 
-export default function AdventDayEnv({dayEnvConfig, envName, partName, dayno}:{dayEnvConfig: any, envName: string, partName: string, dayno: string}) {
+export default function AdventDayEnv({dayEnvConfig, envName, partName, dayno}:{dayEnvConfig: IAdventEnv, envName: string, partName: string, dayno: string}) {
     const spinnerRef = useRef(null)
     const [progress, setProgress] = useState(0)
     useEffect(() => {
@@ -19,7 +19,7 @@ export default function AdventDayEnv({dayEnvConfig, envName, partName, dayno}:{d
     const { state, dispatch } = useContext(AdventContext);
 
     const handleClick = async () => {
-        dispatch({ type: "SET_SELECTED", payload: { dayno, partName, envName } });
+        dispatch({ type: "SET_SELECTED", payload: { dayno, partName, envName, envConfig:dayEnvConfig } });
     }
 
 

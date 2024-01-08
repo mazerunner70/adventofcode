@@ -3,21 +3,21 @@
     "dayno": 1,
     "part1": {
       "test": {
-        "file": "test.txt",
+        "filename": "test.txt",
         "reference": "142"
       },
       "full": {
-        "file": "input.txt",
+        "filename": "input.txt",
         "reference": "54159"
       }
     },
     "part2": {
       "test": {
-        "file": "test2.txt",
+        "filename": "test2.txt",
         "reference": "281"
       },
       "full": {
-        "file": "input.txt",
+        "filename": "input.txt",
         "reference": "53866"
       }
     }
@@ -26,21 +26,21 @@
     "dayno": 2,
     "part1": {
       "test": {
-        "file": "test.txt",
+        "filename": "test.txt",
         "reference": "8"
       },
       "full": {
-        "file": "input.txt",
+        "filename": "input.txt",
         "reference": "2727"
       }
     },
     "part2": {
       "test": {
-        "file": "test.txt",
+        "filename": "test.txt",
         "reference": "2286"
       },
       "full": {
-        "file": "input.txt",
+        "filename": "input.txt",
         "reference": "56580"
       }
     }
@@ -49,21 +49,21 @@
     "dayno": 3,
     "part1": {
       "test": {
-        "file": "test.txt",
+        "filename": "test.txt",
         "reference": "4361"
       },
       "full": {
-        "file": "input.txt",
+        "filename": "input.txt",
         "reference": "509115"
       }
     },
     "part2": {
       "test": {
-        "file": "test.txt",
+        "filename": "test.txt",
         "reference": "467835"
       },
       "full": {
-        "file": "input.txt",
+        "filename": "input.txt",
         "reference": "75220503"
       }
     }

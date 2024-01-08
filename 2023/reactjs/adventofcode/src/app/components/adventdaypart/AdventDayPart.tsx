@@ -1,8 +1,8 @@
-import AdventDayEnv
-    from "@app/components/adventdayenv/AdventDayEnv";
+import AdventDayEnv from "@app/components/adventdayenv/AdventDayEnv";
+import { IPart } from "@app/context/Advent.context";
 
 
-export default function AdventDayPart({dayPartConfig, partName, dayno}:{dayPartConfig: any, partName, dayno}) {
+export default function AdventDayPart({dayPartConfig, partName, dayno}:{dayPartConfig: IPart, partName, dayno}) {
     
     return (
         <div>

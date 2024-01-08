@@ -2,18 +2,27 @@
 
 import React, { createContext, useReducer, type Dispatch, } from "react";
 
-interface AdventSelected {
-    dayno: string,
+export interface AdventSelected {
+    dayno: number,
     partName: string,
-    envName: string
+    envName: string,
+    envConfig: IAdventEnv
 }
 
-const initialState: {selected: AdventSelected | null, runState: {} | null} = {
+export interface AdventDayRunState {
+    dataState: { [daypart: string]:AdventRunState}
+}
+export interface AdventRunState {
+    data: string
+}
+
+const initialState: {selected: AdventSelected | null, runState: AdventDayRunState | null} = {
     selected: null,
-    runState: {}
+    runState: {dataState:{}}
 };
 
 const reducer = (state, action) => {
+    console.log("reducer", action)
     switch (action.type) {
         case "SET_SELECTED": {
             console.log("SET_SELECTED", action.payload)
@@ -21,9 +30,9 @@ const reducer = (state, action) => {
         }
         case "SET_RUNSTATE": {
             console.log("SET_RUNSTATE", action.payload)
-            let pk = action.payload.pk
-            let pv = action.payload.pv
-            return { ...state, runState: { ...state.runState, pk : pv } };
+            let dayenv = action.payload.dayenv
+            let data = action.payload.data
+            return { ...state, runState: { ...state.runState.dataState, dayno:data} };
         }
         default: {
             console.log("default", action)
@@ -45,3 +54,24 @@ export const AdventContextProvider = ({ children }) => {
         </AdventContext.Provider>
     );
 };
+
+export interface IAdvent {
+    config: IConfig[];
+}
+
+export interface IConfig {
+    dayno: number;
+    part1: IPart;
+    part2: IPart;
+}
+
+export interface IPart {
+    test: IAdventEnv;
+    full: IAdventEnv;
+}
+
+export interface IAdventEnv {
+    filename:      string;
+    reference: string;
+}
+
