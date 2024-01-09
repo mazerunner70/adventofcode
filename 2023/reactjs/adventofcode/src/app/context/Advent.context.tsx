@@ -10,7 +10,7 @@ export interface AdventSelected {
 }
 
 export interface AdventDayRunState {
-    dataState: { [daypart: string]:AdventRunState}
+    dataState: { [dayenv: string]:AdventRunState}
 }
 export interface AdventRunState {
     data: string
@@ -32,7 +32,9 @@ const reducer = (state, action) => {
             console.log("SET_RUNSTATE", action.payload)
             let dayenv = action.payload.dayenv
             let data = action.payload.data
-            return { ...state, runState: { ...state.runState.dataState, dayno:data} };
+            let newState = { ...state, runState: { ...state.runState, dataState: {...state.runState.dataState, [dayenv]: {data}}  } };
+            console.log("newState", newState)
+            return newState;
         }
         default: {
             console.log("default", action)

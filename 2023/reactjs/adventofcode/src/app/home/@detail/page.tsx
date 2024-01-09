@@ -13,7 +13,7 @@ export default function Page() {
     const { state, dispatch } = useContext(AdventContext);
     const fetchData = async (dayno: number, envName: string, filename: string) => {
         const resp = await fetch(`/assets/day${dayno.toString().padStart(2, "0")}/${filename}`);
-        const d = await resp.json();
+        const d = await resp.text();
         dispatch({ type: "SET_RUNSTATE", payload: { dayenv:dayno+envName, data:d } });
     }
 
