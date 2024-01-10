@@ -43,13 +43,11 @@
       "last 1 safari version"
     ]
   },
-  "jest": {
-    "testMatch": [
-      "<rootDir>/src/tests/jest/**/*.test.js"
-    ]
-  },
+
   "devDependencies": {
     "@babel/preset-typescript": "^7.23.3",
-    "@types/node": "^20.10.6"
+    "@types/jest": "^29.5.11",
+    "@types/node": "^20.10.6",
+    "ts-jest": "^29.1.1"
   }
 }

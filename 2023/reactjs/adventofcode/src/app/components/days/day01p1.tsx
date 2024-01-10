@@ -3,17 +3,16 @@ import {useContext, useEffect, useState} from "react";
 import { WordGrid, SearchLetter, FoundLetter,
     RespTable, RespTableCaption, RespTableHeader, TableHeaderCell, RespTableBody,
     TableRow, TableCell, TableFooter, TableFooterCell} from "./styled"
+import {
+    pairwise
+} from "@app/utils/ArrayOps";
 
 
  function DisplayLine({line, searchIndex,foundLeftIndex,foundRightIndex, valueFound}: WordSearchState): JSX.Element {
-     var indexes: number[] = [searchIndex, foundLeftIndex, foundRightIndex].filter(v=>v != -1).sort()
+     var indexes: number[] = [0, searchIndex, foundLeftIndex, foundRightIndex, line.length].filter(v=>v != -1).sort()
      console.log(">>", indexes)
-     var slices: string[] = [line.slice(0, indexes[0])]
-     for (var i = 0; i < indexes.length-1; i++) {
-         slices.push(line.slice(indexes[i], indexes[i+1]))
-     }
-     slices.push(line
-         .slice(indexes[indexes.length-1]))
+     const slices2: string[] = indexes.map((v,i) => line.slice(v, indexes[i+1]))
+     const slices: string[] = Array.from(pairwise(indexes)).map((s, i) => line.slice(s[0], s[1]))
      console.log(">>", slices)
     return (
         <WordGrid>
@@ -21,24 +20,26 @@ import { WordGrid, SearchLetter, FoundLetter,
                 <RespTableHeader>
                     <TableHeaderCell>Word</TableHeaderCell>
                     <TableHeaderCell>Found</TableHeaderCell>
-                </RespTableHeader>
-                <RespTableBody>
+                </RespTableHeader>a
+                <RespTableBody>b
                     {slices.map((slice, i) => {
                         let initialLetter = slice[0]
                         let restWord = slice.slice(1)
-                            return (
-                                <TableRow>
-                                    <TableCell>
-                                        {i == 0 && <span>{slice}</span>}
-                                        {i > 0 &&
-                                            <span>
-                                                {indexes[i-1] === searchIndex?<SearchLetter>{initialLetter}</SearchLetter> : <FoundLetter>{initialLetter}</FoundLetter>}
-                                                    <span>{restWord}</span>
-                                            </span>
-                                        }
-                                    </TableCell>
-                                    <TableCell>{valueFound}</TableCell>
-                                </TableRow>)
+                        console.log("<<", initialLetter, restWord)
+                        return (
+                            <TableRow>
+                                <TableCell>{i}
+                                    {i == 0 && <span>{slice}</span>}
+                                    {i > 0 &&
+                                        <span>
+                                            {indexes[i-1] === searchIndex?<SearchLetter>{initialLetter}</SearchLetter> : <FoundLetter>{initialLetter}</FoundLetter>}
+                                                <span>{restWord}</span>
+                                        </span>
+                                    }
+                                </TableCell>
+                                <TableCell>{valueFound}</TableCell>
+                            </TableRow>
+                        )
                     })}
                 </RespTableBody>
             </RespTable>
