@@ -28,7 +28,7 @@ export const InitialisedContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     return (
         <InitialisedContext.Provider value={{ state, dispatch }}>
-    {children}
-    </InitialisedContext.Provider>
-);
+            {children}
+        </InitialisedContext.Provider>
+    );
 };
