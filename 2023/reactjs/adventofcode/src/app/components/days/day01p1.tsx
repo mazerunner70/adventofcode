@@ -10,54 +10,35 @@ import {
 
  function DisplayLine({line, searchIndex,foundLeftIndex,foundRightIndex, valueFound}: WordSearchState): JSX.Element {
      var indexes: number[] = [0, searchIndex, foundLeftIndex, foundRightIndex, line.length].filter(v=>v != -1).sort()
-     console.log(">>", indexes)
+     //console.log(">>", indexes)
      const slices2: string[] = indexes.map((v,i) => line.slice(v, indexes[i+1]))
      const slices: string[] = Array.from(pairwise(indexes)).map((s, i) => line.slice(s[0], s[1]))
-     console.log(">>", slices)
-    return (
-        <WordGrid>
-            <RespTable>
-                <RespTableHeader>
-                    <TableHeaderCell>Word</TableHeaderCell>
-                    <TableHeaderCell>Found</TableHeaderCell>
-                </RespTableHeader>a
-                <RespTableBody>b
-                    {slices.map((slice, i) => {
-                        let initialLetter = slice[0]
-                        let restWord = slice.slice(1)
-                        console.log("<<", initialLetter, restWord)
-                        return (
-                            <TableRow>
-                                <TableCell>{i}
-                                    {i == 0 && <span>{slice}</span>}
-                                    {i > 0 &&
-                                        <span>
-                                            {indexes[i-1] === searchIndex?<SearchLetter>{initialLetter}</SearchLetter> : <FoundLetter>{initialLetter}</FoundLetter>}
-                                                <span>{restWord}</span>
-                                        </span>
-                                    }
-                                </TableCell>
-                                <TableCell>{valueFound}</TableCell>
-                            </TableRow>
-                        )
-                    })}
-                </RespTableBody>
-            </RespTable>
-        </WordGrid>
+     //console.log(">>", slices)
+    return ( <TableRow>
+        <TableCell >
+            {slices.map((slice, i) => {
+                let initialLetter = slice[0]
+                let restWord = slice.slice(1)
+                //console.log("<<", initialLetter, restWord)
+                return ( i == 0 ?
+                    <span key={i}>{slice}</span>
+                        :
+                    <span key={i}>
+                        {indexes[i-1] === searchIndex?<SearchLetter>{initialLetter}</SearchLetter> : <FoundLetter>{initialLetter}</FoundLetter>}
+                            <span>{restWord}</span>
+                    </span>
+
+                )
+            })}
+        </TableCell>
+            <TableCell>{valueFound}</TableCell>
+        </TableRow>
+
     )
  }
 
- interface IRunState {
-     searchState: WordSearchState[]
-     total: number | null
- }
- interface WordSearchState {
-    line: string
-    searchIndex: number,
-    foundLeftIndex: number,
-    foundRightIndex: number,
-     valueFound: string | null
- }
+
+
 
 export default function Day01P1(): JSX.Element {
 
@@ -83,7 +64,7 @@ export default function Day01P1(): JSX.Element {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            //setTime(new Date());
+            //console.log(new Date());
         }, 1000);
 
         return () => clearInterval(interval);
@@ -104,13 +85,24 @@ export default function Day01P1(): JSX.Element {
             <h2>Day 1p1 fc</h2>
             {state?.selected?.dayno}
             <div>
-                {lines?.map((line, i) => {
+                <WordGrid>
+                    <RespTable>
+                        <RespTableHeader>
+                            <TableHeaderCell>Word</TableHeaderCell>
+                            <TableHeaderCell>Found</TableHeaderCell>
+                        </RespTableHeader>
+                        <RespTableBody>
+
+                            {lines?.map((line, i) => {
                     const rs = runState?.searchState[i]
                     return (
                         rs &&
-                        <DisplayLine line={rs.line} searchIndex={rs.searchIndex} foundLeftIndex={rs.foundLeftIndex} foundRightIndex={rs.foundRightIndex} valueFound={rs.valueFound}/>
+                        <DisplayLine key={i} line={rs.line} searchIndex={rs.searchIndex} foundLeftIndex={rs.foundLeftIndex} foundRightIndex={rs.foundRightIndex} valueFound={rs.valueFound}/>
                     )
                 })}
+                        </RespTableBody>
+                    </RespTable>
+                </WordGrid>
             </div>
         </div>
     )
