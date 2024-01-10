@@ -17,7 +17,6 @@ const FoundLetter = styled.span`
 // table in css
 const RespTable = styled.div`
     display: table;
-    width: 100%;
 `
 const RespTableCaption = styled.div`
     display: table-caption;
