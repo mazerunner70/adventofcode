@@ -3,12 +3,12 @@ import {useContext, useEffect, useState} from "react";
 import { WordGrid, SearchLetter, FoundLetter,
     RespTable, RespTableCaption, RespTableHeader, TableHeaderCell, RespTableBody,
     TableRow, TableCell, TableFooter, TableFooterCell} from "./styled"
-import {
-    pairwise
-} from "@app/utils/ArrayOps";
+import {pairwise} from "@app/utils/ArrayOps";
+import {ITickState, LineSearchState} from "./ticker";
+import {tick} from "@app/components/days/ticker";
 
 
- function DisplayLine({line, searchIndex,foundLeftIndex,foundRightIndex, valueFound}: WordSearchState): JSX.Element {
+ function DisplayLine({line, searchIndex,foundLeftIndex,foundRightIndex, valueFound}: LineSearchState): JSX.Element {
      var indexes: number[] = [0, searchIndex, foundLeftIndex, foundRightIndex, line.length].filter(v=>v != -1).sort()
      //console.log(">>", indexes)
      const slices2: string[] = indexes.map((v,i) => line.slice(v, indexes[i+1]))
@@ -43,7 +43,7 @@ import {
 export default function Day01P1(): JSX.Element {
 
     const { state, dispatch } = useContext(AdventContext);
-    const [runState, setRunState] = useState<IRunState | null>(null);
+    const [tickState, setTickState] = useState<ITickState | null>(null);
 
 
     var lines: string[] | null = null;
@@ -55,11 +55,11 @@ export default function Day01P1(): JSX.Element {
             //let maxWidth = lines.map((line) => line.length).reduce((a,b) => a>b?a:b);
         }
     }
-    function buildSearchState(line: string): WordSearchState {
+    function buildSearchState(line: string): LineSearchState {
         return {line, searchIndex: -1, foundLeftIndex: -1, foundRightIndex: -1, valueFound: null}
     }
-    if (lines && !runState) {
-        setRunState({searchState: Array.from(lines, buildSearchState), total: null})
+    if (lines && !tickState) {
+        setTickState({searchState: Array.from(lines, buildSearchState), total: 0})
     }
 
     useEffect(() => {
@@ -70,14 +70,15 @@ export default function Day01P1(): JSX.Element {
         return () => clearInterval(interval);
     }, []);
 
-    function tick() {
-        if (!runState) {
+    useEffect(() => {
+        localTick()
+    }, [tickState]);
+    function localTick() {
+        if (!tickState) {
             return
         }
-        if (runState.total) {
-            return
-        }
-
+        const newState = tick(tickState)
+        console.log("NewState", newState)
     }
 
     return (
@@ -94,7 +95,7 @@ export default function Day01P1(): JSX.Element {
                         <RespTableBody>
 
                             {lines?.map((line, i) => {
-                    const rs = runState?.searchState[i]
+                    const rs = tickState?.searchState[i]
                     return (
                         rs &&
                         <DisplayLine key={i} line={rs.line} searchIndex={rs.searchIndex} foundLeftIndex={rs.foundLeftIndex} foundRightIndex={rs.foundRightIndex} valueFound={rs.valueFound}/>
