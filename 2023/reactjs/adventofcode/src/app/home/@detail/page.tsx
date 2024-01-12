@@ -4,7 +4,7 @@ import {useContext, useEffect} from 'react';
 import styles from './styles.module.css'
 import { AdventContext } from '@app/context/Advent.context';
 import DetailHeader from "@app/components/detailheader/DetailHeader";
-import Day01P1 from "@app/components/days/day01p1";
+import Day01P1 from "@app/components/days/day01/day01p1";
 
 const handleClick = async () => {
     console.log("here1")

@@ -4,8 +4,8 @@ import { WordGrid, SearchLetter, FoundLetter,
     RespTable, RespTableCaption, RespTableHeader, TableHeaderCell, RespTableBody,
     TableRow, TableCell, TableFooter, TableFooterCell} from "./styled"
 import {pairwise} from "@app/utils/ArrayOps";
-import {ITickState, LineSearchState} from "./ticker";
-import {tick} from "@app/components/days/ticker";
+import {ITickState, LineSearchState, UIActions} from "./ticker";
+import {tick} from "@app/components/days/day01/ticker";
 
 
  function DisplayLine({line, searchIndex,foundLeftIndex,foundRightIndex, valueFound}: LineSearchState): JSX.Element {
@@ -27,7 +27,6 @@ import {tick} from "@app/components/days/ticker";
                         {indexes[i-1] === searchIndex?<SearchLetter>{initialLetter}</SearchLetter> : <FoundLetter>{initialLetter}</FoundLetter>}
                             <span>{restWord}</span>
                     </span>
-
                 )
             })}
         </TableCell>
@@ -44,6 +43,7 @@ export default function Day01P1(): JSX.Element {
 
     const { state, dispatch } = useContext(AdventContext);
     const [tickState, setTickState] = useState<ITickState | null>(null);
+    const [uiActions, setUiActions] = useState<UIActions | null>(null);
 
 
     var lines: string[] | null = null;
@@ -79,6 +79,8 @@ export default function Day01P1(): JSX.Element {
         }
         const newState = tick(tickState)
         console.log("NewState", newState)
+        setTickState(newState.runState)
+        setUiActions(newState.uiActions)
     }
 
     return (
