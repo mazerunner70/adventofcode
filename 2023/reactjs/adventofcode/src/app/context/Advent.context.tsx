@@ -16,8 +16,8 @@ export interface AdventRunState {
     data: string
 }
 
-const initialState: {selected: AdventSelected | null, runState: AdventDayRunState | null} = {
-    selected: null,
+const initialState: {selected: AdventSelected , runState: AdventDayRunState } = {
+    selected: {dayno: 0, partName: "", envName: "", envConfig: {filename: "", reference: ""}},
     runState: {dataState:{}}
 };
 

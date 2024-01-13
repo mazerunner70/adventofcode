@@ -13,7 +13,8 @@ export interface LineSearchState {
     valueFound: number | null
 }
 
-enum Action {
+export enum Action {
+    NoAction,
     TotalFound,
     ValueFoundForLine,
     DigitFoundForRight,
