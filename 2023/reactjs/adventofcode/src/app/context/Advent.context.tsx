@@ -22,18 +22,18 @@ const initialState: {selected: AdventSelected , runState: AdventDayRunState } = 
 };
 
 const reducer = (state, action) => {
-    console.log("reducer", action)
+    //console.log("reducer", action)
     switch (action.type) {
         case "SET_SELECTED": {
-            console.log("SET_SELECTED", action.payload)
-            return { ...state, selected: action.payload };
+            const newState = { ...state, selected: action.payload };
+            console.log("SET_SELECTED", action.payload, newState)
+            return newState
         }
         case "SET_RUNSTATE": {
-            console.log("SET_RUNSTATE", action.payload)
-            let dayenv = action.payload.dayenv
-            let data = action.payload.data
-            let newState = { ...state, runState: { ...state.runState, dataState: {...state.runState.dataState, [dayenv]: {data}}  } };
-            console.log("newState", newState)
+              const dayEnv = action.payload.dayenv
+            const data = action.payload.data
+            const newState = { ...state, runState: { ...state.runState, dataState: {...state.runState.dataState, [dayEnv]: {data}}  } };
+            console.log("SET_RUNSTATE", action.payload, newState)
             return newState;
         }
         default: {

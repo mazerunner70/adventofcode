@@ -31,7 +31,7 @@ export interface UIActions {
 
 export interface TickResult {
     uiActions: UIActions,
-    runState: ITickState
+    tickState: ITickState
 }
 
 function uiActionsFoundAllLines(runState: ITickState): boolean {
@@ -62,7 +62,7 @@ export function tick(runState: ITickState): TickResult {
         const total = runState.searchState.reduce((acc, lss) => acc + (lss.valueFound?lss.valueFound:0), 0)
         return {
             uiActions: {action: Action.TotalFound, param: total.toString()},
-            runState: {...runState, total: total}
+            tickState: {...runState, total: total}
         }
     }
 
@@ -73,7 +73,7 @@ export function tick(runState: ITickState): TickResult {
         const valueFound = searchStateToProcess.line[searchStateToProcess.foundLeftIndex] + searchStateToProcess.line[searchStateToProcess.foundRightIndex]
         return {
             uiActions: {action: Action.ValueFoundForLine, param: findRowIndexReadyToFindValue.toString()},
-            runState: {
+            tickState: {
                 ...runState,
                 searchState: [
                     ...runState.searchState.slice(0, findRowIndexReadyToFindValue),
@@ -94,7 +94,7 @@ export function tick(runState: ITickState): TickResult {
             const searchIndex = -1
             return {
                 uiActions: {action: Action.DigitFoundForRight, param: findRowIndexSearchingFromRight.toString()},
-                runState: {
+                tickState: {
                     ...runState,
                     searchState: [
                         ...runState.searchState.slice(0, findRowIndexSearchingFromRight),
@@ -106,7 +106,7 @@ export function tick(runState: ITickState): TickResult {
         }
         return {
             uiActions: {action: Action.SearchingFromRight, param: findRowIndexSearchingFromRight.toString()},
-            runState: {
+            tickState: {
                 ...runState,
                 searchState: [
                     ...runState.searchState.slice(0, findRowIndexSearchingFromRight),
@@ -124,7 +124,7 @@ export function tick(runState: ITickState): TickResult {
             const searchIndex = -1
             return {
                 uiActions: {action: Action.DigitFoundForLeft, param: findRowIndexSearchingFromLeft.toString()},
-                runState: {
+                tickState: {
                     ...runState,
                     searchState: [
                         ...runState.searchState.slice(0, findRowIndexSearchingFromLeft),
@@ -136,7 +136,7 @@ export function tick(runState: ITickState): TickResult {
         }
         return {
             uiActions: {action: Action.SearchingFromLeft, param: findRowIndexSearchingFromLeft.toString()},
-            runState: {
+            tickState: {
                 ...runState,
                 searchState: [
                     ...runState.searchState.slice(0, findRowIndexSearchingFromLeft),
@@ -151,7 +151,7 @@ export function tick(runState: ITickState): TickResult {
         const searchStateToProcess = runState.searchState[findRowIndexNotStartedSearching]
         return {
             uiActions: {action: Action.StartingSearch, param: findRowIndexNotStartedSearching.toString()},
-            runState: {
+            tickState: {
                 ...runState,
                 searchState: [
                     ...runState.searchState.slice(0, findRowIndexNotStartedSearching),
