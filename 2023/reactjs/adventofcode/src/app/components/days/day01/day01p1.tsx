@@ -23,17 +23,26 @@ export default function Day01P1({envName, data}:{envName: string, data:string}):
         setUiActions(tickResult.uiActions)
     }, [data]);
 
+    function localTick() {
+        const tickResult = tick(tickState)
+        console.log("localTick", tickResult)
+        setTickState(tickResult.tickState)
+        setUiActions(tickResult.uiActions)
+    }
+
     useEffect(() => {
         const interval = setInterval(() => {
             // console.log(new Date());
-            // localTick()
+            //localTick()
         }, 4000);
-
         return () => clearInterval(interval);
     }, []);
 
 
    return (
-       <Render  data = {data} tickState = {tickState} uiActions = {uiActions} />
+       <div>
+           <button onClick={localTick}>Tick</button>
+           <Render  data = {data} tickState = {tickState} uiActions = {uiActions} />
+       </div>
    )
 }

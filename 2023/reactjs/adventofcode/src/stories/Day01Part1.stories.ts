@@ -31,7 +31,7 @@ export const StartingSearch: Story = {
             searchState: [
                 {
                     line: "1abc2",
-                    searchIndex: -1,
+                    searchIndex: 0,
                     foundLeftIndex: -1,
                     foundRightIndex: -1,
                     valueFound: null
@@ -42,21 +42,8 @@ export const StartingSearch: Story = {
                     foundLeftIndex: -1,
                     foundRightIndex: -1,
                     valueFound: null
-                },
-                {
-                    line: "a1b2c3d4e5f",
-                    searchIndex: -1,
-                    foundLeftIndex: -1,
-                    foundRightIndex: -1,
-                    valueFound: null
-                },
-                {
-                    line: "treb7uchet",
-                    searchIndex: -1,
-                    foundLeftIndex: -1,
-                    foundRightIndex: -1,
-                    valueFound: null
                 }
+
             ],
             total: 0
         },
@@ -65,4 +52,37 @@ export const StartingSearch: Story = {
             param: "0"
         }
     },
+
+};
+export const FindingLeft: Story = {
+    args: {
+        data: "\"1abc2\n" +
+            "pqr3stu8vwx\n" +
+            "a1b2c3d4e5f\n" +
+            "treb7uchet\"",
+        tickState: {
+            searchState: [
+                {
+                    line: "1abc2",
+                    searchIndex: 4,
+                    foundLeftIndex: 0,
+                    foundRightIndex: -1,
+                    valueFound: null
+                },
+                {
+                    line: "pqr3stu8vwx",
+                    searchIndex: -1,
+                    foundLeftIndex: -1,
+                    foundRightIndex: -1,
+                    valueFound: null
+                }
+
+            ],
+            total: 0
+        },
+        uiActions: {
+            action: 5,
+            param: "0"
+        }
+    }
 };

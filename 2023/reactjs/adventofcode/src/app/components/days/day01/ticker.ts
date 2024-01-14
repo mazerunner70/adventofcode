@@ -50,8 +50,8 @@ const hasFoundRightIndex = (searchState: LineSearchState): boolean => searchStat
 const hasStartedSearching = (searchState: LineSearchState): boolean => searchState.searchIndex !== -1
 const hasNotStartedSearching = (searchState: LineSearchState): boolean => searchState.searchIndex === -1
 const hasStartedSearchingFromLeft = (searchState: LineSearchState): boolean => and([hasNotFoundValue, not(hasFoundLeftIndex), hasStartedSearching])(searchState)
-const hasStartedSearchingFromRight = (searchState: LineSearchState): boolean => and([hasNotFoundValue, not(hasFoundRightIndex), hasStartedSearching])(searchState)
-const isreadyToFindValue = (searchState: LineSearchState): boolean => and([hasNotFoundValue, hasFoundLeftIndex, hasFoundRightIndex])(searchState)
+const hasStartedSearchingFromRight = (searchState: LineSearchState): boolean => and([hasNotFoundValue, hasFoundLeftIndex, not(hasFoundRightIndex), hasStartedSearching])(searchState)
+const isReadyToFindValue = (searchState: LineSearchState): boolean => and([hasNotFoundValue, hasFoundLeftIndex, hasFoundRightIndex])(searchState)
 export function tick(runState: ITickState): TickResult {
     console.log("tick", runState)
     // If all lines have been searched, return the total
@@ -67,7 +67,7 @@ export function tick(runState: ITickState): TickResult {
     }
 
     //Find line that is ready to show value
-    const findRowIndexReadyToFindValue = uiActionsFindNextLineThat(isreadyToFindValue, runState.searchState)
+    const findRowIndexReadyToFindValue = uiActionsFindNextLineThat(isReadyToFindValue, runState.searchState)
     if (findRowIndexReadyToFindValue !== -1) {
         const searchStateToProcess = runState.searchState[findRowIndexReadyToFindValue]
         const valueFound = searchStateToProcess.line[searchStateToProcess.foundLeftIndex] + searchStateToProcess.line[searchStateToProcess.foundRightIndex]
@@ -121,7 +121,7 @@ export function tick(runState: ITickState): TickResult {
         const searchStateToProcess = runState.searchState[findRowIndexSearchingFromLeft]
         if (isDigit(searchStateToProcess.line[searchStateToProcess.searchIndex])) {
             const foundLeftIndex = searchStateToProcess.searchIndex
-            const searchIndex = -1
+            const searchIndex = searchStateToProcess.line.length-1
             return {
                 uiActions: {action: Action.DigitFoundForLeft, param: findRowIndexSearchingFromLeft.toString()},
                 tickState: {
