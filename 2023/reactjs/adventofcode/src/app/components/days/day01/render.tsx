@@ -27,7 +27,7 @@ function RenderLine({line, searchIndex, foundLeftIndex, foundRightIndex, valueFo
     const indexes: number[] = [0, searchIndex, foundLeftIndex, foundRightIndex, line.length].filter(v => v != -1).sort();
     console.log(">>", indexes)
     const slices: string[] = Array.from(pairwise(indexes)).map((s, i) => line.slice(s[0], s[1]))
-    //console.log(">>", slices)
+    console.log(">>", slices)
     return (<TableRow>
                 <TableCell ref={tableCellRef}>
                     {slices.map((slice, i) => {
@@ -35,19 +35,22 @@ function RenderLine({line, searchIndex, foundLeftIndex, foundRightIndex, valueFo
                         const restWord = slice.slice(1)
                         //console.log("<<", initialLetter, restWord)
                         return (
-                                i == 0 ?
+                                i === 0 ?
                                 <span key={i}>{slice}</span>
                                 :
-                                <span key={i}>{indexes[i-1] === searchIndex?
+                                <span key={i}>{indexes[i-1] === foundLeftIndex || indexes[i-1] === foundRightIndex?
+                                    <FoundLetter>{initialLetter}</FoundLetter>
+                                        : indexes[i-1] === searchIndex?
                                     <SearchLetter>{initialLetter}</SearchLetter>
-                                    :
-                                    <FoundLetter>{initialLetter}</FoundLetter>}
+                                        :
+                                    <span> {initialLetter}</span>
+                                }
                                 <span>{restWord}</span>
                         </span>
                         )
-                    })}
+                                            })}
                 </TableCell>
-            <TableCell>{valueFound}</TableCell>
+                                    <TableCell>{valueFound}</TableCell>
         </TableRow>
     )
 }
