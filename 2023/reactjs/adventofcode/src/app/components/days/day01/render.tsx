@@ -19,7 +19,7 @@ function RenderLine({line, searchIndex, foundLeftIndex, foundRightIndex, valueFo
     const tableCellRef = useRef(null);
     useEffect(() => {
         if (uiActions.action === Action.StartingSearch) {
-            const scaleTween = gsap.to(tableCellRef.current, {scale:1.1, repeat:3, yoyo:true, paused:true, color: "yellow"});
+            const scaleTween = gsap.to(tableCellRef.current, {scale:1.1, repeat:3, x:5, yoyo:true, paused:true, color: "yellow"});
             scaleTween.play()
             console.log("scaleTween")
         }
