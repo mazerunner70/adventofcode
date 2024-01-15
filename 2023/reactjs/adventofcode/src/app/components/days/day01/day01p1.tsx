@@ -9,7 +9,7 @@ export default function Day01P1({envName, data}:{envName: string, data:string}):
     const [tickState, setTickState] = useState<ITickState>({searchState: [], total: 0});
     const [uiActions, setUiActions] = useState<UIActions>({action: Action.NoAction, param: ""});
     const dayEnv = "1"+envName;
-    console.log("entered Day01P1", tickState, uiActions, dayEnv, data)
+    //console.log("entered Day01P1", tickState, uiActions, dayEnv, data)
     function buildSearchState(line: string): LineSearchState {
         return {line, searchIndex: -1, foundLeftIndex: -1, foundRightIndex: -1, valueFound: null}
     }
