@@ -8,8 +8,8 @@ const glowingAnimation = keyframes`
 `
 
 const GlowOnHoverButton = styled.button` 
-    width: 220px;
-    height: 50px;
+    width: 100px;
+    height: 30px;
     border: none;
     outline: none;
     color: #fff;

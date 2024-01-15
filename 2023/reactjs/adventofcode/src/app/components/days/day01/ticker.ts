@@ -37,6 +37,7 @@ export interface TickResult {
 function uiActionsFoundAllLines(runState: ITickState): boolean {
     return runState.searchState.every((searchState) => searchState.valueFound !== null)
 }
+
 function uiActionsFindNextLineThat(pred: (lineSearchState: LineSearchState)=>boolean, lines: LineSearchState[]): number {
     return lines.findIndex(pred)
 }
@@ -53,7 +54,7 @@ const hasStartedSearchingFromLeft = (searchState: LineSearchState): boolean => a
 const hasStartedSearchingFromRight = (searchState: LineSearchState): boolean => and([hasNotFoundValue, hasFoundLeftIndex, not(hasFoundRightIndex), hasStartedSearching])(searchState)
 const isReadyToFindValue = (searchState: LineSearchState): boolean => and([hasNotFoundValue, hasFoundLeftIndex, hasFoundRightIndex])(searchState)
 export function tick(runState: ITickState): TickResult {
-    console.log("tick", runState)
+    //console.log("tick", runState)
     // If all lines have been searched, return the total
     function isNumber(valueFound: number | null): valueFound is number {
         return valueFound !== undefined;
@@ -77,9 +78,10 @@ export function tick(runState: ITickState): TickResult {
                 ...runState,
                 searchState: [
                     ...runState.searchState.slice(0, findRowIndexReadyToFindValue),
-                    {...searchStateToProcess, valueFound: parseInt(valueFound)},
+                    {...searchStateToProcess, valueFound: parseInt(valueFound), searchIndex: -2},
                     ...runState.searchState.slice(findRowIndexReadyToFindValue + 1)
-                ]
+                ],
+                total: runState.searchState.reduce((acc, lss) => acc + (lss.valueFound?lss.valueFound:0), 0) + parseInt(valueFound)
             }
         }
     }
