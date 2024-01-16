@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 
 
 // https://www.dhiwise.com/post/understanding-the-useinterval-hook-in-react
-function useInterval(callback: ()=>void, delay: number) {
+export default function useInterval(callback: ()=>void, delay: number|null) {
     const savedCallback = useRef(()=>{})
 
     // Remember the latest callback.

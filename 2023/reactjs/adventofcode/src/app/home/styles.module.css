@@ -6,47 +6,29 @@
 
 .left {
     flex: 0 0 250px; /* do not grow, do not shrink, start at 250px */
-    border: 1px dashed #f0f;
+    #border: 1px dashed #f0f;
 }
 
 .right {
     flex: 1;  /* grow */
-    border: 1px dashed #00f;
+    #border: 1px dashed #00f;
 }
 
-.main {
-    height: 50vh;
-    max-height: 100%;
-    overflow-x: hidden;
-    perspective: 1px;
-    perspective-origin: center top;
-    transform-style: preserve-3d;
-    padding: 0 40px;
-}
+
 
 .header {
-    height: 70vh;
+    height: 25vh;
     background: url("/assets/adventofcode.png");
-    background-size: cover;
+    background-size: 80%;
     background-position: center center;
     position: relative;
     vertical-align: top;
-    transform-origin: center top;
-    transform:
-            translateZ(-1px)
-            scale(2);
 }
 
-.section {
-    min-height: 30vh;
-    background: white;
-    transform: translateZ(0);
-    padding: 10px 0;
-}
 
 .h1 {
     font-family: "Mountains of Christmas";
-    font-size: 40px;
+    font-size: 60px;
     font-weight: 400;
     padding: 10px 20px;
 }

@@ -1,0 +1,23 @@
+"use client";
+import styled from "styled-components";
+
+export const PanelWrapper = styled.div<{ shadowed?: boolean }>`
+  background-color: #fff;
+  border-radius: 13px;
+  padding: 10px;
+  box-shadow: ${(props) =>
+    props.shadowed ? "0px 0px 5px 0px rgba(0,0,0,0.75)" : "none"};
+`;
+export const InnerPanelWrapper = styled.div`
+  background-color: #e3e3e3;
+  border-radius: 5px;
+  padding: 10px;
+`;
+export const PanelTitle = styled.h2`
+  font-size: 1.5em;
+  margin: 0;
+`;
+export const PanelSubTitle = styled.h3`
+  font-size: 1.2em;
+  margin: 0;
+`;
