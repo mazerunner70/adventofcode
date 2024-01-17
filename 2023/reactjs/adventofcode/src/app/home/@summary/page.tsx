@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { InitialisedContext } from "@app/context/Initialised.context";
-import Advent from "../../components/aoc/sidepanel/advent";
+import Adventdays from "../../components/aoc/sidepanel/adventdays";
 
 export default function Page() {
   const { state, dispatch } = useContext(InitialisedContext);
@@ -18,5 +18,7 @@ export default function Page() {
     }
   }, [state]);
 
-  return <div>{state.initialised && config && <Advent data={config} />}</div>;
+  return (
+    <div>{state.initialised && config && <Adventdays data={config} />}</div>
+  );
 }

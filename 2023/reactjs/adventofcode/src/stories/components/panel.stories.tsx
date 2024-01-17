@@ -9,7 +9,7 @@ const meta: Meta<typeof Panel> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Basic: Story = {
+export const Basic1: Story = {
   args: {
     children: <span>Test</span>,
     title: "title",
