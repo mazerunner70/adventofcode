@@ -2,7 +2,7 @@
 
 import {useContext, useEffect, useState} from 'react';
 import { AdventContext } from '@app/context/Advent.context';
-import DetailHeader from "@app/components/detailheader/DetailHeader";
+import DetailHeader from "@app/components/detailheader/detailheader";
 import Day01P1 from "@app/components/days/day01/day01p1";
 
 

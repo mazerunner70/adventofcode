@@ -1,0 +1,16 @@
+import {Meta, Story, CanvasArgsTable, Canvas} from '@storybook/addon-docs';
+import * as DetailHeaderStories from './DetailHeader.stories';
+
+<Meta of={DetailHeaderStories}/>
+
+# DetailHeader
+
+The detail header component gives the essential details of the Task being done
+
+## Starting Search
+Here the component flashes the line about to be searched and highlights the left character. That highlight is red if the left character is not found and blue if it is found.
+<Canvas>
+    <Story of={DetailHeaderStories.Detail}/>
+</Canvas>
+
+
