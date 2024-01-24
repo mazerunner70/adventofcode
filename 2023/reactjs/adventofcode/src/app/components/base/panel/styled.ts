@@ -1,5 +1,6 @@
 "use client";
 import styled from "styled-components";
+import {familjenGrotesk} from "@app/styles/fonts";
 
 export const PanelWrapper = styled.div<{ shadowed?: boolean }>`
   background-color: #fff;
@@ -16,6 +17,7 @@ export const InnerPanelWrapper = styled.div`
   display: inline-block;
 `;
 export const PanelTitle = styled.h2`
+    ${familjenGrotesk.style};
   font-size: 1.5em;
   margin: 0;
 `;

@@ -1,4 +1,4 @@
-import { inter } from "@app/fonts";
+import { inter, mountainsOfChristmas, familjenGrotesk } from "@app/styles/fonts";
 
 import styles from "./styles.module.css";
 export default function HomeLayout(props: {
@@ -12,7 +12,7 @@ export default function HomeLayout(props: {
         <title>Advent of Code 2020</title>
         <meta name="description" content="Advent of Code 2020" />
       </head>
-      <body className={inter.className}>
+      <body className={mountainsOfChristmas.className}>
         <header />
         {props.children}
         <div className={styles.box}>
