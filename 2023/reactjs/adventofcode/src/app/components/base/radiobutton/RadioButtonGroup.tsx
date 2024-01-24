@@ -7,11 +7,17 @@ import RadioButton from "./RadioButton";
 
 const Fieldset = styled.fieldset`
   border: none;
+  padding-inline-start: 0;
 `;
+
+const LegendLeft = styled(Legend)`
+  padding-inline-start: 0;
+  `
 
 const Wrapper = styled.div`
   padding: 0.5rem;
-  display: grid;
+  display: flex;
+  width: auto;
   gap: 1rem;
 `;
 

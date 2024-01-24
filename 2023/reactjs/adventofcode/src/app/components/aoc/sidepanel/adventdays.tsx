@@ -3,12 +3,14 @@ import { IConfig } from "@app/context/Advent.context";
 import Panel from "@app/components/base/panel";
 import styled from "styled-components";
 import { H1 } from "@app/components/base/text/textwrappers";
+import {Legend} from "@app/components/base/radiobutton/InputStyles";
 import DropDown, {
   Entry,
   ArrayObjectSelectState,
 } from "@app/components/base/dropdown/dropdown";
 import React, { useEffect } from "react";
 import RadioButtonGroup from "@app/components/base/radiobutton/RadioButtonGroup";
+import { familjenGrotesk} from "@app/styles/fonts";
 
 const HorizontalDivider = styled.hr`
   border: 0;
@@ -46,6 +48,19 @@ export default function AdventDays({ data }: { data: IConfig[] }) {
       name: "Parts",
     },
   ];
+  const testDataOnOff = [
+    {
+      label: "On",
+      name: "OnOff",
+    },
+    {
+      label: "Off",
+      name: "OnOff",
+    },
+  ];
+
+  console.log(familjenGrotesk)
+
   const [partState, setPartState] = React.useState<string>(parts[0].label);
   function partRadioGroupHandler(event: React.ChangeEvent<HTMLInputElement>) {
     setPartState(event.target.value);
@@ -60,7 +75,7 @@ export default function AdventDays({ data }: { data: IConfig[] }) {
       <div>
         <HorizontalDivider />
         <ADPanel>
-          <H1>Day</H1>
+          <Legend>Day</Legend>
           <DropDown
             options={dayOptions}
             selected={dayNumberState.selectedEntry}
@@ -70,9 +85,17 @@ export default function AdventDays({ data }: { data: IConfig[] }) {
         <HorizontalDivider />
         <ADPanel>
           <RadioButtonGroup
-            label="Part"
-            options={parts}
-            onChange={partRadioGroupHandler}
+              label="Part"
+              options={parts}
+              onChange={partRadioGroupHandler}
+          />
+        </ADPanel>
+        <HorizontalDivider />
+        <ADPanel>
+          <RadioButtonGroup
+              label="Test Data"
+              options={testDataOnOff}
+              onChange={partRadioGroupHandler}
           />
         </ADPanel>
       </div>

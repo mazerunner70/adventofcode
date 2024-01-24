@@ -6,7 +6,8 @@
       "@config/*": ["app/_config/*"],
       "@environment/*": ["environments/*"],
       "@shared/*": ["app/_shared/*"],
-      "@helpers/*": ["helpers/*"]
+      "@helpers/*": ["helpers/*"],
+      "@/fonts": ["./styles/fonts"]
     },
     "lib": [
       "dom",

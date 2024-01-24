@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { BrandColor } from "../../styled-components/GlobalStyles";
+import {
+  familjenGrotesk
+} from "@app/styles/fonts";
 
 export const Legend = styled.legend`
   font-weight: 600;
@@ -64,6 +67,7 @@ export const StyledRadio = styled.input`
 `;
 
 export const StyledLabel = styled.label<{ disabled?: boolean }>`
+  ${familjenGrotesk.style};
   font-weight: 600;
   font-size: 1rem;
   color: ${BrandColor.DARK_PURPLE};
