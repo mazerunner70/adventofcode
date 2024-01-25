@@ -15,3 +15,10 @@ export const Heading = styled.div`
   font-weight: 600;
   margin: 0.5rem 0;
 `;
+
+export const OutlinedBox = styled.span`
+    border: 1px solid #000;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    margin: 0 0.5rem;
+    `;

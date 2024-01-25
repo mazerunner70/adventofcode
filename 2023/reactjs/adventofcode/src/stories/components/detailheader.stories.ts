@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import DetailHeader from "@app/components/detailheader/detailheader";
+import DetailHeader from "@app/components/aoc/detailheader/detailheader";
 
 const meta: Meta<typeof DetailHeader> = {
   component: DetailHeader,
