@@ -17,8 +17,9 @@ export default function Panel({
   subheading?: string;
   shadowed?: boolean;
 }) {
+  const shado = false;
   return (
-    <PanelWrapper shadowed={shadowed}>
+    <PanelWrapper $shadowed={shadowed}>
       <InnerPanelWrapper>
         {title && <PanelTitle>{title}</PanelTitle>}
         {subheading && <PanelSubTitle>{subheading}</PanelSubTitle>}
