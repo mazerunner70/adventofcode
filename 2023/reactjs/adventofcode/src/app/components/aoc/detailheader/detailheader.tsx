@@ -10,11 +10,8 @@ export default function DetailHeader({ config }: { config: AdventSelected }) {
     <EvenDistributed>
       <H2>Status</H2>
         <OutlinedBox>Idle</OutlinedBox>
-        <H2>Day {config.dayno.toString().padStart(2, "0")} </H2>
-        <H2>{config.partName}</H2>
-        <H2>Run Data: {config.envName}</H2>
-        <H2>Datafile: {config.envConfig.filename}</H2>
-        <H2>Expected: {config.envConfig.reference}</H2>
+        <H2>Output</H2>
+      <OutlinedBox>--</OutlinedBox>
     </EvenDistributed>
         </Panel>
   );

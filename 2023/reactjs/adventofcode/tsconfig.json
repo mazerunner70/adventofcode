@@ -7,6 +7,7 @@
       "@environment/*": ["environments/*"],
       "@shared/*": ["app/_shared/*"],
       "@helpers/*": ["helpers/*"],
+      "@public/*": ["../public/*"],
       "@/fonts": ["./styles/fonts"]
     },
     "lib": [
