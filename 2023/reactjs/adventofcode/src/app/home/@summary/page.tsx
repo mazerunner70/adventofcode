@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { InitialisedContext } from "@app/context/Initialised.context";
-import Adventdays from "../../components/aoc/sidepanel/adventdays";
+import Adventdays from "@app/components/aoc/taskselection/adventdays";
 
 export default function Page() {
   const { state, dispatch } = useContext(InitialisedContext);

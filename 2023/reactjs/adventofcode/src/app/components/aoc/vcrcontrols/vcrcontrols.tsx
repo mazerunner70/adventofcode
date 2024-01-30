@@ -12,13 +12,13 @@ import React from 'react';
 import Panel from '@app/components/base/panel';
 
 export const controlType= {
-    PLAY: {name: 'play', icon: playButton},
-    PAUSE: {name: 'pause', icon: pauseButton},
-    STOP: {name: 'stop', icon: stopButton},
-    RECORD: {name: 'record', icon: recordButton},
-    EJECT: {name: 'eject', icon: ejectButton},
-    FAST_FORWARD: {name: 'fast-forward', icon: fastForwardButton},
-    REWIND: {name: 'rewind', icon: rewindButton},
+    PLAY: {name: 'play', icon: playButton, isActive: (speed: number) => speed == 1},
+    PAUSE: {name: 'pause', icon: pauseButton, isActive: (speed: number) => false},
+    STOP: {name: 'stop', icon: stopButton, isActive: (speed: number) => speed == 0},
+    RECORD: {name: 'record', icon: recordButton, isActive: (speed: number) => speed == 1},
+    EJECT: {name: 'eject', icon: ejectButton, isActive: (speed: number) => speed == 1},
+    FAST_FORWARD: {name: 'fast-forward', icon: fastForwardButton, isActive: (speed: number) => speed > 1},
+    REWIND: {name: 'rewind', icon: rewindButton, isActive: (speed: number) => speed < 0},
 }
 export const VCRBUttonContainer = styled.div`
     background-color: transparent;
@@ -27,10 +27,10 @@ export const VCRBUttonContainer = styled.div`
     width: 64px;
     height: 64px ;
 `;
-export const VCRBacking = styled.div`
+export const VCRBacking = styled.div<{ $active?: boolean }>`
     left: 0px;
     top: 0px;
-    background-color: steelgray;
+    background-color: ${props => props.$active ? "green" : "transparent"};
     position: absolute;
     margin: 12% 6% 6% 12%;
     width: 82%;
@@ -53,10 +53,10 @@ export const VCRButton = styled.button`
     border: solid 2px transparent;
 `;
 
-export const Button = ({ type, onClick }) => {
+export const Button = ({ type, onClick, speed }) => {
     return (
         <VCRBUttonContainer>
-        <VCRBacking/>
+        <VCRBacking $active={type.isActive(speed)}/>
         <VCRButton onClick={onClick}>
             <Image src={type.icon} alt={type.name} width={64} height={64}/>
         </VCRButton>
@@ -71,35 +71,30 @@ export const VCRControls = () => {
             setSpeedState(-1)
         else
             setSpeedState(speedState * 2)
-        console.log("rewind: ", speedState)
     }
     const fastForwardHandler = () => {
         if (speedState<=0)
             setSpeedState(1)
         else
             setSpeedState(speedState * 2)
-        console.log("fast forward: ", speedState)
     }
     const stopHandler = () => {
         setSpeedState(0)
-        console.log("stop: ", speedState)
     }
     const playHandler = () => {
         setSpeedState(1)
-        console.log("play: ", speedState)
     }
     const pauseHandler = () => {
         setSpeedState(0)
-        console.log("pause: ", speedState)
     }
-
+    console.log("speed: ", speedState)
     return (
         <Panel shadowed={true}>
-            <Button type={controlType.REWIND} onClick={rewindHandler} />
-            <Button type={controlType.STOP} onClick={stopHandler} />
-            <Button type={controlType.PLAY} onClick={playHandler} />
-            <Button type={controlType.PAUSE} onClick={pauseHandler} />
-            <Button type={controlType.FAST_FORWARD} onClick={fastForwardHandler} />
+            <Button type={controlType.REWIND} onClick={rewindHandler} speed={speedState}/>
+            <Button type={controlType.STOP} onClick={stopHandler} speed={speedState} />
+            <Button type={controlType.PLAY} onClick={playHandler} speed={speedState} />
+            <Button type={controlType.PAUSE} onClick={pauseHandler} speed={speedState} />
+            <Button type={controlType.FAST_FORWARD} onClick={fastForwardHandler} speed={speedState} />
         </Panel>
     )
 }
