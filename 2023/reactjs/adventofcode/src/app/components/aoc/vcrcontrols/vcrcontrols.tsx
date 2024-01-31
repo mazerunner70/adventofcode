@@ -63,29 +63,35 @@ export const Button = ({ type, onClick, speed }) => {
         </VCRBUttonContainer>
     )
 }
-export const VCRControls = () => {
-    const [speedState, setSpeedState] = React.useState<number>(0);
+
+export interface IVCRControlsProps {
+    speedState: number;
+    onSpeedChange: (speed: number) => void;
+}
+
+export const VCRControls = ({speedState, onSpeedChange}: IVCRControlsProps) => {
+    //const [speedState, setSpeedState] = React.useState<number>(0);
 
     const rewindHandler = () => {
         if (speedState>=0)
-            setSpeedState(-1)
+            onSpeedChange(-1)
         else
-            setSpeedState(speedState * 2)
+            onSpeedChange(speedState * 2)
     }
     const fastForwardHandler = () => {
         if (speedState<=0)
-            setSpeedState(1)
+            onSpeedChange(1)
         else
-            setSpeedState(speedState * 2)
+            onSpeedChange(speedState * 2)
     }
     const stopHandler = () => {
-        setSpeedState(0)
+        onSpeedChange(0)
     }
     const playHandler = () => {
-        setSpeedState(1)
+        onSpeedChange(1)
     }
     const pauseHandler = () => {
-        setSpeedState(0)
+        onSpeedChange(0)
     }
     console.log("speed: ", speedState)
     return (
