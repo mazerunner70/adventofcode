@@ -8,9 +8,9 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const RadioButton = ({ label, id, disabled, ...rest }: InputElementProps) => (
+const RadioButton = ({ label, id, disabled, checked, ...rest }: InputElementProps) => (
   <Wrapper>
-    <StyledRadio id={id} type="radio" disabled={disabled} {...rest} />
+    <StyledRadio id={id} type="radio" disabled={disabled} checked={checked} {...rest} />
     <StyledLabel htmlFor={id} disabled={disabled}>
       {label}
     </StyledLabel>

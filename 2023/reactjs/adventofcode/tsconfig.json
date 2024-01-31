@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "es2015",
     "baseUrl": "src",
     "paths": {
       "@app/*": ["app/*"],
@@ -7,6 +8,7 @@
       "@environment/*": ["environments/*"],
       "@shared/*": ["app/_shared/*"],
       "@helpers/*": ["helpers/*"],
+      "@public/*": ["../public/*"],
       "@/fonts": ["./styles/fonts"]
     },
     "lib": [
