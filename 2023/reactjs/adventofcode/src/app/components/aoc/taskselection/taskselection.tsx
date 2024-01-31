@@ -32,7 +32,7 @@ export interface ISelectionConfig {
   day: number;
   part: number;
   testData: boolean;
-  onDayChange: (day: number) => void;
+  onDayChange: (day: number | null) => void;
   onPartChange: (part: number) => void;
   onTestDataChange: (testData: boolean) => void;
 }
@@ -43,7 +43,6 @@ export default function TaskSelection({ daylist, selectionConfig }: { daylist: n
     label: day.toString(),
     value: day.toString(),
   });
-  console.log("ff", daylist);
   const dayOptions = daylist.map(toEntry);
 
 
@@ -82,7 +81,7 @@ export default function TaskSelection({ daylist, selectionConfig }: { daylist: n
           <DropDown
             options={dayOptions}
             selected={toEntry(selectionConfig.day)}
-            onChange={(dayno)=> selectionConfig.onDayChange(parseInt(dayno.value)}
+            onChange={(daynoString: string|null)=> selectionConfig.onDayChange(daynoString?parseInt(daynoString):null)}
           />
         </ADPanel>
         <HorizontalDivider />
@@ -90,8 +89,8 @@ export default function TaskSelection({ daylist, selectionConfig }: { daylist: n
           <RadioButtonGroup
             label="Part"
             options={parts}
-            selected={selectionConfig.part}
-            onChange={selectionConfig.onPartChange}
+            selected={selectionConfig.part.toString()}
+            onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>selectionConfig.onPartChange(parseInt(evt.target.value))}
           />
         </ADPanel>
         <HorizontalDivider />
@@ -99,8 +98,8 @@ export default function TaskSelection({ daylist, selectionConfig }: { daylist: n
           <RadioButtonGroup
             label="Test Data"
             options={testDataOnOff}
-            selected={selectionConfig.testTask}
-            onChange={selectionConfig.onTestDataChange}
+            selected={selectionConfig.testData?'On':'Off'}
+            onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>selectionConfig.onTestDataChange(evt.target.value == 'On')}
           />
         </ADPanel>
       </div>

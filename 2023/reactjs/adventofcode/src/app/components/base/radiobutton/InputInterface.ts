@@ -19,4 +19,5 @@ export interface InputElementProps
   id: string;
   error?: boolean;
   disabled?: boolean;
+  selected: string;
 }

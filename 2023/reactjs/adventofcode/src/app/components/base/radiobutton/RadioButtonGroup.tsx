@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   gap: 1rem;
 `;
 
-const RadioButtonGroup = ({ label, options, onChange }: IInputGroup) => {
+const RadioButtonGroup = ({ label, options, onChange, selected }: IInputGroup) => {
   function renderOptions() {
     return options.map(({ label, name, disabled }: IOption, index) => {
       const shortenedOptionLabel = label.replace(/\s+/g, "");
@@ -33,6 +33,7 @@ const RadioButtonGroup = ({ label, options, onChange }: IInputGroup) => {
           label={label}
           key={optionId}
           id={optionId}
+          checked={selected === label}
           name={name}
           disabled={disabled}
           defaultChecked={index === 0}

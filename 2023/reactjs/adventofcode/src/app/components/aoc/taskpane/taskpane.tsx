@@ -22,7 +22,7 @@ export interface ITaskPaneProps {
 }
 
 export default function TaskPane ({ data }: { data: ITaskPaneProps }) {
-    const [dayNumberState, setDayNumberState] = React.useState<number>(1);
+    const [dayNumberState, setDayNumberState] = React.useState<number>(2);
     const [partState, setPartState] = React.useState<number>(1);
     const [testDataUsedState, setTestDataUsedState] = React.useState<boolean>(false);
 
@@ -37,6 +37,7 @@ export default function TaskPane ({ data }: { data: ITaskPaneProps }) {
         onPartChange: (newPart: number) => setPartState(newPart),
         onTestDataChange: (newState: boolean) => setTestDataUsedState(newState),
     }
+    console.log(dayNumberState, partState, testDataUsedState);
 
     return (
         <TaskPanel>

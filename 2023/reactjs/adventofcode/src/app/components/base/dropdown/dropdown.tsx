@@ -9,6 +9,8 @@ export interface ArrayObjectSelectState {
   selectedEntry: string | null;
 }
 
+export type OnChangeString = (s:string | null) => void;
+
 export default function DropDown({
   options,
   selected,
@@ -16,7 +18,7 @@ export default function DropDown({
 }: {
   options: Entry[];
   selected: Entry | null;
-  onChange: (string | null) => void;
+  onChange: OnChangeString;
 }) {
   const newTheme = (theme: any) => {
     return {
@@ -43,7 +45,7 @@ export default function DropDown({
       // If you don't need a state you can remove the two following lines value & onChange
       value={selected}
       onChange={(option: Entry | null) => {
-        onChange(option?.value);
+        onChange(option?option.value:null);
       }}
       getOptionLabel={(entry: Entry) => entry.label}
       getOptionValue={(entry: Entry) => entry.value}
