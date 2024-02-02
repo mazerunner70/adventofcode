@@ -1,4 +1,4 @@
-import {ITickState, tick} from "@app/components/days/day01/ticker"
+import {ITickState, tick} from "@app/components/days/day01/p1/ticker"
 
 
 describe("ticker test", () => {
