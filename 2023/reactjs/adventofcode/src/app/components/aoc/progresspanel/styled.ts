@@ -22,3 +22,18 @@ export const OutlinedBox = styled.span`
     border-radius: 0.5rem;
     margin: 0 0.5rem;
     `;
+
+export const PulsingText = styled.span`
+    animation: pulse 1s infinite;
+    @keyframes pulse {
+        0% {
+        opacity: 0.5;
+        }
+        50% {
+        opacity: 1;
+        }
+        100% {
+        opacity: 0.5;
+        }
+    }
+    `;

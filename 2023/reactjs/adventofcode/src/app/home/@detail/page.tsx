@@ -3,7 +3,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AdventContext } from "@app/context/Advent.context";
 import DetailHeader from "@app/components/aoc/detailheader/detailheader";
-import Day01P1 from "@app/components/days/day01/day01p1";
+import Day01P1 from "@app/components/days/day01/p1/day01p1";
 
 export default function Page() {
   const { state, dispatch } = useContext(AdventContext);

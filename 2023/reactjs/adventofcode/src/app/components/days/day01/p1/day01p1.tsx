@@ -1,13 +1,13 @@
 import {AdventContext} from "@app/context/Advent.context";
 import {useContext, useEffect, useState} from "react";
 import {Action, ITickState, LineSearchState, UIActions} from "./ticker";
-import {tick} from "@app/components/days/day01/ticker";
-import Render from "@app/components/days/day01/render";
+import {tick} from "@app/components/days/day01/p1/ticker";
+import Render from "@app/components/days/day01/p1/render";
 import useInterval from "@app/utils/useinterval";
 
 export default function Day01P1({envName, data}:{envName: string, data:string}): JSX.Element {
 
-    const [tickState, setTickState] = useState<ITickState>({searchState: [], total: 0});
+    const [ tickState, setTickState] = useState<ITickState>({searchState: [], total: 0});
     const [uiActions, setUiActions] = useState<UIActions>({action: Action.NoAction, param: ""});
     const [delay, setDelay] = useState(1000); // Initial state for the delay
     const [isRunning, setIsRunning] = useState(true); // State to start or pause the interval

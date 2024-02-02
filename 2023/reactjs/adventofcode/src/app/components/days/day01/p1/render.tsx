@@ -7,8 +7,8 @@ import {
     TableCell, TableHeaderCell,
     TableRow,
     WordGrid
-} from "@app/components/days/day01/styled";
-import {Action, ITickState, LineSearchState, UIActions} from "@app/components/days/day01/ticker";
+} from "./styled";
+import {Action, ITickState, LineSearchState, UIActions} from "@app/components/days/day01/p1/ticker";
 import {useEffect, useRef} from "react";
 import gsap from "gsap";
 

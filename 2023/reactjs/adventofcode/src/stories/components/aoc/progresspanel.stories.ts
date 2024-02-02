@@ -12,9 +12,30 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Detail: Story = {
+export const Initialising: Story = {
     args: {
-        config: {
-        },
+        speedState: 1,
+        progressData: {
+            totalTicks: 0,
+            currentTick:22
+        }
+    }
+};
+export const Idle: Story = {
+    args: {
+        speedState: 0,
+        progressData: {
+            totalTicks: 120,
+            currentTick:22
+        }
+    }
+};
+export const Running: Story = {
+    args: {
+        speedState: 1,
+        progressData: {
+            totalTicks: 120,
+            currentTick:22
+        }
     }
 };
