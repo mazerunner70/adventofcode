@@ -10,6 +10,7 @@ export interface IInputGroup {
   label: string;
   options: IOption[];
   hasFullWidth?: boolean;
+  selected: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -19,5 +20,4 @@ export interface InputElementProps
   id: string;
   error?: boolean;
   disabled?: boolean;
-  selected: string;
 }
