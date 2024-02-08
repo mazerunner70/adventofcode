@@ -84,10 +84,10 @@ export default function TaskPane({ data }: { data: ITaskPaneProps }) {
     console.log("dddd", data);
     if (data.tasks?.length > 0) {
       console.log("ddd", data.tasks[0].filename);
-      // const worker: Worker = asWorker(calcWorker);
+      const worker: Worker = asWorker(exWorker);
       // const worker = new Worker(new URL("@app/components/days/day01/p1/tickcalc.ts", import.meta.url));
       // const worker = new Worker("javascript/example.js", { type: "classic" });
-      const worker = asWorker(exWorker);
+      // const worker = asWorker(calcWorker);
       worker.onmessage = (e: MessageEvent<number>) => {
         console.log("e", e);
         setProgressData({ ...progressData, totalTicks: e.data });
