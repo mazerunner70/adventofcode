@@ -22,7 +22,6 @@ This document outlines the technical design for setting up a Django project with
 - Run `python manage.py startapp adventofcode`.
  
 
-## 2. UseCases
 ## 2. Usecases
 
 This section outlines specific use cases for a Django GraphQL project designed to interact with an "Advent of Code" type task system. The system is envisioned to provide real-time feedback and states through GraphQL API calls, enhancing the user experience by offering immediate insights into task progress, specific tick states, and range-based state queries.
@@ -62,14 +61,21 @@ Each of these use cases leverages the strengths of GraphQL, such as fetching pre
 
 By incorporating this use case, the GraphQL API extends its functionality to not only interact with predefined tasks but also to engage dynamically with user-generated content, showcasing the flexibility and power of GraphQL in handling complex computational and analytical tasks.
 
-### View ER model
-![ER model](readme_media/er_model.png)
+
 
 
 ## 3. Database Design
 
+### View ER model
+- Each AdventDay has a number of tasks, this corresponds on the website as part 1  or 2.
+- Each Task has two possible data inputs, either 'test' or 'full'. This allows the example data on the page to be used and helps debugging.
+- For each possible data input, there are a number of ticks. Each tick has a state, which is a json string, and a number, which is the tick number.
+- The model is shown below.
+![ER model](readme_media/er_model.png)
 ### Define Models
 - Create models in `models.py` according to your data structure.
+- The model is here: 
+
 
 ### Database Migrations
 - Use Django's built-in migration system (`makemigrations` and `migrate`).

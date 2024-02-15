@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "graphene_django",
     "polls.apps.PollsConfig",
     "ingredients.apps.IngredientsConfig",
+    "adventofcode.apps.AdventofcodeConfig",
 ]
 
 MIDDLEWARE = [
