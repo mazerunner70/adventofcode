@@ -18,9 +18,12 @@ from django.contrib import admin
 from graphene_django.views import GraphQLView
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import include, path
+from ingredients.schema import ingredients_schema
+from adventofcode.schema import aocschema
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("graphql", csrf_exempt(GraphQLView.as_view(graphiql=True))),
+    path("ingredients", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=ingredients_schema))),
+    path("aoc", csrf_exempt(GraphQLView.as_view(graphiql=True, schema=aocschema))),
     path("polls/", include("polls.urls")),
 ]

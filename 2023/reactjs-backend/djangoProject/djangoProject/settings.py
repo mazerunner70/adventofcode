@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "polls.apps.PollsConfig",
     "ingredients.apps.IngredientsConfig",
     "adventofcode.apps.AdventofcodeConfig",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'djangoProject.urls'
@@ -127,6 +129,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-GRAPHENE = {
-    "SCHEMA": "djangoProject.schema.schema"
-}
+# GRAPHENE = {
+#     "SCHEMA": "djangoProject.schema.schema"
+# }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000"
+]
