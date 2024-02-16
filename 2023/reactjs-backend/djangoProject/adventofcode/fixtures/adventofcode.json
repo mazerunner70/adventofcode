@@ -1,0 +1,191 @@
+[
+  {
+    "model": "adventofcode.adventday",
+    "pk": 1,
+    "fields": {
+      "day_number": 1,
+      "title": "Day 1: The Beginning",
+      "description": "The first challenge."
+    }
+  },
+  {
+    "model": "adventofcode.adventday",
+    "pk": 2,
+    "fields": {
+      "day_number": 2,
+      "title": "Day 2: Continue Onward",
+      "description": "The second challenge."
+    }
+  },
+  {
+    "model": "adventofcode.adventday",
+    "pk": 3,
+    "fields": {
+      "day_number": 3,
+      "title": "Day 3: The Adventure Deepens",
+      "description": "The third challenge."
+    }
+  },
+  {
+    "model": "adventofcode.task",
+    "pk": 1,
+    "fields": {
+      "advent_day": 1,
+      "task_number": 1,
+      "description": "Task 1 for Day 1."
+    }
+  },
+  {
+    "model": "adventofcode.task",
+    "pk": 2,
+    "fields": {
+      "advent_day": 1,
+      "task_number": 2,
+      "description": "Task 2 for Day 1."
+    }
+  },
+  {
+    "model": "adventofcode.task",
+    "pk": 3,
+    "fields": {
+      "advent_day": 2,
+      "task_number": 1,
+      "description": "Task 1 for Day 2."
+    }
+  },
+  {
+    "model": "adventofcode.task",
+    "pk": 4,
+    "fields": {
+      "advent_day": 2,
+      "task_number": 2,
+      "description": "Task 2 for Day 2."
+    }
+  },
+    {
+    "model": "adventofcode.task",
+    "pk": 5,
+    "fields": {
+      "advent_day": 3,
+      "task_number": 1,
+      "description": "Task 1 for Day 3."
+    }
+  },
+  {
+    "model": "adventofcode.task",
+    "pk": 6,
+    "fields": {
+      "advent_day": 3,
+      "task_number": 2,
+      "description": "Task 2 for Day 3."
+    }
+  },
+  {
+    "model": "adventofcode.inputdata",
+    "pk": 1,
+    "fields": {
+      "task": 1,
+      "input_type": "test",
+      "data": "Test input data for Task 1."
+    }
+  },
+  {
+    "model": "adventofcode.inputdata",
+    "pk": 2,
+    "fields": {
+      "task": 1,
+      "input_type": "full",
+      "data": "Full input data for Task 1."
+    }
+  },
+  {
+    "model": "adventofcode.inputdata",
+    "pk": 3,
+    "fields": {
+      "task": 2,
+      "input_type": "test",
+      "data": "Test input data for Task 2."
+    }
+  },
+  {
+    "model": "adventofcode.inputdata",
+    "pk": 4,
+    "fields": {
+      "task": 2,
+      "input_type": "full",
+      "data": "Full input data for Task 2."
+    }
+  },
+  {
+    "model": "adventofcode.inputdata",
+    "pk": 5,
+    "fields": {
+      "task": 3,
+      "input_type": "test",
+      "data": "Test input data for Task 3."
+    }
+  },
+  {
+    "model": "adventofcode.inputdata",
+    "pk": 6,
+    "fields": {
+      "task": 3,
+      "input_type": "full",
+      "data": "Full input data for Task 3."
+    }
+  },
+  {
+    "model": "adventofcode.inputdata",
+    "pk": 7,
+    "fields": {
+      "task": 4,
+      "input_type": "test",
+      "data": "Test input data for Task 4."
+    }
+  },
+  {
+    "model": "adventofcode.inputdata",
+    "pk": 8,
+    "fields": {
+      "task": 4,
+      "input_type": "full",
+      "data": "Full input data for Task 4."
+    }
+  },
+  {
+    "model": "adventofcode.inputdata",
+    "pk": 9,
+    "fields": {
+      "task": 5,
+      "input_type": "test",
+      "data": "Test input data for Task 5."
+    }
+  },
+  {
+    "model": "adventofcode.inputdata",
+    "pk": 10,
+    "fields": {
+      "task": 5,
+      "input_type": "full",
+      "data": "Full input data for Task 5."
+    }
+  },
+  {
+    "model": "adventofcode.inputdata",
+    "pk": 11,
+    "fields": {
+      "task": 6,
+      "input_type": "test",
+      "data": "Test input data for Task 6."
+    }
+  },
+  {
+    "model": "adventofcode.inputdata",
+    "pk": 12,
+    "fields": {
+      "task": 6,
+      "input_type": "full",
+      "data": "Full input data for Task 6."
+    }
+  }
+]

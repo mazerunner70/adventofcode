@@ -72,13 +72,19 @@ By incorporating this use case, the GraphQL API extends its functionality to not
 - For each possible data input, there are a number of ticks. Each tick has a state, which is a json string, and a number, which is the tick number.
 - The model is shown below.
 ![ER model](readme_media/er_model.png)
-### Define Models
+### Define Django Models
 - Create models in `models.py` according to your data structure.
-- The model is here: 
+- The model is [here](adventofcode/models.py)
 
 
 ### Database Migrations
 - Use Django's built-in migration system (`makemigrations` and `migrate`).
+- This will create the database and the tables.
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
 
 ### Admin Interface
 - Optionally, register models in `admin.py` for admin panel access.
