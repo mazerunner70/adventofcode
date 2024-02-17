@@ -11,25 +11,54 @@ import TaskPane, {
 export default function Page() {
 //  const { state, dispatch } = useContext(AdventContext);
   const [data, setData] = useState<ITaskPaneProps>({tasks:[]});
-  const fetchData = async () => {
-    const resp = await fetch("/assets/config.json");
-    const d = await resp.json();
-    //dispatch({ type: "SET_RUNSTATE", payload: { dayenv:dayno+envName, data:d } });
+
+  const fetchData2 = async () => {
+    const data = await fetch(
+      "http://localhost:8000/aoc",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          query: 'query {\n' +
+            '  allAdventDays {\n' +
+            '    id\n' +
+            '    dayNumber\n' +
+            '    description\n' +
+            '    tasks {\n' +
+            '      taskId\n' +
+            '      taskNumber\n' +
+            '      description\n' +
+            '      inputData {\n' +
+            '        inputType\n' +
+            '      }\n' +
+            '    }\n' +
+            '  }\n' +
+            '}',
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) => res.json());
     const tasks : ITaskProps[] = [];
-    for (let i = 0; i < d.length; i++) {
-      tasks.push({ day: d[i].dayno, part: 1, testDataUsed: true, filename: d[i].part1.test.filename });
-      tasks.push({ day: d[i].dayno, part: 1, testDataUsed: false, filename: d[i].part1.full.filename });
-      tasks.push({ day: d[i].dayno, part: 2, testDataUsed: true, filename: d[i].part2.test.filename });
-      tasks.push({ day: d[i].dayno, part: 2, testDataUsed: false, filename: d[i].part2.full.filename });
+    const adventdays = data.data.allAdventDays;
+    for (let i = 0; i < adventdays.length; i++) {
+      tasks.push({ day: adventdays[i].dayNumber, part: 1, testDataUsed: true, taskId: adventdays[i].tasks[0].taskId });
+      tasks.push({ day: adventdays[i].dayNumber, part: 1, testDataUsed: false, taskId: adventdays[i].tasks[0].taskId });
+      tasks.push({ day: adventdays[i].dayNumber, part: 2, testDataUsed: true, taskId: adventdays[i].tasks[1].taskId });
+      tasks.push({ day: adventdays[i].dayNumber, part: 2, testDataUsed: false, taskId: adventdays[i].tasks[1].taskId });
     }
     setData({tasks});
-  };
+    console.log("datagraphql", data);
+    console.log("datagraphql-xfrm", {tasks});
+  }
+
   console.log("aa", data)
   useEffect(() => {
     console.log("aaa", data)
     if (data.tasks.length === 0) {
       console.log("aaaa", data)
-      fetchData();
+      // fetchData();
+      fetchData2();
     }
   }, [ ]);
   //console.log("--", state)

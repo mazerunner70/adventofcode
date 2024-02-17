@@ -1,24 +1,64 @@
 import graphene
+from graphene import Int
 from graphene_django import DjangoObjectType
 
 from adventofcode.models import AdventDay, Task, InputData, Tick
+from adventofcode.services.inputdataservice import InputDataService
 
 
 class AdventDayType(DjangoObjectType):
     class Meta:
         model = AdventDay
 
+
 class TaskType(DjangoObjectType):
     class Meta:
         model = Task
 
+
 class InputDataType(DjangoObjectType):
+    tick_count = Int(description="Count of ticks for the input data")
+
     class Meta:
         model = InputData
+
+    def resolve_tick_count(self, info):
+        # Return the count of related Tick instances
+        return self.ticks.count()
+
+
+class BuildTicksMutation(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID(required=True)
+
+    # The response fields of the mutation
+    input_data = graphene.Field(InputDataType)
+    tick_count = graphene.Field(InputDataType)
+    success = graphene.Boolean()
+
+    @classmethod
+    def mutate(cls, root, info, id):
+        try:
+            input_data = InputData.objects.get(pk=id)
+            if input_data.state != 'initialised':
+                input_data.state = 'initialising'
+                input_data.save()
+                inputdataservice = InputDataService(input_data)
+                inputdataservice.initialise()
+                input_data.state = 'initialised'
+                input_data.save()
+                success = True
+            else:
+                success = False
+            return BuildTicksMutation(input_data=input_data, success=success)
+        except InputData.DoesNotExist:
+            return BuildTicksMutation(input_data=None, success=False)
+
 
 class TickType(DjangoObjectType):
     class Meta:
         model = Tick
+
 
 class Query(graphene.ObjectType):
     all_advent_days = graphene.List(AdventDayType)
@@ -49,4 +89,7 @@ class Query(graphene.ObjectType):
     def resolve_ticks_by_input_data(self, info, input_data_id):
         return Tick.objects.filter(input_data_id=input_data_id)
 
-aocschema = graphene.Schema(query=Query)
+class MyMutations(graphene.ObjectType):
+    build_ticks = BuildTicksMutation.Field()
+
+aocschema = graphene.Schema(query=Query, mutation=MyMutations)

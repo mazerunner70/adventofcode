@@ -34,9 +34,15 @@ class InputData(models.Model):
         ('test', 'Test'),
         ('full', 'Full'),
     )
+    STATE_CHOICES = (
+        ('not_initialised', 'Not Initialised'),
+        ('initialising', 'Initialising'),
+        ('initialised', 'Initialised'),
+    )
     task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="input_data")
     input_type = models.CharField(max_length=4, choices=INPUT_TYPES, help_text="Type of input data (test or full)")
     data = models.TextField(help_text="The input data for the task")
+    state = models.CharField(max_length=15, choices=STATE_CHOICES, default='not_initialised', help_text="State of the input data")
 
     class Meta:
         unique_together = ('task', 'input_type')
@@ -47,7 +53,7 @@ class InputData(models.Model):
 class Tick(models.Model):
     input_data = models.ForeignKey(InputData, on_delete=models.CASCADE, related_name="ticks")
     tick_number = models.PositiveIntegerField(help_text="Sequential number of the tick for the input data")
-    state_description = models.TextField(help_text="Description of the state at this tick")
+    endstate = models.TextField(help_text="The state and actions from this tick", default='{}')
 
     class Meta:
         unique_together = ('input_data', 'tick_number')
