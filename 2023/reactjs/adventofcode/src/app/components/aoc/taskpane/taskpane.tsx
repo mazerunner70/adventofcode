@@ -44,7 +44,7 @@ export interface ITaskProps {
   day: number;
   part: number;
   testDataUsed: boolean;
-  filename: string;
+  taskId: number;
 }
 
 export interface ITaskPaneProps {
@@ -52,10 +52,10 @@ export interface ITaskPaneProps {
 }
 
 export default function TaskPane({ data }: { data: ITaskPaneProps }) {
-  const [dayNumberState, setDayNumberState] = React.useState<number>(2);
+  const [dayNumberState, setDayNumberState] = React.useState<number>(1);
   const [partState, setPartState] = React.useState<number>(1);
   const [testDataUsedState, setTestDataUsedState] =
-    React.useState<boolean>(false);
+    React.useState<boolean>(true);
   const [speedState, setSpeedState] = React.useState<number>(0);
   const [progressData, setProgressData] = React.useState<IProgressData>({
     totalTicks: 0,
@@ -80,19 +80,48 @@ export default function TaskPane({ data }: { data: ITaskPaneProps }) {
     setSpeedState(speed);
   }
 
+  const fetchInputData = async (taskId: number, testDataUsed: boolean) => {
+    const data = await fetch(
+      "http://localhost:8000/aoc",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          query: 'query {\n' +
+            '  inputdataByTaskIdAndType(taskId: ' + taskId + ', inputType: "' + (testDataUsed?"test":"full") + '") {\n' +
+            '    id\n' +
+            '    data\n' +
+            '  }\n' +
+            '}',
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then((res) => res.json());
+    console.log("inputdata", data);
+  }
+
+  useEffect(() => {
+    console.log("iddata");
+    const taskId = data.tasks.find(task=>task.day === dayNumberState && task.part === partState && task.testDataUsed === testDataUsedState)?.taskId;
+    if (taskId) {
+      fetchInputData(taskId, testDataUsedState);
+    }
+  }, [dayNumberState, partState, testDataUsedState]);
+
   useEffect(() => {
     console.log("dddd", data);
     if (data.tasks?.length > 0) {
-      console.log("ddd", data.tasks[0].filename);
-      const worker: Worker = asWorker(exWorker);
-      // const worker = new Worker(new URL("@app/components/days/day01/p1/tickcalc.ts", import.meta.url));
-      // const worker = new Worker("javascript/example.js", { type: "classic" });
-      // const worker = asWorker(calcWorker);
-      worker.onmessage = (e: MessageEvent<number>) => {
-        console.log("e", e);
-        setProgressData({ ...progressData, totalTicks: e.data });
-      };
-      worker.postMessage({ filename: data.tasks[0].filename });
+      console.log("ddd", data.tasks[0].taskId);
+      // const worker: Worker = asWorker(exWorker);
+      // // const worker = new Worker(new URL("@app/components/days/day01/p1/tickcalc.ts", import.meta.url));
+      // // const worker = new Worker("javascript/example.js", { type: "classic" });
+      // // const worker = asWorker(calcWorker);
+      // worker.onmessage = (e: MessageEvent<number>) => {
+      //   console.log("e", e);
+      //   setProgressData({ ...progressData, totalTicks: e.data });
+      // };
+      // worker.postMessage({ filename: data.tasks[0].taskId });
     }
   }, [data]);
 

@@ -156,3 +156,20 @@ python manage.py migrate
 - Set up logging for effective debugging and monitoring.
 
 This outline serves as a foundation for developing a Django project with GraphQL. It's crucial to adapt and expand upon this skeleton based on the specific requirements and challenges of your project.
+
+
+query {
+    inputdataByTaskIdAndType(taskId: 1, inputType: "test") {
+    data
+    tickCount
+  }
+
+
+mutation {
+  calculateTicks(taskDescription: "1, 2, 3, 4, 5, 6, 7, 8, 9, 10") {
+    ticks {
+      number
+      state
+    }
+  }
+}  
