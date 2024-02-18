@@ -11,6 +11,8 @@ import { familjenGrotesk } from "@app/styles/fonts";
 import calcWorker from "@app/components/days/day01/p1/tickcalc";
 import { asWorker } from "@app/utils/WebWorker";
 import exWorker from "@app/components/days/day01/p1/example1";
+import {IInputData, fetchInputDataByTaskIdAndType, initialiseInputData } from "@app/apiclient/inputdata";
+import { fetchTicksByInputDataAndTickNumberRange } from "@app/apiclient/tick";
 
 const TaskPanel = styled.div`
   ${familjenGrotesk.style};
@@ -47,16 +49,19 @@ export interface ITaskProps {
   taskId: number;
 }
 
+
+
 export interface ITaskPaneProps {
   tasks: ITaskProps[];
 }
 
-export default function TaskPane({ data }: { data: ITaskPaneProps }) {
+export default function TaskPane( {data} : {data:ITaskPaneProps} ) {
   const [dayNumberState, setDayNumberState] = React.useState<number>(1);
   const [partState, setPartState] = React.useState<number>(1);
   const [testDataUsedState, setTestDataUsedState] =
     React.useState<boolean>(true);
   const [speedState, setSpeedState] = React.useState<number>(0);
+  const [inputDataState, setInputDataState] = React.useState<IInputData | null>(null);
   const [progressData, setProgressData] = React.useState<IProgressData>({
     totalTicks: 0,
     currentTick: 0,
@@ -80,34 +85,28 @@ export default function TaskPane({ data }: { data: ITaskPaneProps }) {
     setSpeedState(speed);
   }
 
-  const fetchInputData = async (taskId: number, testDataUsed: boolean) => {
-    const data = await fetch(
-      "http://localhost:8000/aoc",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          query: 'query {\n' +
-            '  inputdataByTaskIdAndType(taskId: ' + taskId + ', inputType: "' + (testDataUsed?"test":"full") + '") {\n' +
-            '    id\n' +
-            '    data\n' +
-            '  }\n' +
-            '}',
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    ).then((res) => res.json());
-    console.log("inputdata", data);
-  }
 
   useEffect(() => {
-    console.log("iddata");
-    const taskId = data.tasks.find(task=>task.day === dayNumberState && task.part === partState && task.testDataUsed === testDataUsedState)?.taskId;
+    console.log("iddata", data.tasks);
+    const taskId = data.tasks?.find(task=>task.day === dayNumberState && task.part === partState && task.testDataUsed === testDataUsedState)?.taskId;
     if (taskId) {
-      fetchInputData(taskId, testDataUsedState);
+      console.log("iddataT", taskId, testDataUsedState);
+      fetchInputDataByTaskIdAndType(taskId, testDataUsedState)
+        .then((res) => {console.log("initInputData", res);setInputDataState(res); return res.id})
+        .then((inputDataId) => {return initialiseInputData(inputDataId)})
+        .then((res) => {console.log("initTicks", res);return res.data.buildTicks.inputData.tickCount;})
+        .then((tickCount) => {setProgressData({...progressData, totalTicks: tickCount});})
     }
-  }, [dayNumberState, partState, testDataUsedState]);
+  }, [data, dayNumberState, partState, testDataUsedState]);
+
+  useEffect(() => {
+    console.log("tickretrieve");
+    if (inputDataState) {
+      console.log("tickretrieve2");
+      fetchTicksByInputDataAndTickNumberRange(inputDataState, 0, 0)
+        .then((res) => {console.log("tickretrieve3", res.endstate.uiActions.param);return res;})
+    }
+  }, [inputDataState]);
 
   useEffect(() => {
     console.log("dddd", data);

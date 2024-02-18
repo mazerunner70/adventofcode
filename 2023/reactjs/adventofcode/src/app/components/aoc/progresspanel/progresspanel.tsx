@@ -20,8 +20,8 @@ export default function ProgressPanel({ speedState, progressData }: {speedState:
             <EvenDistributed>
                 <H2>Status</H2>
                 <PulsingText>{statusText}</PulsingText>
-                <H2>Output</H2>
-                <OutlinedBox>-</OutlinedBox>
+                <H2>Ticks</H2>
+                <PulsingText>{progressData.currentTick} of {progressData.totalTicks}</PulsingText>
             </EvenDistributed>
         </Panel>
     );
