@@ -53,7 +53,27 @@ class TickResult:
         if isinstance(obj, Action):
             return obj.value
         raise TypeError(f"Object of type '{obj.__class__.__name__}' is not JSON serializable")
-
+    def to_json_camel(obj):
+        if isinstance(obj, UIActions):
+            return convert_keys(obj.__dict__)
+        if isinstance(obj, TickState):
+            return convert_keys(obj.__dict__)
+        if isinstance(obj, TickResult):
+            return convert_keys(obj.__dict__)
+        if isinstance(obj, LineSearchState):
+            return convert_keys(obj.__dict__)
+        if isinstance(obj, Action):
+            return obj.value
+        raise TypeError(f"Object of type '{obj.__class__.__name__}' is not JSON serializable")
+def snake_to_camel(snake_str):
+    components = snake_str.split('_')
+    return components[0] + ''.join(x.title() for x in components[1:])
+def convert_keys(obj):
+    if isinstance(obj, dict):
+        return {snake_to_camel(k): convert_keys(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [convert_keys(i) for i in obj]
+    return obj
 
 def ui_actions_found_all_lines(tickstate: TickState) -> bool:
     return all(lss.value_found is not None for lss in tickstate.lines_searchstate)
@@ -135,7 +155,8 @@ class Day01Part1Algorithm1:
         ticknumber = 1
         while True:
             tickresult = self.tick(tickstate, self.lines)
-            jsonString = json.dumps(tickresult, default=TickResult.to_json)
+            #jsonString = json.dumps(tickresult, default=TickResult.to_json)
+            jsonString = json.dumps(tickresult, default=TickResult.to_json_camel)
             tickProcessor(ticknumber, jsonString)
             ticknumber += 1
             if (ticknumber > 100):

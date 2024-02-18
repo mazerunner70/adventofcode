@@ -70,6 +70,12 @@ class Query(graphene.ObjectType):
         task_id=graphene.Int(required=True),
         input_type=graphene.String(required=True)
     )
+    ticks_in_range = graphene.List(
+        TickType,
+        input_data_id=graphene.Int(required=True),
+        start_tick=graphene.Int(required=True),
+        end_tick=graphene.Int(required=True)
+    )
 
     def resolve_all_advent_days(self, info, **kwargs):
         return AdventDay.objects.all()
@@ -88,6 +94,14 @@ class Query(graphene.ObjectType):
 
     def resolve_ticks_by_input_data(self, info, input_data_id):
         return Tick.objects.filter(input_data_id=input_data_id)
+
+    def resolve_ticks_in_range(self, info, input_data_id, start_tick, end_tick, **kwargs):
+        # Fetch ticks for the specified InputData within the given range
+        return Tick.objects.filter(
+            input_data_id=input_data_id,
+            tick_number__gte=start_tick,
+            tick_number__lte=end_tick
+        ).order_by('tick_number')
 
 class MyMutations(graphene.ObjectType):
     build_ticks = BuildTicksMutation.Field()
