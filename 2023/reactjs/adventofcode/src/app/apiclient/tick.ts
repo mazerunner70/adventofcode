@@ -3,24 +3,45 @@ import {
 } from "@app/apiclient/inputdata";
 
 
-export interface IEndState {
-  uiActions: {
-    action: number,
-    param: string
-  },
+
+export interface LineSearchState {
+  searchIndex: number,
+  foundLeftIndex: number,
+  foundRightIndex: number,
+  valueFound: number | null
+}
+
+export enum Action {
+  NoAction,
+  TotalFound,
+  ValueFoundForLine,
+  DigitFoundForRight,
+  SearchingFromRight,
+  DigitFoundForLeft,
+  SearchingFromLeft,
+  StartingSearch
+}
+export interface UiActions {
+  action: Action,
+  param: string
+}
+export interface ITickOutcome {
+  uiActions: UiActions,
   tickState: {
-    linesSearchstate: [{
-      searchIndex: number,
-      foundLeftIndex: number,
-      foundRightIndex: number,
-      valueFound: number | null    }]
+    linesSearchstate: LineSearchState[],
+    total: number|null,
+    completed: boolean
   }
 }
 
-export interface ITick {
+export interface ITickState {
   id: number;
   tickNumber: number;
-  endstate: IEndState
+  tickOutcome: ITickOutcome
+}
+
+export interface ITicksState {
+  ticks: ITickState[]
 }
 
 const getCamelCaseFrom = (a) => {
@@ -31,14 +52,14 @@ const getCamelCaseFrom = (a) => {
   }))
 }
 
-export const fetchTicksByInputDataAndTickNumberRange = async (inputData:IInputData, startTick: number, endTick: number):Promise<ITick> => {
+export const fetchTicksByInputDataAndTickNumberRange = async (inputData:IInputData, startTick: number, endTick: number):Promise<ITicksState> => {
   return fetch(
     "http://localhost:8000/aoc",
     {
       method: "POST",
       body: JSON.stringify({
         query: 'query {\n' +
-          '  ticksInRange(inputDataId: 1, startTick: 1, endTick: 1) {\n' +
+          '  ticksInRange(inputDataId: 1, startTick: 1, endTick: 34) {\n' +
           '    id\n' +
           '    tickNumber\n' +
           '    endstate\n' +
@@ -50,6 +71,6 @@ export const fetchTicksByInputDataAndTickNumberRange = async (inputData:IInputDa
       },
     }
   ).then((res) => res.json())
-    .then((res) => res.data.ticksInRange[0])
-    .then(res=> { return {id:res.id, tickNumber : res.tickNumber, endstate : JSON.parse(res.endstate)}});
+    .then((res) => res.data.ticksInRange)
+    .then(res=>  {return {ticks: res.map(t=>{console.log("bare", t);;return {id:t.id, tickNumber : t.tickNumber, tickOutcome : JSON.parse(t.endstate)};})}});
 }
