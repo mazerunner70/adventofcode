@@ -12,7 +12,9 @@ import calcWorker from "@app/components/days/day01/p1/tickcalc";
 import { asWorker } from "@app/utils/WebWorker";
 import exWorker from "@app/components/days/day01/p1/example1";
 import {IInputData, fetchInputDataByTaskIdAndType, initialiseInputData } from "@app/apiclient/inputdata";
-import { fetchTicksByInputDataAndTickNumberRange } from "@app/apiclient/tick";
+import {ITicksState, fetchTicksByInputDataAndTickNumberRange } from "@app/apiclient/tick";
+import Task
+  from "../../../../../../../../../../../../../../home/william/Documents/personal/projects/adventofcode/2023/reactjs/adventofcode/src/app/components/aoc/taskpane/task";
 
 const TaskPanel = styled.div`
   ${familjenGrotesk.style};
@@ -66,6 +68,8 @@ export default function TaskPane( {data} : {data:ITaskPaneProps} ) {
     totalTicks: 0,
     currentTick: 0,
   });
+  const [ticksState, setTicksState] = React.useState<ITicksState>({ticks: []});
+
 
   console.log("dd", data);
   const daylist: number[] = [...new Set(data.tasks?.map((task) => task.day))];
@@ -85,6 +89,15 @@ export default function TaskPane( {data} : {data:ITaskPaneProps} ) {
     setSpeedState(speed);
   }
 
+  function incrementTick(): void {
+    const newTick = Math.min(Math.max(1, progressData.currentTick + speedState), progressData.totalTicks);
+    if (progressData.currentTick !== newTick) {
+      setProgressData({
+        ...progressData,
+        currentTick: newTick,
+      });
+    }
+  }
 
   useEffect(() => {
     console.log("iddata", data.tasks);
@@ -103,32 +116,35 @@ export default function TaskPane( {data} : {data:ITaskPaneProps} ) {
     console.log("tickretrieve");
     if (inputDataState) {
       console.log("tickretrieve2");
-      fetchTicksByInputDataAndTickNumberRange(inputDataState, 0, 0)
-        .then((res) => {console.log("tickretrieve3", res.endstate.uiActions.param);return res;})
+      fetchTicksByInputDataAndTickNumberRange(inputDataState, 1, 34)
+        .then((res) => {
+          console.log("tickretrieve3", res);
+          setTicksState(res);
+        })
     }
   }, [inputDataState]);
 
   useEffect(() => {
-    console.log("dddd", data);
-    if (data.tasks?.length > 0) {
-      console.log("ddd", data.tasks[0].taskId);
-      // const worker: Worker = asWorker(exWorker);
-      // // const worker = new Worker(new URL("@app/components/days/day01/p1/tickcalc.ts", import.meta.url));
-      // // const worker = new Worker("javascript/example.js", { type: "classic" });
-      // // const worker = asWorker(calcWorker);
-      // worker.onmessage = (e: MessageEvent<number>) => {
-      //   console.log("e", e);
-      //   setProgressData({ ...progressData, totalTicks: e.data });
-      // };
-      // worker.postMessage({ filename: data.tasks[0].taskId });
-    }
-  }, [data]);
+    //Implementing the setInterval method
+    const interval = setInterval(() => {
+      if (ticksState.ticks.length > 0)
+        incrementTick();
+    }, 1000);
+    //Clearing the interval
+    return () => clearInterval(interval);
+  }, [progressData, speedState]);
+
+  console.log("tickstate", ticksState, progressData);
 
   return (
     <TaskPanel>
       <TopLeft>
         <TaskSelection daylist={daylist} selectionConfig={selectionState} />
       </TopLeft>
+      <TopRight>
+        {inputDataState && inputDataState.data && ticksState.ticks.length > progressData.currentTick &&
+        <Task taskProps={{data: inputDataState.data, tick: ticksState.ticks[progressData.currentTick]}} /> }
+      </TopRight>
       <BottomLeft>
         <VCRControls speedState={speedState} onSpeedChange={onSpeedChange} />
       </BottomLeft>

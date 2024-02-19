@@ -10,14 +10,10 @@ import {
   TableRow,
   WordGrid,
 } from "./styled";
-import {
-  Action,
-  ITickState,
-  LineSearchState,
-  UIActions,
-} from "@app/components/days/day01/p1/ticker";
+
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import {Action, ITickOutcome, LineSearchState, UiActions } from "@app/apiclient/tick";
 
 function RenderLine({
   line,
@@ -25,13 +21,13 @@ function RenderLine({
   foundLeftIndex,
   foundRightIndex,
   valueFound,
-  uiActions,
-}: LineSearchState & { uiActions: UIActions }): JSX.Element {
+  uiAction,
+}: {line:string} & LineSearchState & { uiAction: UiActions }): JSX.Element {
   const tableCellRef = useRef(null);
   const foundValueRef = useRef(null);
   useEffect(() => {
     //console.log("RenderLine useEffect", uiActions, Action.StartingSearch)
-    if (uiActions.action === Action.StartingSearch) {
+    if (uiAction.action === Action.StartingSearch) {
       const scaleTween = gsap.to(tableCellRef.current, {
         scale: 1.1,
         repeat: 3,
@@ -43,7 +39,7 @@ function RenderLine({
       scaleTween.play();
       //console.log("scaleTween1")
     }
-    if (uiActions.action === Action.ValueFoundForLine) {
+    if (uiAction.action === Action.ValueFoundForLine) {
       const scaleTween = gsap.to(foundValueRef.current, {
         scale: 1.1,
         repeat: 3,
@@ -55,7 +51,7 @@ function RenderLine({
       scaleTween.play();
       //console.log("scaleTween2")
     }
-  }, [uiActions.action]);
+  }, [uiAction.action]);
   function compareNumbers(a, b) {
     return a - b;
   }
@@ -100,19 +96,20 @@ function RenderLine({
     </TableRow>
   );
 }
-const noUIActions: UIActions = {
+const noUIAction: UiActions = {
   action: Action.NoAction,
   param: "",
 };
 export default function Render({
   data,
-  tickState,
-  uiActions,
+  tickOutcome
 }: {
   data: string;
-  tickState: ITickState;
-  uiActions: UIActions;
+  tickOutcome: ITickOutcome
 }): JSX.Element {
+  const uiActions: UiActions = tickOutcome.uiActions;
+  const tickState = tickOutcome.tickState;
+  console.log("Render", tickOutcome, tickState, uiActions)
   const foundValueRef = useRef(null);
   useEffect(() => {
     if (uiActions.action === Action.ValueFoundForLine) {
@@ -149,15 +146,16 @@ export default function Render({
             </RespTableHeader>
             <RespTableBody>
               {lines.map((line, i) => {
-                const rs = tickState.searchState[i];
+                const rs = tickState.linesSearchstate[i];
                 return (
                   rs && (
                     <RenderLine
                       key={i}
-                      uiActions={
+                      line={line}
+                      uiAction={
                         uiActions.param === i.toString()
                           ? uiActions
-                          : noUIActions
+                          : noUIAction
                       }
                       {...rs}
                     />
