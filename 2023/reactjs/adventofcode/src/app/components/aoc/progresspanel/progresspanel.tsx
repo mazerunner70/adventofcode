@@ -1,8 +1,6 @@
 import Panel from "@app/components/base/panel";
 import {EvenDistributed, OutlinedBox, PulsingText} from "./styled";
-import { H2 } from "@app/components/base/text/textwrappers";
-
-
+import { H3, H4 } from "@app/components/base/text/textwrappers";
 
 export interface IProgressData {
     totalTicks: number;
@@ -18,10 +16,10 @@ export default function ProgressPanel({ speedState, progressData }: {speedState:
     return (
         <Panel shadowed={true}>
             <EvenDistributed>
-                <H2>Status</H2>
-                <PulsingText>{statusText}</PulsingText>
-                <H2>Ticks</H2>
-                <PulsingText>{progressData.currentTick} of {progressData.totalTicks}</PulsingText>
+                <H4>Status</H4>
+                <PulsingText><H3>{statusText}</H3></PulsingText>
+                <H4>Ticks</H4>
+                <PulsingText><H3>{progressData.currentTick} of {progressData.totalTicks}</H3></PulsingText>
             </EvenDistributed>
         </Panel>
     );

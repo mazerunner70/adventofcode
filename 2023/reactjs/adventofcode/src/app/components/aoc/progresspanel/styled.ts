@@ -6,7 +6,7 @@ export const EvenDistributed = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  width: 100%;
+  width: 300px;
 `;
 
 export const Heading = styled.div`

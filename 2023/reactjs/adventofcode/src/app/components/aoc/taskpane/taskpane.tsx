@@ -13,14 +13,14 @@ import { asWorker } from "@app/utils/WebWorker";
 import exWorker from "@app/components/days/day01/p1/example1";
 import {IInputData, fetchInputDataByTaskIdAndType, initialiseInputData } from "@app/apiclient/inputdata";
 import {ITicksState, fetchTicksByInputDataAndTickNumberRange } from "@app/apiclient/tick";
-import Task
-  from "../../../../../../../../../../../../../../home/william/Documents/personal/projects/adventofcode/2023/reactjs/adventofcode/src/app/components/aoc/taskpane/task";
+import Task from "@app/components/aoc/taskpane/task";
+import Panel from "@app/components/base/panel";
 
 const TaskPanel = styled.div`
   ${familjenGrotesk.style};
   width: 100%;
-  height: 500px;
-  position: relative;
+  height: 100%;
+    position: relative;
 `;
 
 const TopLeft = styled.div`
@@ -43,6 +43,26 @@ const BottomRight = styled.div`
   bottom: 0;
   right: 0;
 `;
+const PaddingContainer = styled.div`
+    padding: 10px;`
+const PaddingCentredContainer = styled.div`
+    padding: 10px;
+    margin: 0 auto;
+    height: 100%;
+`
+const PaddingRightContainer = styled.div`
+    position: absolute;
+    padding: 10px;
+    right: 0;
+`
+const RowContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+`
+const ColumnContainer = styled.div`
+  display: flex;
+    flex-direction: column;
+`
 
 export interface ITaskProps {
   day: number;
@@ -138,19 +158,27 @@ export default function TaskPane( {data} : {data:ITaskPaneProps} ) {
 
   return (
     <TaskPanel>
-      <TopLeft>
-        <TaskSelection daylist={daylist} selectionConfig={selectionState} />
-      </TopLeft>
-      <TopRight>
-        {inputDataState && inputDataState.data && ticksState.ticks.length > progressData.currentTick &&
-        <Task taskProps={{data: inputDataState.data, tick: ticksState.ticks[progressData.currentTick]}} /> }
-      </TopRight>
-      <BottomLeft>
-        <VCRControls speedState={speedState} onSpeedChange={onSpeedChange} />
-      </BottomLeft>
-      <BottomRight>
-        <ProgressPanel speedState={speedState} progressData={progressData} />
-      </BottomRight>
+      <ColumnContainer >
+        <RowContainer>
+          <PaddingContainer>
+            <TaskSelection daylist={daylist} selectionConfig={selectionState}/>
+          </PaddingContainer>
+          <PaddingCentredContainer>
+            <Panel title={"Demo"} shadowed={true}>
+              {inputDataState && inputDataState.data && ticksState.ticks.length > progressData.currentTick &&
+                  <Task taskProps={{data: inputDataState.data, tick: ticksState.ticks[progressData.currentTick]}}/>}
+            </Panel>
+          </PaddingCentredContainer>
+        </RowContainer>
+        <RowContainer>
+          <PaddingContainer>
+            <VCRControls speedState={speedState} onSpeedChange={onSpeedChange} />
+          </PaddingContainer>
+          <PaddingRightContainer>
+            <ProgressPanel speedState={speedState} progressData={progressData} />
+          </PaddingRightContainer>
+        </RowContainer>
+      </ColumnContainer>
     </TaskPanel>
   );
 }
