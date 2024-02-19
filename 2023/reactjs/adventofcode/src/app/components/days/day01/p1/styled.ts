@@ -30,9 +30,15 @@ const RespTableHeader = styled.div`
     font-weight: bold;
     font-size: 1.0em;
 `
+export const RespTableHeaderText = styled.div`
+    display: table-row;
+    background-color: gray;
+    font-weight: bold;
+    font-size: 1.0em;
+`
 const TableHeaderCell = styled.div`
     display: table-cell;
-    border: 1px solid black;
+    //border: 1px solid black;
     padding: 5px;
     text-align: center;
 `

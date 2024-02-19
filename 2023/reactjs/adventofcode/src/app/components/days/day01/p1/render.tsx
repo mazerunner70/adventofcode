@@ -7,6 +7,7 @@ import {
   SearchLetter,
   TableCell,
   TableHeaderCell,
+  RespTableHeaderText,
   TableRow,
   WordGrid,
 } from "./styled";
@@ -137,14 +138,12 @@ export default function Render({
                 <TableCell>Total</TableCell>
                 <TableCell ref={foundValueRef}>{tickState.total}</TableCell>
               </TableRow>
-            </RespTableBody>
-          </RespTable>
-          <RespTable>
-            <RespTableHeader>
+
+            <RespTableHeaderText>
               <TableHeaderCell>Word</TableHeaderCell>
               <TableHeaderCell>Found</TableHeaderCell>
-            </RespTableHeader>
-            <RespTableBody>
+            </RespTableHeaderText>
+
               {lines.map((line, i) => {
                 const rs = tickState.linesSearchstate[i];
                 return (

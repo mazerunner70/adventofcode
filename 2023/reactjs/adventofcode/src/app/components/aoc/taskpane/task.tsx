@@ -13,9 +13,10 @@ export interface ITaskProps {
 
 const TaskPanel = styled.div`
   ${familjenGrotesk.style};
-  width: 70%;
-  height: 300px;
+  width: 100%;
+  height: 100%;
   position: relative;
+    //border: 1px solid black;
 `;
 
 export default function Task( {taskProps} : {taskProps:ITaskProps} ) {
