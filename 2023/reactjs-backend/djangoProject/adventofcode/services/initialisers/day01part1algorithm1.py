@@ -159,8 +159,10 @@ class Day01Part1Algorithm1:
             jsonString = json.dumps(tickresult, default=TickResult.to_json_camel)
             tickProcessor(ticknumber, jsonString)
             ticknumber += 1
-            if (ticknumber > 100):
-                return -1;
+            # if (ticknumber > 100):
+            #     return -1;
+            if (ticknumber % 100 == 0):
+                print(ticknumber)
             if tickresult.ui_actions.action == Action.TotalFound:
                 return tickresult.tick_state.total
             tickstate = tickresult.tick_state
@@ -227,9 +229,13 @@ class Day01Part1Algorithm1:
 
 
 def tickProcessor(jsonstate, ticknumber):
-    print(ticknumber, jsonstate)
+    #print(ticknumber, jsonstate)
+    pass
 
 if __name__ == "__main__":
-    data="1abc2\npqr3stu8vwx\na1b2c3d4e5f\ntreb7uchet"
+    # data="1abc2\npqr3stu8vwx\na1b2c3d4e5f\ntreb7uchet"
+    #read in input.txt to string
+    with open('test/input.txt', 'r') as file:
+        data = file.read()
     day01part1algorithm1 = Day01Part1Algorithm1(data)
     day01part1algorithm1.initialise(tickProcessor)
