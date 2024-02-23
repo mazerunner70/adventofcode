@@ -37,14 +37,18 @@ export interface ISelectionConfig {
   onTestDataChange: (testData: boolean) => void;
 }
 
-
-export default function TaskSelection({ daylist, selectionConfig }: { daylist: number[], selectionConfig: ISelectionConfig}) {
+export default function TaskSelection({
+  daylist,
+  selectionConfig,
+}: {
+  daylist: number[];
+  selectionConfig: ISelectionConfig;
+}) {
   const toEntry: (dayno: number) => Entry = (day) => ({
     label: day.toString(),
     value: day.toString(),
   });
   const dayOptions = daylist.map(toEntry);
-
 
   const parts = [
     {
@@ -71,7 +75,11 @@ export default function TaskSelection({ daylist, selectionConfig }: { daylist: n
   //   setPartState(event.target.value);
   // }
 
-  console.log(selectionConfig.day, selectionConfig.part, selectionConfig.testData)
+  console.log(
+    selectionConfig.day,
+    selectionConfig.part,
+    selectionConfig.testData,
+  );
   return (
     <Panel title={"Task Selection"} shadowed={true}>
       <div>
@@ -81,7 +89,11 @@ export default function TaskSelection({ daylist, selectionConfig }: { daylist: n
           <DropDown
             options={dayOptions}
             selected={toEntry(selectionConfig.day)}
-            onChange={(daynoString: string|null)=> selectionConfig.onDayChange(daynoString?parseInt(daynoString):null)}
+            onChange={(daynoString: string | null) =>
+              selectionConfig.onDayChange(
+                daynoString ? parseInt(daynoString) : null,
+              )
+            }
           />
         </ADPanel>
         <HorizontalDivider />
@@ -90,7 +102,9 @@ export default function TaskSelection({ daylist, selectionConfig }: { daylist: n
             label="Part"
             options={parts}
             selected={selectionConfig.part.toString()}
-            onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>selectionConfig.onPartChange(parseInt(evt.target.value))}
+            onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>
+              selectionConfig.onPartChange(parseInt(evt.target.value))
+            }
           />
         </ADPanel>
         <HorizontalDivider />
@@ -98,8 +112,10 @@ export default function TaskSelection({ daylist, selectionConfig }: { daylist: n
           <RadioButtonGroup
             label="Test Data"
             options={testDataOnOff}
-            selected={selectionConfig.testData?'On':'Off'}
-            onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>selectionConfig.onTestDataChange(evt.target.value == 'On')}
+            selected={selectionConfig.testData ? "On" : "Off"}
+            onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>
+              selectionConfig.onTestDataChange(evt.target.value == "On")
+            }
           />
         </ADPanel>
       </div>

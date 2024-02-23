@@ -17,8 +17,8 @@ const TaskPanel = styled.div`
   //border: 1px solid black;
 `;
 
-export default function Task({ taskProps }: { taskProps: ITaskProps }) {
-  console.log("Task", taskProps);
+export default function RenderPane({ taskProps }: { taskProps: ITaskProps }) {
+  console.log("Renderpane", taskProps);
   return (
     <TaskPanel>
       <Render data={taskProps.data} tickOutcome={taskProps.tick.tickOutcome} />
