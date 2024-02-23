@@ -20,7 +20,7 @@ import {
   ITicksState,
   fetchTicksByInputDataAndTickNumberRange,
 } from "@app/apiclient/tick";
-import Task from "@app/components/aoc/taskpane/task";
+import RenderPane from "@app/components/aoc/taskpane/renderpane";
 import Panel from "@app/components/base/panel";
 
 const TaskPanel = styled.div`
@@ -216,7 +216,7 @@ export default function TaskPane({ data }: { data: ITaskPaneProps }) {
               {inputDataState &&
                 inputDataState.data &&
                 ticksState.ticks.length > progressData.currentTick && (
-                  <Task
+                  <RenderPane
                     taskProps={{
                       data: inputDataState.data,
                       tick: ticksState.ticks[progressData.currentTick],
