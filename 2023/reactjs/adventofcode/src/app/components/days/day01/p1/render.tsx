@@ -3,64 +3,71 @@ import {
   FoundLetter,
   RespTable,
   RespTableBody,
-  RespTableHeader,
+  RespTableHeaderText,
   SearchLetter,
   TableCell,
   TableHeaderCell,
-  RespTableHeaderText,
   TableRow,
   WordGrid,
 } from "./styled";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import {Action, ITickOutcome, LineSearchState, UiActions } from "@app/apiclient/tick";
+import {
+  emptySearchState,
+  LineSearchState,
+  SearchEventType,
+} from "@app/components/days/day01/p1/stateengine";
+import { tick } from "@app/components/days/day01/p1/ticker";
+
+const emptyState: LineSearchState = emptySearchState(-1);
 
 function RenderLine({
   line,
-  searchIndex,
-  foundLeftIndex,
-  foundRightIndex,
-  valueFound,
-  uiAction,
-}: {line:string} & LineSearchState & { uiAction: UiActions }): JSX.Element {
+  tickOutcome,
+}: {
+  line: string;
+  tickOutcome: LineSearchState;
+}): JSX.Element {
   const tableCellRef = useRef(null);
   const foundValueRef = useRef(null);
-  useEffect(() => {
-    //console.log("RenderLine useEffect", uiActions, Action.StartingSearch)
-    if (uiAction.action === Action.StartingSearch) {
-      const scaleTween = gsap.to(tableCellRef.current, {
-        scale: 1.1,
-        repeat: 3,
-        x: 5,
-        yoyo: true,
-        paused: true,
-        color: "yellow",
-      });
-      scaleTween.play();
-      //console.log("scaleTween1")
-    }
-    if (uiAction.action === Action.ValueFoundForLine) {
-      const scaleTween = gsap.to(foundValueRef.current, {
-        scale: 1.1,
-        repeat: 3,
-        x: 5,
-        yoyo: true,
-        paused: true,
-        color: "yellow",
-      });
-      scaleTween.play();
-      //console.log("scaleTween2")
-    }
-  }, [uiAction.action]);
+
+  if (
+    tickOutcome.event_type === SearchEventType.SearchingFromRight &&
+    tickOutcome.search_index === line.length - 1
+  ) {
+    const scaleTween = gsap.to(tableCellRef.current, {
+      scale: 1.1,
+      repeat: 3,
+      x: 5,
+      yoyo: true,
+      paused: true,
+      color: "yellow",
+    });
+    scaleTween.play();
+    //console.log("scaleTween1")
+  }
+  if (tickOutcome.event_type === SearchEventType.ValueCalculated) {
+    const scaleTween = gsap.to(foundValueRef.current, {
+      scale: 1.1,
+      repeat: 3,
+      x: 5,
+      yoyo: true,
+      paused: true,
+      color: "yellow",
+    });
+    scaleTween.play();
+    //console.log("scaleTween2")
+  }
+
   function compareNumbers(a, b) {
     return a - b;
   }
   const indexes: number[] = [
     0,
-    searchIndex,
-    foundLeftIndex,
-    foundRightIndex,
+    tickOutcome.search_index,
+    tickOutcome.found_left_index,
+    tickOutcome.found_right_index,
     line.length,
   ]
     .filter((v) => v != -1)
@@ -80,10 +87,10 @@ function RenderLine({
             <span key={i}>{slice}</span>
           ) : (
             <span key={i}>
-              {indexes[i] === foundLeftIndex ||
-              indexes[i] === foundRightIndex ? (
+              {indexes[i] === tickOutcome.found_left_index ||
+              indexes[i] === tickOutcome.found_right_index ? (
                 <FoundLetter>{headSlice}</FoundLetter>
-              ) : indexes[i] === searchIndex ? (
+              ) : indexes[i] === tickOutcome.search_index ? (
                 <SearchLetter>{headSlice}</SearchLetter>
               ) : (
                 <span>{headSlice}</span>
@@ -93,39 +100,35 @@ function RenderLine({
           );
         })}
       </TableCell>
-      <TableCell ref={foundValueRef}>{valueFound}</TableCell>
+      <TableCell ref={foundValueRef}>{tickOutcome.value_found}</TableCell>
     </TableRow>
   );
 }
-const noUIAction: UiActions = {
-  action: Action.NoAction,
-  param: "",
-};
+
 export default function Render({
   data,
-  tickOutcome
+  tickOutcome,
+  linesCompleted,
 }: {
   data: string;
-  tickOutcome: ITickOutcome
+  tickOutcome: LineSearchState;
+  linesCompleted: LineSearchState[];
 }): JSX.Element {
-  const uiActions: UiActions = tickOutcome.uiActions;
-  const tickState = tickOutcome.tickState;
-  console.log("Render", tickOutcome, tickState, uiActions)
+  console.log("Render", tickOutcome, linesCompleted);
   const foundValueRef = useRef(null);
-  useEffect(() => {
-    if (uiActions.action === Action.ValueFoundForLine) {
-      const scaleTween = gsap.to(foundValueRef.current, {
-        scale: 1.1,
-        repeat: 3,
-        x: 5,
-        yoyo: true,
-        paused: true,
-        color: "yellow",
-      });
-      scaleTween.play();
-      console.log("scaleTween2");
-    }
-  }, [uiActions.action]);
+
+  if (tickOutcome.event_type === SearchEventType.ValueCalculated) {
+    const scaleTween = gsap.to(foundValueRef.current, {
+      scale: 1.1,
+      repeat: 3,
+      x: 5,
+      yoyo: true,
+      paused: true,
+      color: "yellow",
+    });
+    scaleTween.play();
+    console.log("scaleTween2");
+  }
   const lines = data.split("\n");
   //console.log("entered Render Day01", lines, data, tickState, uiActions);
   return (
@@ -136,27 +139,27 @@ export default function Render({
             <RespTableBody>
               <TableRow>
                 <TableCell>Total</TableCell>
-                <TableCell ref={foundValueRef}>{tickState.total}</TableCell>
+                <TableCell ref={foundValueRef}>{tickOutcome.total}</TableCell>
               </TableRow>
 
-            <RespTableHeaderText>
-              <TableHeaderCell>Word</TableHeaderCell>
-              <TableHeaderCell>Found</TableHeaderCell>
-            </RespTableHeaderText>
+              <RespTableHeaderText>
+                <TableHeaderCell>Word</TableHeaderCell>
+                <TableHeaderCell>Found</TableHeaderCell>
+              </RespTableHeaderText>
 
               {lines.map((line, i) => {
-                const rs = tickState.linesSearchstate[i];
                 return (
-                  rs && (
+                  tickOutcome && (
                     <RenderLine
                       key={i}
                       line={line}
-                      uiAction={
-                        uiActions.param === i.toString()
-                          ? uiActions
-                          : noUIAction
+                      tickOutcome={
+                        tickOutcome.line_number === i
+                          ? tickOutcome
+                          : tickOutcome.line_number > i
+                            ? linesCompleted[i]
+                            : emptyState
                       }
-                      {...rs}
                     />
                   )
                 );

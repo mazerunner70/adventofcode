@@ -33,7 +33,7 @@ export interface ITickOutcome {
 export interface ITickState {
   id: number;
   tickNumber: number;
-  tickOutcome: ITickOutcome;
+  tickOutcome: string;
 }
 
 export interface ITicksState {
@@ -76,7 +76,7 @@ export const fetchTicksByInputDataAndTickNumberRange = async (
           return {
             id: t.id,
             tickNumber: t.tickNumber,
-            tickOutcome: JSON.parse(t.endstate),
+            tickOutcome: t.endstate,
           };
         }),
       };
