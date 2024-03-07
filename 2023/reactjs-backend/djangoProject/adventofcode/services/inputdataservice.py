@@ -1,7 +1,6 @@
 from django.db import transaction
 
 from adventofcode.models import Tick
-from adventofcode.services.initialisers.day01part1algorithm1 import Day01Part1Algorithm1
 from adventofcode.services.initialisers.day01part1algorithm2 import Day01Part1Algorithm2
 
 
@@ -17,4 +16,4 @@ class InputDataService:
     def initialise(self):
         algo = Day01Part1Algorithm2(self.inputData.data)
         print("Initialising "+self.inputData.data)
-        algo.initialise(self.event_processor)
+        algo.build_ticks(self.event_processor)
