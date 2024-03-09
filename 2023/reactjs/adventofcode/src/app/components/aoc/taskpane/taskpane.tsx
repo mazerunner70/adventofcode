@@ -4,16 +4,12 @@ import TaskSelection, {
 } from "@app/components/aoc/taskselection";
 import React, { useEffect, useReducer } from "react";
 import { VCRControls } from "@app/components/aoc/vcrcontrols/vcrcontrols";
-import ProgressPanel, {
-  IProgressData,
-} from "@app/components/aoc/progresspanel/progresspanel";
+import ProgressPanel from "@app/components/aoc/progresspanel/progresspanel";
 import { familjenGrotesk } from "@app/styles/fonts";
 
 import {
   fetchInputDataByTaskIdAndType,
-  IInputData,
   initialiseInputData,
-  InputDataType,
 } from "@app/apiclient/inputdata";
 import { fetchTicksByInputDataAndTickNumberRange } from "@app/apiclient/tick";
 import RenderPane from "@app/components/aoc/taskpane/renderpane";
@@ -27,6 +23,7 @@ import {
 import taskStateReducer, {
   ITaskProps2,
 } from "@app/components/aoc/taskpane/taskreducer";
+import { useTicker } from "@app/components/aoc/taskpane/ticker";
 
 const TaskPanel = styled.div`
   ${familjenGrotesk.style};
@@ -35,26 +32,6 @@ const TaskPanel = styled.div`
   position: relative;
 `;
 
-// const TopLeft = styled.div`
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-// `;
-// const TopRight = styled.div`
-//   position: absolute;
-//   top: 0;
-//   right: 0;
-// `;
-// const BottomLeft = styled.div`
-//   position: absolute;
-//   bottom: 0;
-//   left: 0;
-// `;
-// const BottomRight = styled.div`
-//   position: absolute;
-//   bottom: 0;
-//   right: 0;
-// `;
 const PaddingContainer = styled.div`
   padding: 10px;
 `;
@@ -96,7 +73,6 @@ export default function TaskPane({ data }: { data: ITaskPaneProps }) {
     speed: 0,
     inputData: null,
     totalTicks: 0,
-    currentTick: 0,
     ticksState: [],
     linesCompleted: [],
   };
@@ -120,16 +96,21 @@ export default function TaskPane({ data }: { data: ITaskPaneProps }) {
   console.log("taskstate: ", taskState);
 
   function onSpeedChange(speed: number): void {
-    dispatch({ type: "SET_SPEED", speed: speed });
+    if (taskState.ticksState.length > 0) {
+      dispatch({ type: "SET_SPEED", speed: speed });
+    }
   }
 
-  function incrementTick(): void {
-    const newTick = Math.min(
-      Math.max(0, taskState.currentTick + taskState.speed),
-      taskState.totalTicks - 1,
-    );
-    dispatch({ type: "SET_CURRENT_TICK", currentTick: newTick });
-  }
+  const currTick = useTicker(
+    (prevTick) => {
+      return Math.min(
+        Math.max(0, prevTick + taskState.speed),
+        taskState.totalTicks - 1,
+      );
+    },
+    taskState.speed !== 0 ? 1000 : null,
+    0,
+  );
 
   useEffect(() => {
     console.log("iddata", data.tasks);
@@ -192,19 +173,7 @@ export default function TaskPane({ data }: { data: ITaskPaneProps }) {
     }
   }, [taskState.totalTicks]);
 
-  useEffect(() => {
-    //Implementing the setInterval method
-    const interval = setInterval(() => {
-      if (taskState.ticksState.length > 0) {
-        //incrementalTickLoad();
-        incrementTick();
-      }
-    }, 1000);
-    //Clearing the interval
-    return () => clearInterval(interval);
-  }, [taskState.currentTick, taskState.speed]);
-
-  console.log("tickstate", taskState.currentTick, taskState.speed);
+  console.log("tickstate", currTick, taskState.speed);
 
   return (
     <TaskPanel>
@@ -217,11 +186,11 @@ export default function TaskPane({ data }: { data: ITaskPaneProps }) {
             <Panel title={"Demo"} shadowed={true}>
               {taskState.inputData &&
                 taskState.inputData.data &&
-                taskState.ticksState.length > taskState.currentTick && (
+                taskState.ticksState.length > currTick && (
                   <RenderPane
                     taskProps={{
                       data: taskState.inputData.data,
-                      tick: taskState.ticksState[taskState.currentTick],
+                      tick: taskState.ticksState[currTick],
                       linesCompleted: taskState.linesCompleted,
                     }}
                   />
@@ -240,7 +209,7 @@ export default function TaskPane({ data }: { data: ITaskPaneProps }) {
             <ProgressPanel
               speedState={taskState.speed}
               progressData={{
-                currentTick: taskState.currentTick,
+                currentTick: currTick,
                 totalTicks: taskState.totalTicks,
               }}
             />

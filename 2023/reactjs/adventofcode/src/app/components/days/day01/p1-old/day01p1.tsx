@@ -5,9 +5,9 @@ import {
   ITickState,
   LineSearchState,
   UIActions,
-} from "@app/components/days/day01/p1/ticker";
-import { tick } from "@app/components/days/day01/p1/ticker";
-import Render from "@app/components/days/day01/p1/render";
+} from "@app/components/days/day01/p1-old/useticker";
+import { tick } from "@app/components/days/day01/p1-old/useticker";
+import Render from "@app/components/days/day01/p1-old/render";
 import useInterval from "@app/utils/useinterval";
 
 export default function Day01P1({

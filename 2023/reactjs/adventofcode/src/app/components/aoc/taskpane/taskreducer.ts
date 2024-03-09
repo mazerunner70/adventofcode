@@ -8,7 +8,6 @@ export interface ITaskProps2 {
   speed: number;
   inputData: IInputData | null;
   totalTicks: number;
-  currentTick: number;
   ticksState: LineSearchState[];
   linesCompleted: LineSearchState[];
 }
@@ -41,10 +40,10 @@ export default function taskStateReducer(
       if (task.totalTicks !== action.totalTicks)
         return { ...task, totalTicks: action.totalTicks };
       break;
-    case "SET_CURRENT_TICK":
-      if (task.currentTick !== action.currentTick)
-        return { ...task, currentTick: action.currentTick };
-      break;
+    // case "SET_CURRENT_TICK":
+    //   if (task.currentTick !== action.currentTick)
+    //     return { ...task, currentTick: action.currentTick };
+    //   break;
     case "SET_TICKS_STATE":
       if (task.ticksState !== action.ticksState)
         return { ...task, ticksState: action.ticksState };
