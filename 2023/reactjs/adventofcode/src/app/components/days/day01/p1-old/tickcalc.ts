@@ -1,4 +1,4 @@
-import { Action, ITickState, LineSearchState, tick } from "./ticker";
+import { Action, ITickState, LineSearchState, tick } from "./useticker";
 export default () => {
   function buildSearchState(line: string): LineSearchState {
     return {

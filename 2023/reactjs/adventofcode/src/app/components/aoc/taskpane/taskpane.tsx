@@ -2,26 +2,28 @@ import styled from "styled-components";
 import TaskSelection, {
   ISelectionConfig,
 } from "@app/components/aoc/taskselection";
-import React, { useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import { VCRControls } from "@app/components/aoc/vcrcontrols/vcrcontrols";
-import ProgressPanel, {
-  IProgressData,
-} from "@app/components/aoc/progresspanel/progresspanel";
+import ProgressPanel from "@app/components/aoc/progresspanel/progresspanel";
 import { familjenGrotesk } from "@app/styles/fonts";
-import calcWorker from "@app/components/days/day01/p1/tickcalc";
-import { asWorker } from "@app/utils/WebWorker";
-import exWorker from "@app/components/days/day01/p1/example1";
+
 import {
-  IInputData,
   fetchInputDataByTaskIdAndType,
   initialiseInputData,
 } from "@app/apiclient/inputdata";
-import {
-  ITicksState,
-  fetchTicksByInputDataAndTickNumberRange,
-} from "@app/apiclient/tick";
+import { fetchTicksByInputDataAndTickNumberRange } from "@app/apiclient/tick";
 import RenderPane from "@app/components/aoc/taskpane/renderpane";
 import Panel from "@app/components/base/panel";
+import {
+  asEvents,
+  build_line_search_states,
+  LineSearchState,
+  SearchEventType,
+} from "@app/components/days/day01/p1/stateengine";
+import taskStateReducer, {
+  ITaskProps2,
+} from "@app/components/aoc/taskpane/taskreducer";
+import { useTicker } from "@app/components/aoc/taskpane/ticker";
 
 const TaskPanel = styled.div`
   ${familjenGrotesk.style};
@@ -30,26 +32,6 @@ const TaskPanel = styled.div`
   position: relative;
 `;
 
-const TopLeft = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-const TopRight = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-`;
-const BottomLeft = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-`;
-const BottomRight = styled.div`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-`;
 const PaddingContainer = styled.div`
   padding: 10px;
 `;
@@ -84,68 +66,66 @@ export interface ITaskPaneProps {
 }
 
 export default function TaskPane({ data }: { data: ITaskPaneProps }) {
-  const [dayNumberState, setDayNumberState] = React.useState<number>(1);
-  const [partState, setPartState] = React.useState<number>(1);
-  const [testDataUsedState, setTestDataUsedState] =
-    React.useState<boolean>(true);
-  const [speedState, setSpeedState] = React.useState<number>(0);
-  const [inputDataState, setInputDataState] = React.useState<IInputData | null>(
-    null,
-  );
-  const [progressData, setProgressData] = React.useState<IProgressData>({
+  const initialTaskState: ITaskProps2 = {
+    dayNumber: 1,
+    partNumber: 1,
+    testDataUsed: true,
+    speed: 0,
+    inputData: null,
     totalTicks: 0,
-    currentTick: 0,
-  });
-  const [ticksState, setTicksState] = React.useState<ITicksState>({
-    ticks: [],
-  });
-  const tickBlock: number = 50;
+    ticksState: [],
+    linesCompleted: [],
+  };
+  const [taskState, dispatch] = useReducer(taskStateReducer, initialTaskState);
 
   console.log("dd", data);
   const daylist: number[] = [...new Set(data.tasks?.map((task) => task.day))];
 
   const selectionState: ISelectionConfig = {
-    day: dayNumberState,
-    part: partState,
-    testData: testDataUsedState,
-    onDayChange: (newDay: number) => setDayNumberState(newDay),
-    onPartChange: (newPart: number) => setPartState(newPart),
-    onTestDataChange: (newState: boolean) => setTestDataUsedState(newState),
+    day: taskState.dayNumber,
+    part: taskState.partNumber,
+    testData: taskState.testDataUsed,
+    onDayChange: (newDay: number) =>
+      dispatch({ type: "SET_DAY", dayNumber: newDay }),
+    onPartChange: (newPart: number) =>
+      dispatch({ type: "SET_PART", partNumber: newPart }),
+    onTestDataChange: (newState: boolean) =>
+      dispatch({ type: "SET_TEST_DATA_USED", testDataUsed: newState }),
   };
 
-  console.log(dayNumberState, partState, testDataUsedState);
+  console.log("taskstate: ", taskState);
 
   function onSpeedChange(speed: number): void {
-    setSpeedState(speed);
-  }
-
-  function incrementTick(): void {
-    const newTick = Math.min(
-      Math.max(1, progressData.currentTick + speedState),
-      progressData.totalTicks,
-    );
-    if (progressData.currentTick !== newTick) {
-      setProgressData({
-        ...progressData,
-        currentTick: newTick,
-      });
+    if (taskState.ticksState.length > 0) {
+      dispatch({ type: "SET_SPEED", speed: speed });
     }
   }
+
+  const currTick = useTicker(
+    (prevTick) => {
+      return Math.min(
+        Math.max(0, prevTick + taskState.speed),
+        taskState.totalTicks - 1,
+      );
+    },
+    taskState.speed !== 0 ? 1000 : null,
+    0,
+  );
 
   useEffect(() => {
     console.log("iddata", data.tasks);
     const taskId = data.tasks?.find(
       (task) =>
-        task.day === dayNumberState &&
-        task.part === partState &&
-        task.testDataUsed === testDataUsedState,
+        task.day === taskState.dayNumber &&
+        task.part === taskState.partNumber &&
+        task.testDataUsed === taskState.testDataUsed,
     )?.taskId;
     if (taskId) {
-      console.log("iddataT", taskId, testDataUsedState);
-      fetchInputDataByTaskIdAndType(taskId, testDataUsedState)
+      console.log("iddataT", taskId, taskState.testDataUsed);
+      fetchInputDataByTaskIdAndType(taskId, taskState.testDataUsed)
         .then((res) => {
           console.log("initInputData", res);
-          setInputDataState(res);
+          dispatch({ type: "SET_INPUT_DATA", inputData: res });
           return res.id;
         })
         .then((inputDataId) => {
@@ -156,53 +136,44 @@ export default function TaskPane({ data }: { data: ITaskPaneProps }) {
           return res.data.buildTicks.inputData.tickCount;
         })
         .then((tickCount) => {
-          setProgressData({ ...progressData, totalTicks: tickCount });
+          dispatch({ type: "SET_TOTAL_TICKS", totalTicks: tickCount });
         });
     }
-  }, [data, dayNumberState, partState, testDataUsedState]);
+  }, [data, taskState.dayNumber, taskState.partNumber, taskState.testDataUsed]);
+
+  function deriveCompletedLineStates(
+    ticks: LineSearchState[],
+  ): LineSearchState[] {
+    return ticks
+      .filter((t) => t.event_type === SearchEventType.ValueCalculated)
+      .map((v) => {
+        return { ...v, event_type: SearchEventType.Idle };
+      });
+  }
 
   useEffect(() => {
     console.log("tickretrieve");
-    if (inputDataState) {
-      console.log("tickretrieve2");
+    if (taskState.inputData) {
+      console.log("tickretrieve2", taskState.totalTicks);
       fetchTicksByInputDataAndTickNumberRange(
-        inputDataState,
+        taskState.inputData,
         1,
-        Math.min(tickBlock, progressData.totalTicks),
+        taskState.totalTicks,
       ).then((res) => {
         console.log("tickretrieve3", res);
-        setTicksState(res);
-      });
-    }
-  }, [inputDataState]);
-
-  const incrementalTickLoad = () => {
-    if (inputDataState && ticksState.ticks.length < progressData.totalTicks) {
-      fetchTicksByInputDataAndTickNumberRange(
-        inputDataState,
-        ticksState.ticks.length + 1,
-        Math.min(ticksState.ticks.length + tickBlock, progressData.totalTicks),
-      ).then((res) => {
-        setTicksState({
-          ticks: [...ticksState.ticks, ...res.ticks],
+        const events = asEvents(res.ticks.map((t) => t.tickOutcome));
+        const lineSearchStates = build_line_search_states(events);
+        console.log("tickretrieve4", lineSearchStates);
+        dispatch({
+          type: "SET_LINES_STATE",
+          ticksState: lineSearchStates,
+          linesCompleted: deriveCompletedLineStates(lineSearchStates),
         });
       });
     }
-  };
+  }, [taskState.totalTicks]);
 
-  useEffect(() => {
-    //Implementing the setInterval method
-    const interval = setInterval(() => {
-      if (ticksState.ticks.length > 0) {
-        incrementalTickLoad();
-        incrementTick();
-      }
-    }, 1000);
-    //Clearing the interval
-    return () => clearInterval(interval);
-  }, [progressData, speedState]);
-
-  console.log("tickstate", ticksState, progressData);
+  console.log("tickstate", currTick, taskState.speed);
 
   return (
     <TaskPanel>
@@ -213,13 +184,14 @@ export default function TaskPane({ data }: { data: ITaskPaneProps }) {
           </PaddingContainer>
           <PaddingCentredContainer>
             <Panel title={"Demo"} shadowed={true}>
-              {inputDataState &&
-                inputDataState.data &&
-                ticksState.ticks.length > progressData.currentTick && (
+              {taskState.inputData &&
+                taskState.inputData.data &&
+                taskState.ticksState.length > currTick && (
                   <RenderPane
                     taskProps={{
-                      data: inputDataState.data,
-                      tick: ticksState.ticks[progressData.currentTick],
+                      data: taskState.inputData.data,
+                      tick: taskState.ticksState[currTick],
+                      linesCompleted: taskState.linesCompleted,
                     }}
                   />
                 )}
@@ -229,14 +201,17 @@ export default function TaskPane({ data }: { data: ITaskPaneProps }) {
         <RowContainer>
           <PaddingContainer>
             <VCRControls
-              speedState={speedState}
+              speedState={taskState.speed}
               onSpeedChange={onSpeedChange}
             />
           </PaddingContainer>
           <PaddingRightContainer>
             <ProgressPanel
-              speedState={speedState}
-              progressData={progressData}
+              speedState={taskState.speed}
+              progressData={{
+                currentTick: currTick,
+                totalTicks: taskState.totalTicks,
+              }}
             />
           </PaddingRightContainer>
         </RowContainer>
