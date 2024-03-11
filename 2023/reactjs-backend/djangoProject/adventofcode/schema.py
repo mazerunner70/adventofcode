@@ -14,6 +14,7 @@ class AdventDayType(DjangoObjectType):
 class TaskType(DjangoObjectType):
     class Meta:
         model = Task
+        convert_choices_to_enum = False
 
 
 class InputDataType(DjangoObjectType):
@@ -25,7 +26,7 @@ class InputDataType(DjangoObjectType):
     def resolve_tick_count(self, info):
         # Return the count of related Tick instances
         return self.ticks.count()
-
+        convert_choices_to_enum = False
 
 class BuildTicksMutation(graphene.Mutation):
     class Arguments:
