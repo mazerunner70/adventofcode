@@ -19,7 +19,7 @@ import {
   build_line_search_states,
   LineSearchState,
   SearchEventType,
-} from "@app/components/days/day01/p1/stateengine";
+} from "@app/components/tasks/day01/p1/stateengine";
 import taskStateReducer, {
   ITaskProps2,
 } from "@app/components/aoc/taskpane/taskreducer";

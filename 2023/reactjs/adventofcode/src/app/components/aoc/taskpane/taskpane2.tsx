@@ -14,6 +14,8 @@ import TickerPane, {
   IInputData,
 } from "@app/components/aoc/tickerpane/tickerpane";
 import { fetchInputDataByTaskIdAndType } from "@app/apiclient/inputdata";
+import { TaskSelectedContext } from "@app/contexts/TaskSelectedContext";
+import RenderSelector from "@app/components/tasks/renderselector";
 
 export interface TaskSelected {
   dayNumber: number;
@@ -33,7 +35,6 @@ export default function TaskPane2({
     partNumber: 1,
     testDataUsed: true,
   });
-  const TaskSelectedContext = createContext(taskSelected);
   const selectionState: ISelectionConfig = {
     day: taskSelected.dayNumber,
     part: taskSelected.partNumber,
@@ -73,6 +74,7 @@ export default function TaskPane2({
               />
             </PaddingContainer>
             {inputDataState && <TickerPane inputData={inputDataState} />}
+            <RenderSelector />
             {children}
           </RowContainer>
         </ColumnContainer>

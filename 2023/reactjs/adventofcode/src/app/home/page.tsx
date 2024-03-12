@@ -2,7 +2,7 @@
 
 import styles from "./styles.module.css";
 
-import { InitialisedContext } from "@app/context/Initialised.context";
+import { InitialisedContext } from "@app/contexts/Initialised.context";
 import GlowOnHoverButton from "@app/components/glowbutton/styled";
 import { useContext } from "react";
 

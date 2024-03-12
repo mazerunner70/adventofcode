@@ -1,5 +1,5 @@
 import AdventDay from "@app/components/aoc/taskselection/adventday";
-import { IConfig } from "@app/context/Advent.context";
+import { IConfig } from "@app/contexts/Advent.context";
 import Panel from "@app/components/base/panel";
 import styled from "styled-components";
 import { H1 } from "@app/components/base/text/textwrappers";

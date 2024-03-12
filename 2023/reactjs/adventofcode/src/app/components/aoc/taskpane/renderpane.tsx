@@ -1,7 +1,7 @@
 import { familjenGrotesk } from "@app/styles/fonts";
 import styled from "styled-components";
-import Render from "@app/components/days/day01/p1-old/render";
-import { LineSearchState } from "@app/components/days/day01/p1/stateengine";
+import Render from "@app/components/tasks/day01/p1-old/render";
+import { LineSearchState } from "@app/components/tasks/day01/p1/stateengine";
 
 export interface ITaskProps {
   data: string;

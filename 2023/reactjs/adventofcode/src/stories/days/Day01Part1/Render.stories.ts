@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import Render from "@app/components/days/day01/p1-old/render";
+import Render from "@app/components/tasks/day01/p1-old/render";
 
 const meta: Meta<typeof Render> = {
   component: Render,

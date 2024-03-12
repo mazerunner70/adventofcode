@@ -1,4 +1,4 @@
-import { ITickState, tick } from "@app/components/days/day01/p1-old/useticker";
+import { ITickState, tick } from "@app/components/tasks/day01/p1-old/useticker";
 
 describe("ticker test", () => {
   it("should return foundleft for 1abc2", () => {
