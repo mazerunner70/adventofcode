@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { TaskSelectedContext } from "@app/contexts/TaskSelectedContext";
+import { TaskSelectionContext } from "@app/contexts/contexts";
 import { Day01p1 } from "@app/components/tasks/day01/p1/day01p1";
 
 export default function RenderSelector() {
-  const taskSelected = useContext(TaskSelectedContext);
+  const taskSelected = useContext(TaskSelectionContext);
 
   const components = {
     1: {

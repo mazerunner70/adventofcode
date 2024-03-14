@@ -14,7 +14,7 @@ import TickerPane, {
   IInputData,
 } from "@app/components/aoc/tickerpane/tickerpane";
 import { fetchInputDataByTaskIdAndType } from "@app/apiclient/inputdata";
-import { TaskSelectedContext } from "@app/contexts/TaskSelectedContext";
+import { TaskSelectionContext } from "@app/contexts/contexts";
 import RenderSelector from "@app/components/tasks/renderselector";
 
 export interface TaskSelected {
@@ -63,7 +63,7 @@ export default function TaskPane2({
   }, [taskSelected, taskMap]);
 
   return (
-    <TaskSelectedContext.Provider value={taskSelected}>
+    <TaskSelectionContext.Provider value={taskSelected}>
       <TaskPanel>
         <ColumnContainer>
           <RowContainer>
@@ -73,12 +73,14 @@ export default function TaskPane2({
                 selectionConfig={selectionState}
               />
             </PaddingContainer>
-            {inputDataState && <TickerPane inputData={inputDataState} />}
-            <RenderSelector />
-            {children}
+            {inputDataState && (
+              <TickerPane inputData={inputDataState}>
+                <RenderSelector />
+              </TickerPane>
+            )}
           </RowContainer>
         </ColumnContainer>
       </TaskPanel>
-    </TaskSelectedContext.Provider>
+    </TaskSelectionContext.Provider>
   );
 }

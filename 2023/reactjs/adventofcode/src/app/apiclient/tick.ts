@@ -1,35 +1,35 @@
 import { IInputData } from "@app/apiclient/inputdata";
-
-export interface LineSearchState {
-  searchIndex: number;
-  foundLeftIndex: number;
-  foundRightIndex: number;
-  valueFound: number | null;
-}
-
-export enum Action {
-  NoAction,
-  TotalFound,
-  ValueFoundForLine,
-  DigitFoundForRight,
-  SearchingFromRight,
-  DigitFoundForLeft,
-  SearchingFromLeft,
-  StartingSearch,
-}
-export interface UiActions {
-  action: Action;
-  param: string;
-}
-export interface ITickOutcome {
-  uiActions: UiActions;
-  tickState: {
-    linesSearchstate: LineSearchState[];
-    total: number | null;
-    completed: boolean;
-  };
-}
-
+//
+// export interface LineSearchState {
+//   searchIndex: number;
+//   foundLeftIndex: number;
+//   foundRightIndex: number;
+//   valueFound: number | null;
+// }
+//
+// export enum Action {
+//   NoAction,
+//   TotalFound,
+//   ValueFoundForLine,
+//   DigitFoundForRight,
+//   SearchingFromRight,
+//   DigitFoundForLeft,
+//   SearchingFromLeft,
+//   StartingSearch,
+// }
+// export interface UiActions {
+//   action: Action;
+//   param: string;
+// }
+// export interface ITickOutcome {
+//   uiActions: UiActions;
+//   tickState: {
+//     linesSearchstate: LineSearchState[];
+//     total: number | null;
+//     completed: boolean;
+//   };
+// }
+//
 export interface ITickState {
   id: number;
   tickNumber: number;

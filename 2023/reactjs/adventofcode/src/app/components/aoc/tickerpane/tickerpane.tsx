@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { initialiseInputData } from "@app/apiclient/inputdata";
 import {
   fetchTicksByInputDataAndTickNumberRange,
@@ -11,6 +11,8 @@ import {
   PaddingRightContainer,
   RowContainer,
 } from "@app/components/aoc/taskpane/styled";
+import { TickerStateContext } from "@app/contexts/contexts";
+import { useTicker } from "@app/components/aoc/taskpane/useticker";
 
 export enum InputDataState {
   initialising = "initialising",
@@ -31,12 +33,14 @@ export interface IInputData {
 }
 export interface TickProps {
   inputData: IInputData;
-  ticksState: ITicksState;
-  totalTicks: number;
   currentTick: number;
+  totalTicks: number;
 }
 
-export default function TickerPane({ inputData }: { inputData: IInputData }) {
+export default function TickerPane({
+  inputData,
+  children,
+}: { inputData: IInputData } & { children?: ReactNode }) {
   const [tickProps, setTickProps] = useState<TickProps>({
     inputData: {
       id: 0,
@@ -44,61 +48,68 @@ export default function TickerPane({ inputData }: { inputData: IInputData }) {
       data: "",
       state: InputDataState.notInitialised,
     },
-    ticksState: {
-      ticks: [],
-    },
-    totalTicks: 0,
     currentTick: 0,
+    totalTicks: 0,
   });
   const [speedState, setSpeedState] = useState<number>(0);
 
   useEffect(() => {
     if (inputData) {
-      initialiseInputData(inputData.id)
-        .then((res) => {
-          console.log("initialiseInputData", res);
-          if (res) {
-            return fetchTicksByInputDataAndTickNumberRange(
-              inputData,
-              1,
-              res.data.buildTicks.inputData.tickCount,
-            );
-          }
-        })
-        .then((res) => {
-          console.log("fetchTicksByInputDataAndTickNumberRange", res);
-          if (res) {
-            setTickProps({
-              inputData: inputData,
-              ticksState: { ticks: res.ticks },
-              currentTick: 1,
-              totalTicks: res.ticks.length,
-            });
-          }
-        });
+      initialiseInputData(inputData.id).then((res) => {
+        console.log("initialiseInputData", res);
+        if (res) {
+          setTickProps({
+            inputData: inputData,
+            currentTick: 0,
+            totalTicks: res.data.buildTicks.inputData.tickCount,
+          });
+        }
+      });
     }
   }, [inputData]);
 
   function onSpeedChange(speed: number): void {
-    if (tickProps.ticksState.ticks.length > 0) {
+    console.log("speed", speedState);
+    if (tickProps.totalTicks > 0) {
       setSpeedState(speed);
     }
   }
+  const currTick = useTicker(
+    (prevTick) => {
+      return Math.min(
+        Math.max(0, prevTick + speedState),
+        tickProps.totalTicks - 1,
+      );
+    },
+    speedState !== 0 ? 1000 : null,
+    0,
+  );
+
+  useEffect(() => {
+    setTickProps({ ...tickProps, currentTick: currTick });
+  }, [currTick]);
 
   return (
-    <RowContainer>
-      <PaddingContainer>
-        <VCRControls speedState={speedState} onSpeedChange={onSpeedChange} />
-      </PaddingContainer>
-      <PaddingRightContainer>
-        <ProgressPanel
-          speedState={speedState}
-          progressData={{
-            currentTick: tickProps.currentTick,
-            totalTicks: tickProps.totalTicks,
-          }}
-        />
-      </PaddingRightContainer>
-    </RowContainer>
+    <>
+      <RowContainer>
+        <PaddingContainer>
+          <VCRControls speedState={speedState} onSpeedChange={onSpeedChange} />
+        </PaddingContainer>
+        <PaddingRightContainer>
+          <ProgressPanel
+            speedState={speedState}
+            progressData={{
+              currentTick: currTick,
+              totalTicks: tickProps.totalTicks,
+            }}
+          />
+        </PaddingRightContainer>
+      </RowContainer>
+      <RowContainer>
+        <TickerStateContext.Provider value={tickProps}>
+          <PaddingContainer>{children}</PaddingContainer>
+        </TickerStateContext.Provider>
+      </RowContainer>
+    </>
   );
 }
