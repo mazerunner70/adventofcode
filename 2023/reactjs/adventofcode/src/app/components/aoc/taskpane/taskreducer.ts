@@ -1,5 +1,5 @@
 import { IInputData } from "@app/apiclient/inputdata";
-import { LineSearchState } from "@app/components/days/day01/p1/stateengine";
+import { LineSearchState } from "@app/components/tasks/day01/p1/stateengine";
 
 export interface ITaskProps2 {
   dayNumber: number;

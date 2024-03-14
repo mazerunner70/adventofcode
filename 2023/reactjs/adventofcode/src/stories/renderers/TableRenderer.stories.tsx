@@ -7,7 +7,7 @@ import {
 import {
   Highlight,
   StringHighlighter,
-} from "@app/components/days/day01/util/StringHighlighter";
+} from "@app/components/tasks/day01/util/StringHighlighter";
 
 const meta: Meta<typeof TableRenderer> = {
   component: TableRenderer,

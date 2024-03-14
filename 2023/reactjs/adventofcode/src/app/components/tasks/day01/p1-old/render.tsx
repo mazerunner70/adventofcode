@@ -17,15 +17,15 @@ import {
   emptySearchState,
   LineSearchState,
   SearchEventType,
-} from "@app/components/days/day01/p1/stateengine";
+} from "@app/components/tasks/day01/p1/stateengine";
 import {
   Highlight,
   StringHighlighter,
-} from "@app/components/days/day01/util/StringHighlighter";
+} from "@app/components/tasks/day01/util/StringHighlighter";
 import {
   AnimationType,
   useAnimation,
-} from "@app/components/days/day01/util/useanimate";
+} from "@app/components/tasks/day01/util/useanimate";
 
 const emptyState: LineSearchState = emptySearchState(-1);
 

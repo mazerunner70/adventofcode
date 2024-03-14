@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { StringHighlighter } from "@app/components/days/day01/util/StringHighlighter";
+import { StringHighlighter } from "@app/components/tasks/day01/util/StringHighlighter";
 
 const meta: Meta<typeof StringHighlighter> = {
   component: StringHighlighter,

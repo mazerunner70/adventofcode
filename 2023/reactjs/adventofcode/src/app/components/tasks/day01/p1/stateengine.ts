@@ -1,26 +1,4 @@
-export interface LineSearchState {
-  event_type: SearchEventType;
-  line_number: number;
-  search_index: number;
-  found_left_index: number;
-  found_right_index: number;
-  value_found: string;
-  total: number;
-}
-
-export enum SearchEventType {
-  Idle = 0,
-  SearchingFromLeft = 1,
-  FoundLeftIndex = 2,
-  SearchingFromRight = 3,
-  FoundRightIndex = 4,
-  ValueCalculated = 5,
-}
-
-interface SearchEvent {
-  event_type: SearchEventType;
-  param: string;
-}
+import { SearchEvent, SearchEventType, LineSearchState } from "./types";
 
 function as_event(str: string): SearchEvent {
   const [event_type, param] = str.split("-");

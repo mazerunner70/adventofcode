@@ -17,13 +17,15 @@ import Panel from "@app/components/base/panel";
 import {
   asEvents,
   build_line_search_states,
-  LineSearchState,
-  SearchEventType,
-} from "@app/components/days/day01/p1/stateengine";
+} from "@app/components/tasks/day01/p1/stateengine";
 import taskStateReducer, {
   ITaskProps2,
 } from "@app/components/aoc/taskpane/taskreducer";
-import { useTicker } from "@app/components/aoc/taskpane/ticker";
+import { useTicker } from "@app/components/aoc/taskpane/useticker";
+import {
+  LineSearchState,
+  SearchEventType,
+} from "@app/components/tasks/day01/p1/types";
 
 const TaskPanel = styled.div`
   ${familjenGrotesk.style};

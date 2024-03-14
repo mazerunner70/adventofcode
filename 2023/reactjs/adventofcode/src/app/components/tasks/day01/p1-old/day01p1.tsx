@@ -1,13 +1,13 @@
-import { AdventContext } from "@app/context/Advent.context";
+import { AdventContext } from "@app/contexts/Advent.context";
 import { useContext, useEffect, useState } from "react";
 import {
   Action,
   ITickState,
   LineSearchState,
   UIActions,
-} from "@app/components/days/day01/p1-old/useticker";
-import { tick } from "@app/components/days/day01/p1-old/useticker";
-import Render from "@app/components/days/day01/p1-old/render";
+} from "@app/components/tasks/day01/p1-old/useticker";
+import { tick } from "@app/components/tasks/day01/p1-old/useticker";
+import Render from "@app/components/tasks/day01/p1-old/render";
 import useInterval from "@app/utils/useinterval";
 
 export default function Day01P1({
