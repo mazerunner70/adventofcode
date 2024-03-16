@@ -26,7 +26,7 @@ export interface TableProps {
 }
 
 export function TableRenderer({ columns, rows }: TableProps): JSX.Element {
-  console.log("TableRenderer", columns, rows);
+  // console.log("TableRenderer", columns, rows);
   return (
     <WordGrid>
       <RespTable>

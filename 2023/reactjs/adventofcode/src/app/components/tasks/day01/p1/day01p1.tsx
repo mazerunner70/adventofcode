@@ -16,10 +16,19 @@ import {
 import { TickProps } from "@app/components/aoc/tickerpane/tickerpane";
 import {
   buildCompletedLineStates,
+  buildEmptyLines,
   buildLineState,
   highlightRules,
 } from "./builder";
-import { IRow, ITicksState, LineSearchState, SearchEventType } from "./types";
+import { IRow, ITicksState } from "./types";
+import Panel from "@app/components/base/panel";
+import { useDetailState } from "@app/components/tasks/day01/p1/usedetailstate";
+import styled from "styled-components";
+
+const HeightLimitedDiv = styled.div`
+  max-height: 300px;
+  overflow-y: auto;
+`;
 
 const highlightCellRenderer = (rowProps: RowProps, columnNumber: number) => {
   const rules: Highlight[] = highlightRules(rowProps);
@@ -39,85 +48,22 @@ const cellRenderer = (rowProps: RowProps, columnNumber: number) => {
   }
 };
 const columns = [
-  { name: "Column 1", renderer: cellRenderer },
-  { name: "Column 2", renderer: cellRenderer },
+  { name: "Text", renderer: cellRenderer },
+  { name: "Value", renderer: cellRenderer },
 ];
 
 export const Day01p1 = () => {
-  //Holds the state of the lines for rendering the table
-  const [ticksState, setTicksState] = useState<ITicksState>({
-    linesearchState: [],
-    linesCompleted: [],
-    emptyLiness: [],
-  });
-  // Holds the rows of text to populat ethe tickstate from
-  const [dataRowsState, setDataRowsState] = useState<string[]>([]);
-  // Holds the current tick state to render
-  const [currentRowsState, setCurrentRowsState] = useState<IRow[]>();
   const tickerState: TickProps | null = useContext(TickerStateContext);
 
-  function buildEmptyLines(dataRows: string[]): IRow[] {
-    return dataRows.map((v) => {
-      return { columns: [v, ""], params: [] };
-    });
-  }
-
-  useEffect(() => {
-    console.log("tickretrieve", tickerState);
-    if (tickerState) {
-      if (tickerState.inputData) {
-        const dataRows = tickerState.inputData.data.split("\n");
-        setDataRowsState(dataRows);
-        console.log("tickretrieve2", tickerState.totalTicks);
-        fetchTicksByInputDataAndTickNumberRange(
-          tickerState.inputData,
-          1,
-          tickerState.totalTicks,
-        ).then((res) => {
-          console.log("tickretrieve3", res);
-          const events = asEvents(res.ticks.map((t) => t.tickOutcome));
-          const lineSearchStates = build_line_search_states(events);
-          console.log("tickretrieve4", lineSearchStates);
-          setTicksState({
-            linesearchState: lineSearchStates,
-            linesCompleted: buildCompletedLineStates(
-              lineSearchStates,
-              dataRows,
-            ),
-            emptyLiness: buildEmptyLines(dataRows),
-          });
-        });
-      }
-    }
-  }, [tickerState?.inputData, tickerState?.totalTicks]);
-
-  useEffect(() => {
-    console.log("tickstate", tickerState?.currentTick, ticksState);
-    if (tickerState !== null && ticksState.linesearchState.length > 0) {
-      const currTickNumber = tickerState.currentTick;
-      const searchState = ticksState.linesearchState[currTickNumber];
-      const dataRow = dataRowsState[searchState.line_number];
-      const currRow = buildLineState(searchState, dataRow);
-      console.log("tickstate2", currRow, searchState, dataRow);
-      setCurrentRowsState([
-        ...ticksState.linesCompleted.slice(0, searchState.line_number),
-        currRow,
-        ...ticksState.emptyLiness.slice(searchState.line_number + 1),
-      ]);
-      console.log(
-        "tickstate3",
-        ticksState.linesCompleted.slice(0, searchState.line_number),
-        currRow,
-        ticksState.emptyLiness.slice(searchState.line_number + 1),
-      );
-    }
-  }, [tickerState?.currentTick, ticksState]);
+  const currentRowsState = useDetailState(tickerState);
 
   return (
-    <div>
-      {currentRowsState && (
-        <TableRenderer columns={columns} rows={currentRowsState} />
-      )}
-    </div>
+    <Panel shadowed={true}>
+      <HeightLimitedDiv>
+        {currentRowsState && (
+          <TableRenderer columns={columns} rows={currentRowsState} />
+        )}
+      </HeightLimitedDiv>
+    </Panel>
   );
 };

@@ -1,6 +1,7 @@
 import {
   highlightRules,
   buildCompletedLineStates,
+  buildEmptyLines,
 } from "@app/components/tasks/day01/p1/builder";
 import {
   SearchEventType,
@@ -78,5 +79,13 @@ describe("Day01 part1 tests", () => {
     expect(rows.length).toBe(2);
     expect(rows[0].columns[0]).toBe("This is a line of text");
     expect(rows[0].columns[1]).toBe("5");
+  });
+  it("buildEmptyLines tests", () => {
+    const dataRows = ["This is a line of text", "This is another line of text"];
+    const rows = buildEmptyLines(dataRows);
+    expect(rows.length).toBe(2);
+    expect(rows[0].columns[0]).toBe("This is a line of text");
+    expect(rows[0].columns[1]).toBe("");
+    expect(rows[0].params.length).toBe(3);
   });
 });

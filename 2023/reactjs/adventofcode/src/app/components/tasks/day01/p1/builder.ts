@@ -4,6 +4,7 @@ import { LineSearchState, SearchEventType } from "./types";
 import { IRow } from "./types";
 
 export function highlightRules(rowProps: RowProps) {
+  // console.log("highlightRules", rowProps, parseInt(rowProps.params[0]));
   const rules: Highlight[] = [];
   if (rowProps.params[0] !== "-1") {
     rules.push({
@@ -81,4 +82,10 @@ export function buildLineState(
         params: ["-1", "-1", "-1"],
       };
   }
+}
+
+export function buildEmptyLines(dataRows: string[]): IRow[] {
+  return dataRows.map((v) => {
+    return { columns: [v, ""], params: ["-1", "-1", "-1"] };
+  });
 }

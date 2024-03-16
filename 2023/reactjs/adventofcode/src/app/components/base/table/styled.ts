@@ -43,7 +43,7 @@ export const TableRow = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 40px;
+
   background-color: #ffffff;
   border-bottom: 1px solid #f2f2f2;
 `;

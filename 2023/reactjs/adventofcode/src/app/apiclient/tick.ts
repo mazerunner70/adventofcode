@@ -72,7 +72,7 @@ export const fetchTicksByInputDataAndTickNumberRange = async (
     .then((res) => {
       return {
         ticks: res.map((t) => {
-          console.log("bare", t);
+          // console.log("bare", t);
           return {
             id: t.id,
             tickNumber: t.tickNumber,

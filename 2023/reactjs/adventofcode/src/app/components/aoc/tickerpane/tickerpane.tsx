@@ -1,41 +1,33 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import { initialiseInputData } from "@app/apiclient/inputdata";
 import {
-  fetchTicksByInputDataAndTickNumberRange,
-  ITicksState,
-} from "@app/apiclient/tick";
+  IInputData,
+  initialiseInputData,
+  InputDataState,
+  InputDataType,
+} from "@app/apiclient/inputdata";
+
 import { VCRControls } from "@app/components/aoc/vcrcontrols/vcrcontrols";
 import ProgressPanel from "@app/components/aoc/progresspanel/progresspanel";
-import {
-  PaddingContainer,
-  PaddingRightContainer,
-  RowContainer,
-} from "@app/components/aoc/taskpane/styled";
+import { PaddingContainer } from "@app/components/aoc/taskpane/styled";
 import { TickerStateContext } from "@app/contexts/contexts";
 import { useTicker } from "@app/components/aoc/taskpane/useticker";
+import styled from "styled-components";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@app/components/base/htmltable/styled";
 
-export enum InputDataState {
-  initialising = "initialising",
-  notInitialised = "not initialised",
-  initialised = "initialised",
-}
-
-export enum InputDataType {
-  test = "Test",
-  full = "Full",
-}
-
-export interface IInputData {
-  id: number;
-  inputType: InputDataType;
-  data: string;
-  state: InputDataState;
-}
 export interface TickProps {
   inputData: IInputData;
   currentTick: number;
   totalTicks: number;
 }
+
+const Z1 = styled.div`
+  z-index: 2;
+`;
 
 export default function TickerPane({
   inputData,
@@ -90,26 +82,40 @@ export default function TickerPane({
   }, [currTick]);
 
   return (
-    <>
-      <RowContainer>
-        <PaddingContainer>
-          <VCRControls speedState={speedState} onSpeedChange={onSpeedChange} />
-        </PaddingContainer>
-        <PaddingRightContainer>
-          <ProgressPanel
-            speedState={speedState}
-            progressData={{
-              currentTick: currTick,
-              totalTicks: tickProps.totalTicks,
-            }}
-          />
-        </PaddingRightContainer>
-      </RowContainer>
-      <RowContainer>
-        <TickerStateContext.Provider value={tickProps}>
-          <PaddingContainer>{children}</PaddingContainer>
-        </TickerStateContext.Provider>
-      </RowContainer>
-    </>
+    <Table>
+      <TableBody>
+        <TableRow>
+          <TableCell>
+            <PaddingContainer>
+              <VCRControls
+                speedState={speedState}
+                onSpeedChange={onSpeedChange}
+              />
+            </PaddingContainer>
+          </TableCell>
+
+          <TableCell>
+            <PaddingContainer>
+              <ProgressPanel
+                speedState={speedState}
+                progressData={{
+                  currentTick: currTick,
+                  totalTicks: tickProps.totalTicks,
+                }}
+              />
+            </PaddingContainer>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>
+            <TickerStateContext.Provider value={tickProps}>
+              <PaddingContainer>
+                <Z1>{children}</Z1>
+              </PaddingContainer>
+            </TickerStateContext.Provider>
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
   );
 }

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import React, { memo } from "react";
 
 export interface Highlight {
   index: number;
@@ -11,7 +12,7 @@ const SpanHighlighter = styled.span<{ $textColour: string }>`
 `;
 
 // create component that takes in a string and an array of index and length and highlighting scheme
-export function StringHighlighter({
+export const StringHighlighter = memo(function StringHighlighter({
   highlights,
   text,
 }: {
@@ -19,7 +20,7 @@ export function StringHighlighter({
   text: string;
 }): JSX.Element {
   let index = 0;
-  console.log(">", highlights);
+  // console.log(">", highlights);
   highlights.sort((a, b) => a.index - b.index);
   return (
     <div>
@@ -41,4 +42,4 @@ export function StringHighlighter({
       {text.slice(index)}
     </div>
   );
-}
+});

@@ -3,8 +3,6 @@ import { familjenGrotesk } from "@app/styles/fonts";
 
 export const TaskPanel = styled.div`
   ${familjenGrotesk.style};
-  height: 100%;
-  position: relative;
 `;
 
 export const PaddingContainer = styled.div`

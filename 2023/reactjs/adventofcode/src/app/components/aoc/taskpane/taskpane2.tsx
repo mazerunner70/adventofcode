@@ -1,21 +1,26 @@
-import { ITaskPaneProps } from "@app/components/aoc/taskpane/taskpane";
 import { TaskMap } from "@app/apiclient/AvailableTasks";
 import TaskSelection, {
   ISelectionConfig,
 } from "@app/components/aoc/taskselection";
-import React, { createContext, ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import {
-  ColumnContainer,
   PaddingContainer,
-  RowContainer,
   TaskPanel,
 } from "@app/components/aoc/taskpane/styled";
-import TickerPane, {
+import {
+  fetchInputDataByTaskIdAndType,
   IInputData,
-} from "@app/components/aoc/tickerpane/tickerpane";
-import { fetchInputDataByTaskIdAndType } from "@app/apiclient/inputdata";
+} from "@app/apiclient/inputdata";
 import { TaskSelectionContext } from "@app/contexts/contexts";
 import RenderSelector from "@app/components/tasks/renderselector";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+} from "@app/components/base/htmltable/styled";
+import TickerPane from "@app/components/aoc/tickerpane/tickerpane";
 
 export interface TaskSelected {
   dayNumber: number;
@@ -25,7 +30,6 @@ export interface TaskSelected {
 
 export default function TaskPane2({
   taskMap,
-  children,
 }: {
   taskMap: TaskMap;
 } & { children?: ReactNode }) {
@@ -65,21 +69,29 @@ export default function TaskPane2({
   return (
     <TaskSelectionContext.Provider value={taskSelected}>
       <TaskPanel>
-        <ColumnContainer>
-          <RowContainer>
-            <PaddingContainer>
-              <TaskSelection
-                daylist={Array.from(taskMap.keys())}
-                selectionConfig={selectionState}
-              />
-            </PaddingContainer>
-            {inputDataState && (
-              <TickerPane inputData={inputDataState}>
-                <RenderSelector />
-              </TickerPane>
-            )}
-          </RowContainer>
-        </ColumnContainer>
+        <TableContainer>
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <PaddingContainer>
+                    <TaskSelection
+                      daylist={Array.from(taskMap.keys())}
+                      selectionConfig={selectionState}
+                    />
+                  </PaddingContainer>
+                </TableCell>
+                <TableCell>
+                  {inputDataState && (
+                    <TickerPane inputData={inputDataState}>
+                      <RenderSelector />
+                    </TickerPane>
+                  )}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </TaskPanel>
     </TaskSelectionContext.Provider>
   );
