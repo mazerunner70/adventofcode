@@ -65,7 +65,7 @@ export default function TaskPane2({
       });
     }
   }, [taskSelected, taskMap]);
-
+  console.log("inputDataState rendering", inputDataState);
   return (
     <TaskSelectionContext.Provider value={taskSelected}>
       <TaskPanel>

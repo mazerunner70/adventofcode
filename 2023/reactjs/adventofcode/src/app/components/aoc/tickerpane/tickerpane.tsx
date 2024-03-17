@@ -44,29 +44,7 @@ export default function TickerPane({
     totalTicks: 0,
   });
   const [speedState, setSpeedState] = useState<number>(0);
-
-  useEffect(() => {
-    if (inputData) {
-      initialiseInputData(inputData.id).then((res) => {
-        console.log("initialiseInputData", res);
-        if (res) {
-          setTickProps({
-            inputData: inputData,
-            currentTick: 0,
-            totalTicks: res.data.buildTicks.inputData.tickCount,
-          });
-        }
-      });
-    }
-  }, [inputData]);
-
-  function onSpeedChange(speed: number): void {
-    console.log("speed", speedState);
-    if (tickProps.totalTicks > 0) {
-      setSpeedState(speed);
-    }
-  }
-  const currTick = useTicker(
+  const [tickState, setTickState] = useTicker(
     (prevTick) => {
       return Math.min(
         Math.max(0, prevTick + speedState),
@@ -78,8 +56,43 @@ export default function TickerPane({
   );
 
   useEffect(() => {
-    setTickProps({ ...tickProps, currentTick: currTick });
-  }, [currTick]);
+    if (inputData) {
+      initialiseInputData(inputData.id).then((res) => {
+        console.log("initialiseInputData", res);
+        if (res) {
+          setTickProps({
+            inputData: inputData,
+            currentTick: 0,
+            totalTicks: res.data.buildTicks.inputData.tickCount,
+          });
+          setTickState(0);
+        }
+      });
+    }
+    return () => {
+      setTickProps({
+        inputData: {
+          id: 0,
+          inputType: InputDataType.test,
+          data: "",
+          state: InputDataState.notInitialised,
+        },
+        currentTick: 0,
+        totalTicks: 0,
+      });
+    };
+  }, [inputData]);
+
+  function onSpeedChange(speed: number): void {
+    console.log("speed", speedState);
+    if (tickProps.totalTicks > 0) {
+      setSpeedState(speed);
+    }
+  }
+
+  useEffect(() => {
+    setTickProps({ ...tickProps, currentTick: tickState });
+  }, [tickState]);
 
   return (
     <Table>
@@ -99,7 +112,7 @@ export default function TickerPane({
               <ProgressPanel
                 speedState={speedState}
                 progressData={{
-                  currentTick: currTick,
+                  currentTick: tickProps.currentTick,
                   totalTicks: tickProps.totalTicks,
                 }}
               />

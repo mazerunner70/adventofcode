@@ -75,5 +75,5 @@ export function useDetailState(tickProps: TickProps | null) {
     }
   }, [tickProps?.inputData, tickProps?.totalTicks]);
 
-  return useMemo(() => calcRowsState(tickProps, detailState), [tickProps]);
+  return calcRowsState(tickProps, detailState);
 }

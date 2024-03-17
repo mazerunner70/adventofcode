@@ -7,7 +7,7 @@ import {
   StringHighlighter,
 } from "@app/components/tasks/day01/util/StringHighlighter";
 import { TickerStateContext } from "@app/contexts/contexts";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { fetchTicksByInputDataAndTickNumberRange } from "@app/apiclient/tick";
 import {
   asEvents,
@@ -42,7 +42,10 @@ const highlightCellRenderer = (rowProps: RowProps, columnNumber: number) => {
 const cellRenderer = (rowProps: RowProps, columnNumber: number) => {
   switch (columnNumber) {
     case 0:
-      return highlightCellRenderer(rowProps, columnNumber);
+      return useMemo(
+        () => highlightCellRenderer(rowProps, columnNumber),
+        [rowProps, columnNumber],
+      );
     default:
       return <div>{rowProps.columns[columnNumber]}</div>;
   }

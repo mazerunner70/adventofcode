@@ -20,7 +20,7 @@ export const StringHighlighter = memo(function StringHighlighter({
   text: string;
 }): JSX.Element {
   let index = 0;
-  // console.log(">", highlights);
+  console.log(">", text, highlights);
   highlights.sort((a, b) => a.index - b.index);
   return (
     <div>
