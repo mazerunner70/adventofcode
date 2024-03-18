@@ -72,8 +72,10 @@ export function useDetailState(tickProps: TickProps | null) {
       tickProps.totalTicks !== null
     ) {
       setInitialState(tickProps.inputData, tickProps.totalTicks);
+      console.log("initialising detail state");
+      console.log("tickProps", tickProps);
     }
   }, [tickProps?.inputData, tickProps?.totalTicks]);
 
-  return useMemo(() => calcRowsState(tickProps, detailState), [tickProps]);
+  return calcRowsState(tickProps, detailState);
 }

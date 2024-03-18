@@ -12,8 +12,8 @@ export default function RenderSelector() {
         false: <Day01p1 />,
       },
       2: {
-        true: <div>Day 1 Part 2 True</div>,
-        false: <div>Day 1 Part 2 False</div>,
+        true: <Day01p1 />,
+        false: <Day01p1 />,
       },
     },
     2: {
