@@ -13,7 +13,7 @@ export default function RenderSelector() {
       },
       2: {
         true: <Day01p1 />,
-        false: <div>Day 1 Part 2 False</div>,
+        false: <Day01p1 />,
       },
     },
     2: {

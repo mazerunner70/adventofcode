@@ -14,6 +14,12 @@ import { highlightRules } from "./builder";
 import Panel from "@app/components/base/panel";
 import { useDetailState } from "@app/components/tasks/day01/p1/usedetailstate";
 import styled from "styled-components";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+} from "@app/components/base/htmltable/styled";
 
 const HeightLimitedDiv = styled.div`
   max-height: 300px;
@@ -62,23 +68,37 @@ export const Day01p1 = () => {
   const summaryRows = [{ columns: [totalSoFar.toString()], params: [] }];
 
   return (
-    <Panel shadowed={true}>
-      <HeightLimitedDiv>
-        {detailCurrentRowsState && (
-          <>
-            <TableRenderer
-              key={2}
-              columns={summaryColumns}
-              rows={summaryRows}
-            />
-            <TableRenderer
-              key={1}
-              columns={detailColumns}
-              rows={detailCurrentRowsState}
-            />
-          </>
-        )}
-      </HeightLimitedDiv>
-    </Panel>
+    <>
+      {detailCurrentRowsState && (
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell>
+                <Panel shadowed={true}>
+                  <HeightLimitedDiv>
+                    <TableRenderer
+                      key={2}
+                      columns={summaryColumns}
+                      rows={summaryRows}
+                    />
+                  </HeightLimitedDiv>
+                </Panel>
+              </TableCell>
+              <TableCell>
+                <Panel shadowed={true}>
+                  <HeightLimitedDiv>
+                    <TableRenderer
+                      key={1}
+                      columns={detailColumns}
+                      rows={detailCurrentRowsState}
+                    />
+                  </HeightLimitedDiv>
+                </Panel>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      )}
+    </>
   );
 };
