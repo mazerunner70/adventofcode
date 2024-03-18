@@ -45,6 +45,7 @@ export function buildLineState(
   searchState: LineSearchState,
   dataRow: string,
 ): IRow {
+  console.log("--searchState", searchState);
   switch (searchState.event_type) {
     case SearchEventType.Idle:
       return { columns: [dataRow, ""], params: ["-1", "-1", "-1", "1", "1"] };

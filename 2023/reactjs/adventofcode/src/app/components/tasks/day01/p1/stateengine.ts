@@ -31,15 +31,18 @@ export function build_line_search_states(
   let line_number = 0;
   let lineSearchState: LineSearchState = emptySearchState(line_number);
   for (const event of events) {
+    console.log("--event", event);
     lineSearchState.event_type = event.event_type;
     switch (event.event_type) {
       case SearchEventType.SearchingFromLeft:
         lineSearchState.search_index = parseInt(event.param);
         break;
       case SearchEventType.FoundLeftIndex: {
+        console.log("event.param", event.param);
         const params = event.param.split(",");
         lineSearchState.found_left_index = parseInt(params[0]);
-        lineSearchState.found_left_length = parseInt(params[1]);
+        lineSearchState.found_left_length =
+          params.length == 1 ? 1 : parseInt(params[1]);
         lineSearchState.search_index = -1;
         break;
       }
@@ -49,7 +52,8 @@ export function build_line_search_states(
       case SearchEventType.FoundRightIndex: {
         const params = event.param.split(",");
         lineSearchState.found_right_index = parseInt(params[0]);
-        lineSearchState.found_right_length = parseInt(params[1]);
+        lineSearchState.found_right_length =
+          params.length == 1 ? 1 : parseInt(params[1]);
         lineSearchState.search_index = -1;
         break;
       }

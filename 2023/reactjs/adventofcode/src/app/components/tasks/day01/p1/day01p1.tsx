@@ -40,21 +40,43 @@ const cellRenderer = (rowProps: RowProps, columnNumber: number) => {
       return <div>{rowProps.columns[columnNumber]}</div>;
   }
 };
-const columns = [
+const cellTextRenderer = (rowProps: RowProps, columnNumber: number) => {
+  return <div>{rowProps.columns[columnNumber]}</div>;
+};
+
+const detailColumns = [
   { name: "Text", renderer: cellRenderer },
   { name: "Value", renderer: cellRenderer },
 ];
 
+const summaryColumns = [{ name: "Total", renderer: cellTextRenderer }];
+
 export const Day01p1 = () => {
   const tickerState: TickProps | null = useContext(TickerStateContext);
+  const detailCurrentRowsState = useDetailState(tickerState);
 
-  const currentRowsState = useDetailState(tickerState);
+  const totalSoFar = detailCurrentRowsState
+    ?.map((r) => parseInt(r.columns[1] === "" ? "0" : r.columns[1]))
+    .reduce((a, b) => a + b, 0);
+
+  const summaryRows = [{ columns: [totalSoFar.toString()], params: [] }];
 
   return (
     <Panel shadowed={true}>
       <HeightLimitedDiv>
-        {currentRowsState && (
-          <TableRenderer columns={columns} rows={currentRowsState} />
+        {detailCurrentRowsState && (
+          <>
+            <TableRenderer
+              key={2}
+              columns={summaryColumns}
+              rows={summaryRows}
+            />
+            <TableRenderer
+              key={1}
+              columns={detailColumns}
+              rows={detailCurrentRowsState}
+            />
+          </>
         )}
       </HeightLimitedDiv>
     </Panel>
