@@ -16,14 +16,14 @@ export function highlightRules(rowProps: RowProps) {
   if (rowProps.params[1] !== "-1") {
     rules.push({
       index: parseInt(rowProps.params[1]),
-      length: 1,
+      length: parseInt(rowProps.params[3]),
       textColour: "blue",
     });
   }
   if (rowProps.params[2] !== "-1") {
     rules.push({
       index: parseInt(rowProps.params[2]),
-      length: 1,
+      length: parseInt(rowProps.params[4]),
       textColour: "blue",
     });
   }
@@ -47,16 +47,22 @@ export function buildLineState(
 ): IRow {
   switch (searchState.event_type) {
     case SearchEventType.Idle:
-      return { columns: [dataRow, ""], params: ["-1", "-1", "-1"] };
+      return { columns: [dataRow, ""], params: ["-1", "-1", "-1", "1", "1"] };
     case SearchEventType.SearchingFromLeft:
       return {
         columns: [dataRow, ""],
-        params: [searchState.search_index.toString(), "-1", "-1"],
+        params: [searchState.search_index.toString(), "-1", "-1", "1", "1"],
       };
     case SearchEventType.FoundLeftIndex:
       return {
         columns: [dataRow, ""],
-        params: ["-1", searchState.found_left_index.toString(), "-1"],
+        params: [
+          "-1",
+          searchState.found_left_index.toString(),
+          "-1",
+          searchState.found_left_length.toString(),
+          "1",
+        ],
       };
     case SearchEventType.SearchingFromRight:
       return {
@@ -65,6 +71,8 @@ export function buildLineState(
           searchState.search_index.toString(),
           searchState.found_left_index.toString(),
           "-1",
+          searchState.found_left_length.toString(),
+          "1",
         ],
       };
     case SearchEventType.FoundRightIndex:
@@ -73,13 +81,19 @@ export function buildLineState(
         params: [
           "-1",
           searchState.found_left_index.toString(),
-          searchState.found_right_index.toString(),
+          (
+            searchState.found_right_index -
+            searchState.found_right_length +
+            1
+          ).toString(),
+          searchState.found_left_length.toString(),
+          searchState.found_right_length.toString(),
         ],
       };
     case SearchEventType.ValueCalculated:
       return {
         columns: [dataRow, searchState.value_found],
-        params: ["-1", "-1", "-1"],
+        params: ["-1", "-1", "-1", "1", "1"],
       };
   }
 }

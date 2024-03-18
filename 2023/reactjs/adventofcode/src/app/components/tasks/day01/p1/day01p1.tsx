@@ -7,20 +7,10 @@ import {
   StringHighlighter,
 } from "@app/components/tasks/day01/util/StringHighlighter";
 import { TickerStateContext } from "@app/contexts/contexts";
-import { useContext, useEffect, useMemo, useState } from "react";
-import { fetchTicksByInputDataAndTickNumberRange } from "@app/apiclient/tick";
-import {
-  asEvents,
-  build_line_search_states,
-} from "@app/components/tasks/day01/p1/stateengine";
+import { useContext, useMemo } from "react";
+
 import { TickProps } from "@app/components/aoc/tickerpane/tickerpane";
-import {
-  buildCompletedLineStates,
-  buildEmptyLines,
-  buildLineState,
-  highlightRules,
-} from "./builder";
-import { IRow, ITicksState } from "./types";
+import { highlightRules } from "./builder";
 import Panel from "@app/components/base/panel";
 import { useDetailState } from "@app/components/tasks/day01/p1/usedetailstate";
 import styled from "styled-components";

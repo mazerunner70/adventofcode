@@ -72,6 +72,8 @@ export function useDetailState(tickProps: TickProps | null) {
       tickProps.totalTicks !== null
     ) {
       setInitialState(tickProps.inputData, tickProps.totalTicks);
+      console.log("initialising detail state");
+      console.log("tickProps", tickProps);
     }
   }, [tickProps?.inputData, tickProps?.totalTicks]);
 

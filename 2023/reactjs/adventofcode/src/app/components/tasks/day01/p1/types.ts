@@ -3,7 +3,9 @@ export interface LineSearchState {
   line_number: number;
   search_index: number;
   found_left_index: number;
+  found_left_length: number;
   found_right_index: number;
+  found_right_length: number;
   value_found: string;
   total: number;
 }
