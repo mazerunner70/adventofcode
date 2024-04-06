@@ -10,7 +10,7 @@
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.1.1",
     "@mui/material": "^5.1.1",
-    "@mui/system": "^5.1.1",
+    "@mui/system": "^5.15.13",
     "antd": "^4.3.3",
     "axios": "^0.24.0",
     "classnames": "^2.2.5",
